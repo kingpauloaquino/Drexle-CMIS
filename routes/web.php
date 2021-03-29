@@ -17,10 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
+Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
+Route::get('/personal/barangay-clearance', [App\Http\Controllers\HomeController::class, 'barangay_clearance']);
+
+
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes(['register' => false]);
