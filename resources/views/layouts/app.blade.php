@@ -59,14 +59,17 @@
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Personal:</h6>
-                            <a class="collapse-item" href="/personal/add-person">Add Person</a>
+                            <h6 class="collapse-header">Resident:</h6>
+                            <a class="collapse-item" href="/personal/add-person">Add Record</a>
+                            <a class="collapse-item" href="/personal/resident-list">View List</a>
+
+                            <h6 class="collapse-header">Clearances:</h6>
                             <a class="collapse-item" href="/personal/barangay-clearance">Barangay Clearance</a>
                             <a class="collapse-item" href="/personal/indigency">Indigency</a>
                             <a class="collapse-item" href="/personal/solicitation">Solicitation</a>
                             <a class="collapse-item" href="/personal/lot-certication">Lot Certication</a>
 
-                            <h6 class="collapse-header">Business:</h6>
+                            <h6 class="collapse-header">Businesses:</h6>
                             <a class="collapse-item" href="/business/business-permit">Business Permit</a>
                             <a class="collapse-item" href="/business/business-closure">Business Closure</a>
                         </div>
@@ -196,13 +199,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>

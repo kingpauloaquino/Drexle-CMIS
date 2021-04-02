@@ -20,7 +20,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
-Route::get('/personal/barangay-clearance', [App\Http\Controllers\HomeController::class, 'barangay_clearance']);
+Route::post('/personal/add-person/store', [App\Http\Controllers\HomeController::class, 'add_person_store']);
+
+Route::get('/personal/resident-list', [App\Http\Controllers\HomeController::class, 'resident_list']);
 
 
 Auth::routes();

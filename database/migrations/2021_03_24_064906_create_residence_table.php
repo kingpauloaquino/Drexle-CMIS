@@ -16,16 +16,21 @@ class CreateResidenceTable extends Migration
         Schema::create('residence', function (Blueprint $table) {
             $table->id();
             $table->string('firstname');
+            $table->string('middlename');
             $table->string('laststname');
-            $table->string('gender', 11);
-            $table->integer('age');
             $table->text('address');
+            $table->integer('year_stay');
+            $table->integer('household');
             $table->date('birthdate');
-            $table->string('birthplace', 20);
-            $table->string('civil_status', 10);
-            $table->string('occupation', 100);
+            $table->string('birthplace');
+            $table->string('gender');
+            $table->string('civil_status');
+            $table->string('nationality');
+            $table->string('blood');
             $table->string('email')->unique();
             $table->string('mobile', 11)->unique();
+            $table->string('work');
+            $table->string('skill');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
