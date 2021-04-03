@@ -59,9 +59,9 @@
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Resident:</h6>
+                            <h6 class="collapse-header">Residence:</h6>
                             <a class="collapse-item" href="/personal/add-person">Add Record</a>
-                            <a class="collapse-item" href="/personal/resident-list">View List</a>
+                            <a class="collapse-item" href="/personal/residence-list">View List</a>
 
                             <h6 class="collapse-header">Clearances:</h6>
                             <a class="collapse-item" href="/personal/barangay-clearance">Barangay Clearance</a>

@@ -10,7 +10,6 @@
                         <h1 class="page-header-title">
                             Add Personal Information
                         </h1>
-                        <div class="page-header-subtitle">Please complete to fill out the form below:</div>
                     </div>
                 </div>
             </div>
@@ -35,7 +34,6 @@
 
                 <div id="default">
                     <div class="card mb-4">
-                        <div class="card-header">Resident Fill Out Form</div>
                         <div class="card-body">
                             <!-- Component Preview-->
                             <div class="sbp-preview">

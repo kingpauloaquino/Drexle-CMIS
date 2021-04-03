@@ -22,7 +22,8 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
 Route::post('/personal/add-person/store', [App\Http\Controllers\HomeController::class, 'add_person_store']);
 
-Route::get('/personal/resident-list', [App\Http\Controllers\HomeController::class, 'resident_list']);
+Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
+Route::any('/personal/resident/issue/store', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
 
 
 Auth::routes();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Residence;
+use App\Models\Transaction;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -37,7 +39,7 @@ class HomeController extends Controller
         $data = new Residence();
         $data->firstname = $request->firstname;
         $data->middlename = $request->middlename;
-        $data->laststname = $request->lastname;
+        $data->lastname = $request->lastname;
         $data->address = $request->address;
         $data->year_stay = $request->stay;
         $data->household = $request->household;
@@ -58,8 +60,23 @@ class HomeController extends Controller
         return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
     }
 
-    public function resident_list()
+    public function residence_list()
     {
-        return view('pages.record_list');
+        $data = Residence::get();
+        return view('pages.record_list', compact('data'));
+    }
+
+    public function resident_issue_store(Request $request)
+    {
+        $data = new Transaction();
+        $data->method = $request->method;
+        $data->residence_uid = $request->uid;
+        $data->details = json_encode(['data' => $request->details]);
+        $data->date_issued = Carbon::now();
+        if($data->save()) {
+            return ["status" => 200];
+        }
+        return ["status" => 500];
+
     }
 }
