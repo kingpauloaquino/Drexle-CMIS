@@ -19,6 +19,7 @@ class CreateResidenceTable extends Migration
             $table->string('middlename');
             $table->string('lastname');
             $table->text('address');
+            $table->integer('age');
             $table->integer('year_stay');
             $table->integer('household');
             $table->date('birthdate');

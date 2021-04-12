@@ -35,7 +35,7 @@
 
                         @for($i = 0; $i < COUNT($data); $i++) <tr>
                             <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
-                            <td>{{ $data[$i]["gender"] }}</td>
+                            <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
                             <td>{{ $data[$i]["mobile"] }}</td>
                             <td>{{ $data[$i]["created_at"] }}</td>
@@ -51,8 +51,8 @@
 </main>
 
 <!-- Large modal -->
-<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div id="myModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Basic Information</h5>
@@ -67,59 +67,63 @@
                 <table class="mt-3" style="width: 100%;">
                     <tr>
                         <td>Name:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtName" style="text-align: right;">***</td>
+                    </tr>
+                    <tr>
+                        <td>Age:</td>
+                        <td id="dtAge" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Address:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtAddress" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Year of Stay:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtStay" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Household:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtHousehold" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Date of Birth:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtBirth" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Place of Birth:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtPlace" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Gender:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtGender" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Civil Status:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtCivil" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Nationality:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtNationality" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Blood Type:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtBlood" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Email Address:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtEmail" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Mobile Number:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtMobile" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Occupation:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtOccupation" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Skill:</td>
-                        <td style="text-align: right;">King Paulo Aquino</td>
+                        <td id="dtSkill" style="text-align: right;">***</td>
                     </tr>
                 </table>
 
@@ -154,6 +158,12 @@
 <script>
     $(document).ready(function() {
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $(".btn").on("click", function() {
             var data = $(this).data();
             $('#myModal').modal($('#myModal').modal({
@@ -161,44 +171,65 @@
                 keyboard: false
             }));
             $('#myModal').modal('show');
+
+            get(data.value);
             $('#btnIssueNow').attr('data-uid', data.value);
         })
 
         $("#btnIssueNow").on("click", function() {
             var data = $(this).data();
             var uid = parseInt(data.uid);
+
             var issue = $("#ddlListOfIssues").val();
 
             if (issue == "0") {
                 alert("Oops, please select issue for.");
             }
 
-            console.log(uid);
             var data = {
                 method: issue,
-                uid: uid,
-                details: "N/A",
+                uid: uid
             };
-
-            $("ddlListOfIssues").attr("disabled", true);
-            $("#btnIssueNow").attr("disabled", true);
             store(data);
-
         })
 
-        function store(data) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        function get(uid) {
+            $.ajax({
+                dataType: 'json',
+                type: "GET",
+                url: "/personal/resident/get/" + uid,
+                beforeSend: function() {
 
+                }
+            }).done(function(res) {
+                console.log(res);
+                $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + res.data.middlename);
+                $("#dtAge").empty().prepend(res.data.age);
+                $("#dtAddress").empty().prepend(res.data.address);
+                $("#dtStay").empty().prepend(res.data.year_stay);
+                $("#dtHousehold").empty().prepend(res.data.household);
+                $("#dtBirth").empty().prepend(res.data.birthdate);
+                $("#dtPlace").empty().prepend(res.data.birthplace);
+                $("#dtGender").empty().prepend(res.data.gender);
+                $("#dtCivil").empty().prepend(res.data.civil_status);
+                $("#dtNationality").empty().prepend(res.data.nationality);
+                $("#dtBlood").empty().prepend(res.data.blood);
+                $("#dtEmail").empty().prepend(res.data.email);
+                $("#dtMobile").empty().prepend(res.data.mobile);
+                $("#dtOccupation").empty().prepend(res.data.work);
+                $("#dtSkill").empty().prepend(res.data.skill);
+            });
+        }
+
+        function store(data) {
             $.ajax({
                 dataType: 'json',
                 type: "GET",
                 url: "/personal/resident/issue/store",
                 data: data,
                 beforeSend: function() {
+                    $("ddlListOfIssues").attr("disabled", true);
+                    $("#btnIssueNow").attr("disabled", true);
                     $("#btnIssueNow").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
                 }
             }).done(function(res) {
@@ -207,10 +238,17 @@
 
                 if (res.status == 200) {
                     alert("Done!");
-                    location.reload();
+                    window.location.href = res.url;
+                } else if (res.status == 404) {
+                    alert("No available certificate.");
+
                 } else {
                     alert("Something went wrong.");
                 }
+
+                $("ddlListOfIssues").attr("disabled", false);
+                $("#btnIssueNow").attr("disabled", false);
+                $("#btnIssueNow").empty().prepend("Issue Now");
 
             });
         }

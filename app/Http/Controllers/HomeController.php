@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Residence;
 use App\Models\Transaction;
+
+use App\Http\Controllers\CertController;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -40,6 +42,7 @@ class HomeController extends Controller
         $data->firstname = $request->firstname;
         $data->middlename = $request->middlename;
         $data->lastname = $request->lastname;
+        $data->age = $request->age;
         $data->address = $request->address;
         $data->year_stay = $request->stay;
         $data->household = $request->household;
@@ -60,6 +63,16 @@ class HomeController extends Controller
         return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
     }
 
+    public function get_resident($uid)
+    {
+        $data = Residence::where("id", (int)$uid)->first();
+
+        if($data == null) {
+            return ["status" => 404];
+        }
+        return ["status" => 200, "data" => $data];
+    }
+
     public function residence_list()
     {
         $data = Residence::get();
@@ -68,14 +81,28 @@ class HomeController extends Controller
 
     public function resident_issue_store(Request $request)
     {
-        $data = new Transaction();
-        $data->method = $request->method;
-        $data->residence_uid = $request->uid;
-        $data->details = json_encode(['data' => $request->details]);
-        $data->date_issued = Carbon::now();
-        if($data->save()) {
-            return ["status" => 200];
+        $resident = $this->get_resident($request->uid);
+
+        $cert = new CertController();
+
+        switch($request->method) {
+            case "First Time JobSeeker":
+                $res = $cert->first_time_jobseekers_generate($resident["data"], null);
+                break;
+            default:
+                return ["status" => 404];
         }
+
+        if($res["status"] == 200) {
+            $data = new Transaction();
+            $data->method = $request->method;
+            $data->residence_uid = $request->uid;
+            $data->date_issued = Carbon::now();
+            if ($data->save()) {
+                return ["status" => 200, "url" => $res["url"]];
+            }
+        }
+
         return ["status" => 500];
 
     }

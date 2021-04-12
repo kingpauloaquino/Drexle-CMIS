@@ -59,6 +59,13 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
+                                                <label for="age">Age:</label>
+                                                <input type="text" class="form-control" id="age" name="age" placeholder="I.e.: 18">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
                                                 <label for="address">Address:</label>
                                                 <input type="text" class="form-control" id="address" name="address" placeholder="I.e.: Lot 5 Block 7 Murphy St.">
                                             </div>
