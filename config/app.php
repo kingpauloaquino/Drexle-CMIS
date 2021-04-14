@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        KPAWork\MSG4wrdIO\MSG4wrdIOServiceProvider::class,
 
     ],
 
