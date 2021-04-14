@@ -70,36 +70,32 @@
                 </td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td style="text-align: center; width: 200px;">
+                <td style="text-align: left; width: 200px;">
                     <p style="padding: 0; margin: 0;">
-                        Date
+                        Attested by:
                     </p>
                 </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
                 <td style="text-align: center; width: 200px;">
                     <p style="padding: 0; margin: 0;">
-                        Witnessed by:
+                        <b>JUANITO R. FABABIER</b>
+                    </p>
+                    <p style="padding: 0; margin: -9px 0 0 0;">
+                        Barangay Secretary
                     </p>
                 </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
         </table>
-
-
     </div>
 </body>
 

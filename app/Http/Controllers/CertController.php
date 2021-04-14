@@ -10,12 +10,6 @@ use File;
 
 class CertController extends Controller
 {
-    public function bgry_clearance(){
-        $data = ["title" => "Mr.", "fullname" => "King Paulo Aquino"];
-        return view("pages.certificate.brgy_clearance", compact('data'));
-
-    }
-
     private function random_number($length = 12)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -26,18 +20,69 @@ class CertController extends Controller
         }
         return $randomString;
     }
-    public function bgry_clearance_pdf(Request $request, $isHTMLView = null)
-    {
 
+    public function bgry_indigency_pdf($resident)
+    {
+        $img_a = asset('/img/city-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+        $title = $resident->gender == 1 ? "Mr." : "Mrs.";
+
+        $data = [
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "address" => $resident->address,
+            "day" => date("d"),
+            "month" => date("M"),
+            "year" => date("Y"),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+        view()->share('data', $data);
+
+        $html = view('pages.certificate.brgy_indigency', $data)->render();
+
+        return $this->toPDF($html, $this->random_number(), "brg-clearance-indigency");
     }
 
-    public function first_time_jobseekers_generate($resident, $isHTMLView = null)
+    public function bgry_clearance_pdf($resident)
     {
-        // $img_a = $isHTMLView != null ? asset('/img/city-logo.png') : public_path() . "/img/city-logo.png";
-        // $img_b = $isHTMLView != null ? asset('/img/city-logo.png') : public_path() . "/img/city-logo.png";
+        $img_a = asset('/img/city-logo.png');
+        $img_b = asset('/img/city-logo.png');
 
-        $img_a = $isHTMLView != null ? asset('/img/city-logo.png') : asset('/img/city-logo.png');
-        $img_b = $isHTMLView != null ? asset('/img/city-logo.png') : asset('/img/city-logo.png');
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+        $title = $resident->gender == 1 ? "Mr." : "Mrs.";
+
+        $data = [
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "address" => $resident->address,
+            "day" => date("d"),
+            "month" => date("M"),
+            "year" => date("Y"),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+        view()->share('data', $data);
+
+        $html = view('pages.certificate.brgy_clearance', $data)->render();
+
+        // echo $html;
+
+        // exit();
+
+        return $this->toPDF($html, $this->random_number(), "brg-clearance");
+    }
+
+    public function first_time_jobseekers_generate($resident)
+    {
+        $img_a = asset('/img/city-logo.png');
+        $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
         $title = $resident->gender == 1 ? "Mr." : "Mrs.";
@@ -55,9 +100,13 @@ class CertController extends Controller
             ];
 
         view()->share('data', $data);
-        $html = view('pages.certificate.brgy_clearance', $data)->render();
 
+        $html = view('pages.certificate.brgy_firstjobseeker', $data)->render();
 
+        return $this->toPDF($html, $this->random_number(), "brg-firstimejobseeker");
+    }
+
+    private function toPDF($html, $filename, $prefix) {
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter', 'portrait');
@@ -67,14 +116,12 @@ class CertController extends Controller
 
         $output = $dompdf->output();
 
-        $random_number = $this->random_number();
-
-        $file_name = "brg-clearance-{$random_number}";
+        $file_name = "{$prefix}-{$filename}";
 
         $destinationPath = public_path() . "/download/" . $file_name . ".pdf";
         File::put($destinationPath, $output);
 
-        $urlDownload = url('/download/' . $file_name .'.pdf');
+        $urlDownload = url('/download/' . $file_name . '.pdf');
         return array(
             "status" => 200,
             "url" => $urlDownload

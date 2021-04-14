@@ -86,11 +86,14 @@ class HomeController extends Controller
         $cert = new CertController();
 
         switch($request->method) {
+            case "Indigency":
+                $res = $cert->bgry_indigency_pdf($resident["data"], null);
+                break;
             case "First Time JobSeeker":
                 $res = $cert->first_time_jobseekers_generate($resident["data"], null);
                 break;
             default:
-                return ["status" => 404];
+                $res = $cert->bgry_clearance_pdf($resident["data"], null);
         }
 
         if($res["status"] == 200) {

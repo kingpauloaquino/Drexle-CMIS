@@ -133,8 +133,8 @@
                         <div class="input-group">
                             <select class="custom-select" id="ddlListOfIssues">
                                 <option value="0" selected>Choose...</option>
-                                <option value="Residency">Residency</option>
-                                <option value="Solo Parent">Solo Parent</option>
+                                <!-- <option value="Residency">Residency</option> -->
+                                <!-- <option value="Solo Parent">Solo Parent</option> -->
                                 <option value="Indigency">Indigency</option>
                                 <option value="Solicitation">Solicitation</option>
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
@@ -184,6 +184,7 @@
 
             if (issue == "0") {
                 alert("Oops, please select issue for.");
+                return false;
             }
 
             var data = {
@@ -228,14 +229,9 @@
                 url: "/personal/resident/issue/store",
                 data: data,
                 beforeSend: function() {
-                    $("ddlListOfIssues").attr("disabled", true);
-                    $("#btnIssueNow").attr("disabled", true);
                     $("#btnIssueNow").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
                 }
             }).done(function(res) {
-
-                console.log(res);
-
                 if (res.status == 200) {
                     alert("Done!");
                     window.location.href = res.url;
@@ -245,11 +241,7 @@
                 } else {
                     alert("Something went wrong.");
                 }
-
-                $("ddlListOfIssues").attr("disabled", false);
-                $("#btnIssueNow").attr("disabled", false);
                 $("#btnIssueNow").empty().prepend("Issue Now");
-
             });
         }
     })

@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/personal/registration', [App\Http\Controllers\PublicController::class, 'personal_registration']);
+Route::post('/personal/registration/store', [App\Http\Controllers\PublicController::class, 'personal_registration_store']);
+
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
@@ -26,8 +29,7 @@ Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::cla
 Route::get('/personal/resident/get/{uid}', [App\Http\Controllers\HomeController::class, 'get_resident']);
 Route::any('/personal/resident/issue/store', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
 
-Route::any('/brgy/clearance/issue', [App\Http\Controllers\CertController::class, 'bgry_clearance']);
-Route::any('/brgy/clearance/issue/pdf/{isHTML?}', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
+Route::any('/brgy/clearance/issue/pdf', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
 
 
 Auth::routes();

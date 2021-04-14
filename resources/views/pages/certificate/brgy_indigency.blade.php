@@ -6,7 +6,7 @@
         <tr>
             <td class="text-center">
                 <h3 style="margin: 0; padding: 0;">
-                    CERTIFICATION
+                    CERTIFICATION OF INDIGENCY
                 </h3>
             </td>
         </tr>
@@ -21,7 +21,14 @@
         <tr>
             <td style="padding: 10px;">
                 <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This further certify that the above-named person has no record of complaints filed against him/her at the Katarungang Pambarangay of this office as of this date.
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This further certifies that the above-named person belongs to the <b>INDIGENT</b> families of this barangay.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px;">
+                <p style="padding: 0; margin: 0;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This certification is being issued upon the request of the above-named person, intended for
                 </p>
             </td>
         </tr>
