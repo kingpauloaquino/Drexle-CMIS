@@ -22,6 +22,7 @@ Route::post('/personal/registration/store', [App\Http\Controllers\PublicControll
 
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
+
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
 Route::post('/personal/add-person/store', [App\Http\Controllers\HomeController::class, 'add_person_store']);
 
@@ -31,6 +32,9 @@ Route::any('/personal/resident/issue/store', [App\Http\Controllers\HomeControlle
 
 Route::any('/brgy/clearance/issue/pdf', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
 
+Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);
+Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);
+Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, 'sms_list']);
 
 Auth::routes();
 // Auth::routes(['register' => false]);
