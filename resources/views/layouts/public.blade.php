@@ -38,6 +38,10 @@
             width: 1rem;
             height: 1rem;
         }
+
+        .required {
+            color: red;
+        }
     </style>
 </head>
 

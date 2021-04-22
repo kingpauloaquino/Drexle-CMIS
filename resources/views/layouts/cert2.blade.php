@@ -50,6 +50,11 @@
                     </center>
                 </td>
             </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="text-center"><b>{{ $data["control_number"] }}</b></td>
+                <td>&nbsp;</td>
+            </tr>
         </table>
 
         <div class="mt-5 p-2">

@@ -17,7 +17,7 @@ class CreateResidenceTransactionTable extends Migration
             $table->id();
             $table->string('method');
             $table->bigInteger('residence_uid');
-            $table->json('details');
+            $table->json('details')->nullable();
             $table->date('date_issued');
             $table->tinyInteger('status')->default(0); // 0 pending, 1 released, 2 hold, 3 void
             $table->timestamps();

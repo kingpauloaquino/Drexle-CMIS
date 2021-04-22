@@ -36,14 +36,22 @@ class HomeController extends Controller
         return view('pages.add_person');
     }
 
+
+
     public function add_person_store(Request $request)
     {
+
+        $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
+        // $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y years, %m months and %d days');
+
         $data = new Residence();
+        $data->id_number = $request->id_number;
         $data->firstname = $request->firstname;
         $data->middlename = $request->middlename;
         $data->lastname = $request->lastname;
-        $data->age = $request->age;
-        $data->address = $request->address;
+        $data->age = (int)$age;
+        $data->address1 = $request->address1;
+        $data->address2 = $request->address2;
         $data->year_stay = $request->stay;
         $data->household = $request->household;
         $data->birthdate = $request->birthdate;

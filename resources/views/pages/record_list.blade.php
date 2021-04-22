@@ -20,6 +20,15 @@
     <div class="container mt-4">
         <div class="card mb-4">
             <div class="card-body">
+
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Firstname, lastname, work, mobile#" aria-label="Recipient's username" aria-describedby="btnSearch">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
+                    </div>
+                </div>
+
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -27,17 +36,18 @@
                             <th>Gender</th>
                             <th>Work</th>
                             <th>Mobile</th>
+                            <th>Schedule</th>
                             <th>Date Added</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @for($i = 0; $i < COUNT($data); $i++) <tr>
                             <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
                             <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
                             <td>{{ $data[$i]["mobile"] }}</td>
+                            <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
                             <td>{{ $data[$i]["created_at"] }}</td>
                             <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>
@@ -66,6 +76,10 @@
 
                 <table class="mt-3" style="width: 100%;">
                     <tr>
+                        <td>ID Number:</td>
+                        <td id="dtIdNumber" style="text-align: right;">***</td>
+                    </tr>
+                    <tr>
                         <td>Name:</td>
                         <td id="dtName" style="text-align: right;">***</td>
                     </tr>
@@ -74,8 +88,12 @@
                         <td id="dtAge" style="text-align: right;">***</td>
                     </tr>
                     <tr>
-                        <td>Address:</td>
-                        <td id="dtAddress" style="text-align: right;">***</td>
+                        <td>House#:</td>
+                        <td id="dtAddress1" style="text-align: right;">***</td>
+                    </tr>
+                    <tr>
+                        <td>Street:</td>
+                        <td id="dtAddress2" style="text-align: right;">***</td>
                     </tr>
                     <tr>
                         <td>Year of Stay:</td>
@@ -164,7 +182,7 @@
             }
         });
 
-        $(".btn").on("click", function() {
+        $("td button.btn").on("click", function() {
             var data = $(this).data();
             $('#myModal').modal($('#myModal').modal({
                 backdrop: 'static',
@@ -204,15 +222,37 @@
                 }
             }).done(function(res) {
                 console.log(res);
+                $("#dtIdNumber").empty().prepend(res.data.id_number);
                 $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + res.data.middlename);
                 $("#dtAge").empty().prepend(res.data.age);
-                $("#dtAddress").empty().prepend(res.data.address);
+                $("#dtAddress1").empty().prepend(res.data.address1);
+                $("#dtAddress2").empty().prepend(res.data.address2);
                 $("#dtStay").empty().prepend(res.data.year_stay);
                 $("#dtHousehold").empty().prepend(res.data.household);
                 $("#dtBirth").empty().prepend(res.data.birthdate);
                 $("#dtPlace").empty().prepend(res.data.birthplace);
-                $("#dtGender").empty().prepend(res.data.gender);
+
+                var gender = parseInt(res.data.gender);
+                if (gender == 1) {
+                    $("#dtGender").empty().prepend("Male");
+                } else {
+                    $("#dtGender").empty().prepend("Female");
+                }
+
                 $("#dtCivil").empty().prepend(res.data.civil_status);
+
+
+                var gender = parseInt(res.data.civil_status);
+                if (gender == 1) {
+                    $("#dtCivil").empty().prepend("Single");
+                } else if (gender == 2) {
+                    $("#dtCivil").empty().prepend("Married");
+                } else if (gender == 3) {
+                    $("#dtCivil").empty().prepend("Seperated");
+                } else {
+                    $("#dtGender").empty().prepend("Widowed");
+                }
+
                 $("#dtNationality").empty().prepend(res.data.nationality);
                 $("#dtBlood").empty().prepend(res.data.blood);
                 $("#dtEmail").empty().prepend(res.data.email);

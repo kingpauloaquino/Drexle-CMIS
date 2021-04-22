@@ -27,13 +27,19 @@ class CertController extends Controller
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
-        $title = $resident->gender == 1 ? "Mr." : "Mrs.";
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
 
         $data = [
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
-            "address" => $resident->address,
+            "address" => $resident->address1 . " " . $resident->address2,
             "day" => date("d"),
             "month" => date("M"),
             "year" => date("Y"),
@@ -48,15 +54,36 @@ class CertController extends Controller
         return $this->toPDF($html, $this->random_number(), "brg-clearance-indigency");
     }
 
+    public static function SerializeNumber($count)
+    {
+        if ($count >= 0 && $count <= 9) {
+            $count = "000" . $count;
+        } else if ($count >= 10 && $count <= 99) {
+            $count = "00" . $count;
+        } else if ($count >= 99 && $count <= 999) {
+            $count = "0" . $count;
+        } else if ($count >= 999 && $count <= 9999) {
+            $count = $count;
+        }
+        return $count;
+    }
+
     public function bgry_clearance_pdf($resident)
     {
         $img_a = asset('/img/city-logo.png');
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
-        $title = $resident->gender == 1 ? "Mr." : "Mrs.";
+
+        $misis = "Ms.";
+        if((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
 
         $data = [
+            "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -85,7 +112,13 @@ class CertController extends Controller
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
-        $title = $resident->gender == 1 ? "Mr." : "Mrs.";
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status >1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
 
         $data = [
             "title" => $title,

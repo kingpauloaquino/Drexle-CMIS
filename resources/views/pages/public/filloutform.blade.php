@@ -38,36 +38,40 @@
                             <!-- Component Preview-->
                             <div class="sbp-preview">
                                 <div class="sbp-preview-content">
-                                    <form action="/personal/registration/store" method="POST">
+                                    <form action="/personal/add-person/store" method="POST">
 
                                         @csrf
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="firstname">First Name:</label>
-                                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Juan">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="middlename">Middle Name:</label>
-                                                <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Dela">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="lastname">Last Name:</label>
-                                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Cruz">
+                                            <div class="form-group col-md-12">
+                                                <label for="age">ID number: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="id_number" name="id_number" placeholder="I.e.: Driver's License ID#" required>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="age">Age:</label>
-                                                <input type="text" class="form-control" id="age" name="age" placeholder="I.e.: 18">
+                                            <div class="form-group col-md-4">
+                                                <label for="firstname">First Name: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Juan" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="middlename">Middle Name: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Dela" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="lastname">Last Name: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Cruz" required>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="address">Address:</label>
-                                                <input type="text" class="form-control" id="address" name="address" placeholder="I.e.: Lot 5 Block 7 Murphy St.">
+                                            <div class="form-group col-md-6">
+                                                <label for="stay">House#: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="address1" name="address1" placeholder="I.e.: 123" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="household">Street: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="address2" name="address2" placeholder="I.e.: Murphy" required>
                                             </div>
                                         </div>
 
@@ -84,12 +88,12 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="birthdate">Birhdate:</label>
-                                                <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Email">
+                                                <label for="birthdate">Birhdate: <span class="required">*</span></label>
+                                                <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Email" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="birhtplace">Place of Birth:</label>
-                                                <input type="text" class="form-control" id="birhtplace" name="birhtplace" placeholder="I.e.: Quezon City">
+                                                <input type="text" class="form-control" id="birhtplace" name="birhtplace" placeholder="I.e.: Quezon City" required>
                                             </div>
                                         </div>
 
@@ -116,8 +120,8 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="nationality">Nationality:</label>
-                                                <input type="text" class="form-control" id="nationality" name="nationality" placeholder="I.e.: Filipino">
+                                                <label for="nationality">Nationality: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="nationality" name="nationality" placeholder="I.e.: Filipino" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="blood">Blood Type:</label>
@@ -131,8 +135,8 @@
                                                 <input type="text" class="form-control" id="email" name="email" placeholder="I.e.: yourname@gmail.com">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="mobile">Mobile Number:</label>
-                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567">
+                                                <label for="mobile">Mobile Number: <span class="required">*</span></label>
+                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567" required>
                                             </div>
                                         </div>
 
