@@ -34,7 +34,7 @@ class CreateResidenceTable extends Migration
             $table->string('mobile', 11)->unique();
             $table->string('work')->nullable();
             $table->string('skill')->nullable();
-            $table->date('schedule');
+            $table->date('schedule')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
