@@ -22,12 +22,12 @@
             <div class="card-body">
 
 
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Firstname, lastname, work, mobile#" aria-label="Recipient's username" aria-describedby="btnSearch">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
                     </div>
-                </div>
+                </div> -->
 
                 <table class="table table-hover">
                     <thead>
@@ -154,7 +154,7 @@
                                 <!-- <option value="Residency">Residency</option> -->
                                 <!-- <option value="Solo Parent">Solo Parent</option> -->
                                 <option value="Indigency">Indigency</option>
-                                <option value="Solicitation">Solicitation</option>
+                                <!-- <option value="Solicitation">Solicitation</option> -->
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>
                                 <option value="Lot Certication">Lot Certication</option>

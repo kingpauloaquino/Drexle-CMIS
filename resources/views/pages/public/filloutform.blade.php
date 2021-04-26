@@ -38,7 +38,7 @@
                             <!-- Component Preview-->
                             <div class="sbp-preview">
                                 <div class="sbp-preview-content">
-                                    <form action="/personal/add-person/store" method="POST">
+                                    <form action="/personal/registration/store" method="POST">
 
                                         @csrf
 

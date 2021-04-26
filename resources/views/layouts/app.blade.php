@@ -70,14 +70,14 @@
                             <a class="collapse-item" href="/personal/residence-list">View List</a>
 
                             <h6 class="collapse-header">Clearances:</h6>
-                            <a class="collapse-item" href="/personal/barangay-clearance">Barangay Clearance</a>
-                            <a class="collapse-item" href="/personal/indigency">Indigency</a>
-                            <a class="collapse-item" href="/personal/solicitation">Solicitation</a>
-                            <a class="collapse-item" href="/personal/lot-certication">Lot Certication</a>
+                            <a class="collapse-item" href="/personal/clearance/get/barangay">Barangay Clearance</a>
+                            <a class="collapse-item" href="/personal/clearance/get/indigency">Indigency</a>
+                            <a class="collapse-item" href="/personal/clearance/get/jobseeker">First Time JobSeeker</a>
+                            <a class="collapse-item" href="/personal/clearance/get/lot-certication">Lot Certication</a>
 
-                            <h6 class="collapse-header">Businesses:</h6>
+                            <!-- <h6 class="collapse-header">Businesses:</h6>
                             <a class="collapse-item" href="/business/business-permit">Business Permit</a>
-                            <a class="collapse-item" href="/business/business-closure">Business Closure</a>
+                            <a class="collapse-item" href="/business/business-closure">Business Closure</a> -->
                         </div>
                     </div>
                 </li>

@@ -8,6 +8,7 @@ use App\Models\Transaction;
 
 use App\Http\Controllers\CertController;
 use Carbon\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
@@ -35,8 +36,6 @@ class HomeController extends Controller
     {
         return view('pages.add_person');
     }
-
-
 
     public function add_person_store(Request $request)
     {
@@ -116,5 +115,37 @@ class HomeController extends Controller
 
         return ["status" => 500];
 
+    }
+
+    public function get_resident_trans($method)
+    {
+
+        $type = "Barangay Clearance";
+        switch($method) {
+            case "jobseeker";
+                $type = "First Time JobSeeker";
+                break;
+            case "indigency";
+                $type = "Indigency";
+                break;
+            case "lot-certication";
+                $type = "Application Cert. Form";
+                break;
+            default:
+                break;
+        }
+
+        // $data = DB::select("
+        //     SELECT *,
+        //     (SELECT firstname FROM residence WHERE id = x.residence_uid)  AS fullname
+        //     FROM residence_transaction AS x
+        //     WHERE x.method = {$type}"
+        // );
+
+        $data = DB::select("SELECT * FROM get_trans WHERE method = '{$type}';");
+
+        // dd($data);
+
+        return view('pages.trans', compact('data'));
     }
 }
