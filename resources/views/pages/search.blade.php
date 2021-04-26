@@ -46,13 +46,13 @@
                     </thead>
                     <tbody>
                         @for($i = 0; $i < COUNT($data); $i++) <tr>
-                            <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
-                            <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
-                            <td>{{ $data[$i]["work"] }}</td>
-                            <td>{{ $data[$i]["mobile"] }}</td>
-                            <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
-                            <td>{{ $data[$i]["created_at"] }}</td>
-                            <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            <td>{{ $data[$i]->lastname . ", " .$data[$i]->firstname . " " . $data[$i]->middlename }}</td>
+                            <td>{{ $data[$i]->gender == 1 ? "Male" : "Female" }}</td>
+                            <td>{{ $data[$i]->work }}</td>
+                            <td>{{ $data[$i]->mobile }}</td>
+                            <td>{{ $data[$i]->schedule != null ? $data[$i]->schedule : "N/A" }}</td>
+                            <td>{{ $data[$i]->created_at }}</td>
+                            <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]->id }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>
                             @endfor
                     </tbody>
@@ -158,14 +158,14 @@
                         <div class="input-group">
                             <select class="custom-select" id="ddlListOfIssues">
                                 <option value="0" selected>Choose...</option>
-                                <option value="Solo Parent">Solo Parent</option>
+                                <!-- <option value="Residency">Residency</option> -->
+                                <!-- <option value="Solo Parent">Solo Parent</option> -->
                                 <option value="Indigency">Indigency</option>
+                                <!-- <option value="Solicitation">Solicitation</option> -->
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>
                                 <option value="Lot Certication">Lot Certication</option>
                                 <option value="Application Cert. Form">Lot Application Cert. Form</option>
-                                <option value="Business Permit">Business Permit</option>
-                                <option value="Business Closure">Business Closure</option>
                             </select>
                             <div class="input-group-append">
                                 <button id="btnIssueNow" class="btn btn-danger" type="button">Issue Now</button>

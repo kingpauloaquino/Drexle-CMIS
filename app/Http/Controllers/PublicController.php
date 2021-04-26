@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Residence;
+use Carbon\Carbon;
+use DB;
 
 class PublicController extends Controller
 {
@@ -14,13 +16,17 @@ class PublicController extends Controller
 
     public function personal_registration_store(Request $request)
     {
+        $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
+
         try {
             $data = new Residence();
+            $data->id_number = $request->id_number;
             $data->firstname = $request->firstname;
             $data->middlename = $request->middlename;
             $data->lastname = $request->lastname;
-            $data->age = $request->age;
-            $data->address = $request->address;
+            $data->age = (int)$age;
+            $data->address1 = $request->address1;
+            $data->address2 = $request->address2;
             $data->year_stay = $request->stay;
             $data->household = $request->household;
             $data->birthdate = $request->birthdate;
@@ -34,6 +40,7 @@ class PublicController extends Controller
             $data->work = $request->work;
             $data->skill = $request->skill;
             $data->schedule = $request->schedule;
+            $data->purpose = $request->purpose;
 
             if ($data->save()) {
                 return redirect("/personal/registration")->with("message", "Good Job!");

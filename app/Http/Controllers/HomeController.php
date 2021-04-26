@@ -51,6 +51,7 @@ class HomeController extends Controller
         $data->age = (int)$age;
         $data->address1 = $request->address1;
         $data->address2 = $request->address2;
+        $data->address3 = $request->address3;
         $data->year_stay = $request->stay;
         $data->household = $request->household;
         $data->birthdate = $request->birthdate;
@@ -70,6 +71,62 @@ class HomeController extends Controller
         return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
     }
 
+    public function edit_person($uid)
+    {
+        $resident = Residence::where("id", $uid)->first();
+        return view('pages.edit_person', compact('resident'));
+    }
+
+    public function edit_person_update($uid, Request $request)
+    {
+        $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
+
+        $data = [
+            "id_number" => $request->id_number,
+            "firstname" => $request->firstname,
+            "middlename" => $request->middlename,
+            "lastname" => $request->lastname,
+            "age" => (int)$age,
+            "address1" => $request->address1,
+            "address2" => $request->address2,
+            "address3" => $request->address3,
+            "year_stay" => $request->stay,
+            "household" => $request->household,
+            "birthdate" => $request->birthdate,
+            "birthplace" => $request->birhtplace,
+            "gender" => $request->gender,
+            "civil_status" => $request->civil,
+            "nationality" => $request->nationality,
+            "blood" => $request->blood,
+            "email" => $request->email,
+            "mobile" => $request->mobile,
+            "work" => $request->work,
+            "skill" => $request->skill,
+        ];
+
+        $resident = Residence::where("id", $uid)->update($data);
+
+        if ($resident) {
+            return redirect("/personal/edit-person/{$uid}")->with("message", "Updated!");
+        }
+        return redirect("/personal/edit-person/{$uid}")->with("error", "Oops, something went wrong.");
+    }
+
+    public function delete_person($uid)
+    {
+        return view('pages.delete_person', compact('uid'));
+    }
+
+    public function delete_person_delete($uid, Request $request)
+    {
+        $resident = Residence::where("id", $uid)->delete();
+
+        if ($resident) {
+            return redirect("/personal/residence-list")->with("message", "Updated!");
+        }
+        return redirect("/personal/edit-person/{$uid}")->with("error", "Oops, something went wrong.");
+    }
+
     public function get_resident($uid)
     {
         $data = Residence::where("id", (int)$uid)->first();
@@ -84,6 +141,19 @@ class HomeController extends Controller
     {
         $data = Residence::get();
         return view('pages.record_list', compact('data'));
+    }
+
+    public function residence_list_seasrch(Request $request)
+    {
+        // $data = Residence::whereLike(['firstname','lastname','mobile','id_number'], $request->search)->get();
+
+        $key = $request->search;
+
+        $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR id_number LIKE '%{$key}%';");
+
+        // dd($data);
+
+        return view('pages.search', compact('data'));
     }
 
     public function resident_issue_store(Request $request)
@@ -142,10 +212,10 @@ class HomeController extends Controller
         //     WHERE x.method = {$type}"
         // );
 
+        $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_trans WHERE method = '{$type}';");
         $data = DB::select("SELECT * FROM get_trans WHERE method = '{$type}';");
 
-        // dd($data);
 
-        return view('pages.trans', compact('data'));
+        return view('pages.trans', compact('data', 'data_count'));
     }
 }

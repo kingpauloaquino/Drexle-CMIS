@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <!--====== Title ======-->
-    <title>Edumate Education HTML Template</title>
+    <title>Barangya East Bajac-bajac</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
     <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
 
     <link rel="stylesheet" href="https://htmldemo.hasthemes.com/edumate/edumate/assets/css/vendor/plugins.min.css">
-    <link rel="stylesheet" href="https://htmldemo.hasthemes.com/edumate/edumate/assets/css/style.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <style>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="header-top-right mt-10">
                         <div class="header-link">
-                            <a class="login" href="/login">Login</a>
+                            <a class="login" href="tel:0471234567">Hotline: 047 1234 567</a>
                             <a class="register" href="/personal/registration">Register</a>
                         </div>
                     </div>

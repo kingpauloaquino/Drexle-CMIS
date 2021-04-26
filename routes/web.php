@@ -29,8 +29,13 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
 Route::post('/personal/add-person/store', [App\Http\Controllers\HomeController::class, 'add_person_store']);
+Route::get('/personal/edit-person/{uid}', [App\Http\Controllers\HomeController::class, 'edit_person']);
+Route::post('/personal/edit-person/update/{uid}', [App\Http\Controllers\HomeController::class, 'edit_person_update']);
+Route::get('/personal/delete-person/{uid}', [App\Http\Controllers\HomeController::class, 'delete_person']);
+Route::post('/personal/delete-person/delete/{uid}', [App\Http\Controllers\HomeController::class, 'delete_person_delete']);
 
 Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
+Route::any('/personal/residence-list/search', [App\Http\Controllers\HomeController::class, 'residence_list_seasrch']);
 Route::get('/personal/resident/get/{uid}', [App\Http\Controllers\HomeController::class, 'get_resident']);
 Route::any('/personal/resident/issue/store', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
 

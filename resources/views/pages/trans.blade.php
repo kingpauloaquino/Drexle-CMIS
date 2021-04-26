@@ -28,6 +28,8 @@
                     </div>
                 </div> -->
 
+                <h4>Total Issued: {{ $data_count[0]->totalCount }}</h4>
+
                 <table class="table table-hover">
                     <thead>
                         <tr>

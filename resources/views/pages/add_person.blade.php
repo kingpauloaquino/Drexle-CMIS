@@ -65,13 +65,17 @@
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="stay">House#: <span class="required">*</span></label>
                                                 <input type="text" class="form-control" id="address1" name="address1" placeholder="I.e.: 123" required>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="household">Street: <span class="required">*</span></label>
                                                 <input type="text" class="form-control" id="address2" name="address2" placeholder="I.e.: Murphy" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="household">Purok: </label>
+                                                <input type="text" class="form-control" id="address3" name="address3" placeholder="Optional">
                                             </div>
                                         </div>
 

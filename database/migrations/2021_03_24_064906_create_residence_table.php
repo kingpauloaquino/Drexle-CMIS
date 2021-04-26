@@ -21,6 +21,7 @@ class CreateResidenceTable extends Migration
             $table->string('lastname');
             $table->text('address1');
             $table->text('address2');
+            $table->text('address3')->nullable();
             $table->integer('age');
             $table->integer('year_stay')->nullable();
             $table->integer('household')->nullable();
@@ -35,6 +36,7 @@ class CreateResidenceTable extends Migration
             $table->string('work')->nullable();
             $table->string('skill')->nullable();
             $table->date('schedule')->nullable();
+            $table->string('purpose')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
