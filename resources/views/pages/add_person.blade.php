@@ -55,7 +55,7 @@
                                                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Juan" required>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="middlename">Middle Name: <span class="required">*</span></label>
+                                                <label for="middlename">Middle Name: <span class="required">*</span> <input type="checkbox" id="noMiddlename" name="noMiddlename" /> <small style="font-size: 11px;">Check If no middlename</small></label>
                                                 <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Dela" required>
                                             </div>
                                             <div class="form-group col-md-4">
@@ -92,7 +92,7 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="birthdate">Birhdate: <span class="required">*</span></label>
+                                                <label for="birthdate">Birthdate: <span class="required">*</span></label>
                                                 <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Email" required>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -165,4 +165,18 @@
             </div>
         </div>
 </main>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $("#noMiddlename").change(function() {
+            if ($(this).prop('checked')) {
+                $("#middlename").removeAttr("required");
+            } else {
+                $("#middlename").attr("required", true);
+            }
+        });
+    })
+</script>
 @endsection

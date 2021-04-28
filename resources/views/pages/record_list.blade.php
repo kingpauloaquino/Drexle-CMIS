@@ -283,7 +283,8 @@
             }).done(function(res) {
                 if (res.status == 200) {
                     alert("Done!");
-                    window.location.href = res.url;
+                    var myWindow = window.open("", "Preview Certificate", "width=750,height=950");
+                    myWindow.document.write(res.html);
                 } else if (res.status == 404) {
                     alert("No available certificate.");
 

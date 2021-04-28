@@ -65,9 +65,6 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-
-
-
                     </ul>
                 </div>
             </div>
@@ -106,7 +103,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.8.2/dist/sweetalert2.all.min.js" integrity="sha256-VkcwHXtZS2ZHfHSFSP8r1AzueZi37jGMPeHv4OfV1Cg=" crossorigin="anonymous"></script>
     <script>
-
+        $(document).ready(function() {
+            $("#noMiddlename").change(function() {
+                if ($(this).prop('checked')) {
+                    $("#middlename").removeAttr("required");
+                } else {
+                    $("#middlename").attr("required", true);
+                }
+            });
+        })
     </script>
 </body>
 

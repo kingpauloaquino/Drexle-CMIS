@@ -164,27 +164,49 @@ class HomeController extends Controller
 
         switch($request->method) {
             case "Indigency":
-                $res = $cert->bgry_indigency_pdf($resident["data"], null);
+                $res = $cert->bgry_indigency_pdf($resident["data"]);
                 break;
             case "First Time JobSeeker":
-                $res = $cert->first_time_jobseekers_generate($resident["data"], null);
+                $res = $cert->first_time_jobseekers_generate($resident["data"]);
                 break;
             default:
-                $res = $cert->bgry_clearance_pdf($resident["data"], null);
+                $res = $cert->bgry_clearance_pdf($resident["data"]);
         }
 
-        if($res["status"] == 200) {
-            $data = new Transaction();
-            $data->method = $request->method;
-            $data->residence_uid = $request->uid;
-            $data->date_issued = Carbon::now();
-            if ($data->save()) {
-                return ["status" => 200, "url" => $res["url"]];
-            }
+        // dd($res);
+
+        // if($res["status"] == 200) {
+        //     $data = new Transaction();
+        //     $data->method = $request->method;
+        //     $data->residence_uid = $request->uid;
+        //     $data->date_issued = Carbon::now();
+        //     if ($data->save()) {
+        //         return ["status" => 200, "url" => $res["url"]];
+        //     }
+        // }
+
+        return ["status" => 200, "html" => $res];
+
+    }
+
+    public function resident_issue_download(Request $request)
+    {
+        $resident = $this->get_resident($request->uid);
+
+        $cert = new CertController();
+
+        switch ($request->method) {
+            case "Indigency":
+                $res = $cert->bgry_indigency_pdf($resident["data"], true);
+                break;
+            case "First Time JobSeeker":
+                $res = $cert->first_time_jobseekers_generate($resident["data"], true);
+                break;
+            default:
+                $res = $cert->bgry_clearance_pdf($resident["data"], true);
         }
 
-        return ["status" => 500];
-
+        return ["status" => $res["status"], "url" => $res["url"]];
     }
 
     public function get_resident_trans($method)
@@ -205,16 +227,8 @@ class HomeController extends Controller
                 break;
         }
 
-        // $data = DB::select("
-        //     SELECT *,
-        //     (SELECT firstname FROM residence WHERE id = x.residence_uid)  AS fullname
-        //     FROM residence_transaction AS x
-        //     WHERE x.method = {$type}"
-        // );
-
         $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_trans WHERE method = '{$type}';");
         $data = DB::select("SELECT * FROM get_trans WHERE method = '{$type}';");
-
 
         return view('pages.trans', compact('data', 'data_count'));
     }

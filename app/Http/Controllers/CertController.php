@@ -21,9 +21,9 @@ class CertController extends Controller
         return $randomString;
     }
 
-    public function bgry_indigency_pdf($resident)
+    public function bgry_indigency_pdf($resident, $pdf = false)
     {
-        $img_a = asset('/img/city-logo.png');
+        $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
@@ -36,6 +36,7 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
 
         $data = [
+            "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -51,7 +52,11 @@ class CertController extends Controller
 
         $html = view('pages.certificate.brgy_indigency', $data)->render();
 
-        return $this->toPDF($html, $this->random_number(), "brg-clearance-indigency");
+        if (!$pdf) {
+            return $html;
+        }
+
+        return $this->toPDF($html, $this->random_number(),"brg-clearance-indigency", $pdf);
     }
 
     public static function SerializeNumber($count)
@@ -68,9 +73,9 @@ class CertController extends Controller
         return $count;
     }
 
-    public function bgry_clearance_pdf($resident)
+    public function bgry_clearance_pdf($resident, $pdf = false)
     {
-        $img_a = asset('/img/city-logo.png');
+        $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
@@ -99,16 +104,16 @@ class CertController extends Controller
 
         $html = view('pages.certificate.brgy_clearance', $data)->render();
 
-        // echo $html;
+        if (!$pdf) {
+            return $html;
+        }
 
-        // exit();
-
-        return $this->toPDF($html, $this->random_number(), "brg-clearance");
+        return $this->toPDF($html, $this->random_number(),"brg-clearance", $pdf);
     }
 
-    public function first_time_jobseekers_generate($resident)
+    public function first_time_jobseekers_generate($resident, $pdf = false)
     {
-        $img_a = asset('/img/city-logo.png');
+        $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
@@ -121,6 +126,7 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
 
         $data = [
+            "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -136,10 +142,14 @@ class CertController extends Controller
 
         $html = view('pages.certificate.brgy_firstjobseeker', $data)->render();
 
-        return $this->toPDF($html, $this->random_number(), "brg-firstimejobseeker");
+        if(!$pdf) {
+            return $html;
+        }
+
+        return $this->toPDF($html, $this->random_number(), "brg-firstimejobseeker", $pdf);
     }
 
-    private function toPDF($html, $filename, $prefix) {
+    private function toPDF($html, $filename, $prefix, $pdf) {
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter', 'portrait');
@@ -147,11 +157,19 @@ class CertController extends Controller
         $dompdf->set_option('isRemoteEnabled', true);
         $dompdf->render();
 
+        if($pdf) {
+            $dompdf->stream($filename, array("Attachment" => 0));
+            return array(
+                "status" => 200
+            );
+        }
+
         $output = $dompdf->output();
 
         $file_name = "{$prefix}-{$filename}";
 
         $destinationPath = public_path() . "/download/" . $file_name . ".pdf";
+
         File::put($destinationPath, $output);
 
         $urlDownload = url('/download/' . $file_name . '.pdf');

@@ -52,59 +52,93 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td class="text-center"><b>{{ $data["control_number"] }}</b></td>
+                <td>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
         </table>
 
-
-
-        <div class="mt-5 p-2">
-            @yield('content')
-        </div>
-
-        <table border="0" style="width: 730px; margin-top: 30px">
+        <table border="0" style="width: 730px;">
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td style="text-align: center; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        <b>GILBERT G. PIÑERO</b>
-                    </p>
-                    <p style="padding: 0; margin: -9px 0 0 0;">
-                        Punong Barangay
-                    </p>
+                <td valign="top" style="width: 230px; background-color:aquamarine;">
+                    <table border="0" style="width: 200px; ">
+                        <tr>
+                            <td style="width: 150px; text-align: center;">
+                                <h3 style="font-size: 20px; padding: 0; margin: 0; font-weight: 600;">Barangay Officials</h3>
+                                <smal style="font-size: 10px; padding: 0; margin: 0;">2018-2021</smal>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: center;">
+                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0; font-weight: 600;">HON. GILBERT G. PINERO</p>
+                                <smal style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</smal>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 150px; text-align: center;">
+                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0;">HON. GILBERT G. PINERO</p>
+                                <smal style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</smal>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center">
+                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0;"><b>{{ $data["control_number"] }}</b></p>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td style="text-align: center; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        Date
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td style="text-align: center; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        Witnessed by:
-                    </p>
+                <td valign="top">
+                    <div class="p-2">
+                        @yield('content')
+                    </div>
+
+                    <table border="0" style="width: 500px; margin-top: 30px">
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="text-align: center; width: 200px;">
+                                <p style="padding: 0; margin: 0;">
+                                    <b>GILBERT G. PIÑERO</b>
+                                </p>
+                                <p style="padding: 0; margin: -9px 0 0 0;">
+                                    Punong Barangay
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="text-align: center; width: 200px;">
+                                <p style="padding: 0; margin: 0;">
+                                    Date
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="text-align: center; width: 200px;">
+                                <p style="padding: 0; margin: 0;">
+                                    Witnessed by:
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
+
+
 
 
     </div>
