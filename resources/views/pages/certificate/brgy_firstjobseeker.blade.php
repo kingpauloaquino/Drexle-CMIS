@@ -2,18 +2,16 @@
 
 @section('content')
 <center>
-    <table border="0" style="width: 500px; margin-top: 30px;">
+    <table border="0" style="width: 510px; margin-top: 30px;">
         <tr>
             <td class="text-center">
-                <h3 style="margin: 0; padding: 0;">
-                    BARANGAY CERTIFICATION
-                </h3>
-                <p> (First Time Jobseekers Assistance Act-RA11261)</p>
+                <h3 style="margin: 0; padding: 0;">BARANGAY CERTIFICATION</h3>
+                <p style="margin: -5px 0 0 0; padding: 0;"> (First Time Jobseekers Assistance Act-RA11261)</p>
             </td>
         </tr>
         <tr>
             <td style="padding: 1px;">
-                <p style="padding: 0; margin: 0;">
+                <p style="padding: 0; margin: 20px 0 0 0;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that <b>{{ $data["title"] }} {{ $data["fullname"] }}</b>, <b>{{ $data["age"] }}</b> years old, a resident of <b>{{ $data["address"] }}</b>, East Bajac – Bajac, Olongapo City is a qualified availed of <b>RA 11261</b> or the <b>First Time Jobseekers Act of 2019</b>.
                 </p>
             </td>

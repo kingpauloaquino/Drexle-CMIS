@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel 7 PDF Example</title>
+    <title>BARANGAY CERTIFICATE PREVIEW</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js" integrity="sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==" crossorigin="anonymous"></script>
@@ -50,39 +50,83 @@
                     </center>
                 </td>
             </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
         </table>
 
         <table border="0" style="width: 730px;">
             <tr>
-                <td valign="top" style="width: 230px; background-color:aquamarine;">
-                    <table border="0" style="width: 200px; ">
+                <td valign="top" style="width: 200px;">
+                    <table border="0" style="width: 200px; background-color:aquamarine; margin-top: 20px;">
                         <tr>
-                            <td style="width: 150px; text-align: center;">
-                                <h3 style="font-size: 20px; padding: 0; margin: 0; font-weight: 600;">Barangay Officials</h3>
-                                <smal style="font-size: 10px; padding: 0; margin: 0;">2018-2021</smal>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 150px; text-align: center;">
-                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0; font-weight: 600;">HON. GILBERT G. PINERO</p>
-                                <smal style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</smal>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 150px; text-align: center;">
-                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0;">HON. GILBERT G. PINERO</p>
-                                <smal style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</smal>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 18px; padding: 0; margin: 0; font-weight: 600;">Barangay Officials<br /><small style="font-size: 10px; padding: 0; margin: 0;">2018-2021</small></h3>
                             </td>
                         </tr>
 
                         <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. GILBERT G. PIÑERO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ERICK JAYSON Y. CANO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. RYAN KRISTOFER P. ALBAY</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. REYNALYN E. TABLAN</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ROMEO G. MANALANG</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. NELSON B. YCO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. OLIVER P. GUERRERO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. BERGEL A. LAGMAN</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">SK CHAIRPERSON</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. JUANITO R. FABABIER</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">SECRETARY</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ARIS C. BANIQUED</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">TREASURER</small></h3>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table border="0" style="width: 200px;">
+                        <tr>
                             <td class="text-center">
-                                <p style="font-size: 14px; padding: 0; margin: 20px 0 0 0;"><b>{{ $data["control_number"] }}</b></p>
+                                <p style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>{{ $data["control_number"] }}</b></p>
                             </td>
                         </tr>
                     </table>
@@ -137,9 +181,6 @@
                 </td>
             </tr>
         </table>
-
-
-
 
     </div>
 </body>

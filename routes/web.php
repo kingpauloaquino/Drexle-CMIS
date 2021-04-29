@@ -37,7 +37,9 @@ Route::post('/personal/delete-person/delete/{uid}', [App\Http\Controllers\HomeCo
 Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
 Route::any('/personal/residence-list/search', [App\Http\Controllers\HomeController::class, 'residence_list_seasrch']);
 Route::get('/personal/resident/get/{uid}', [App\Http\Controllers\HomeController::class, 'get_resident']);
-Route::any('/personal/resident/issue/store', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
+
+Route::any('/personal/resident/issue/summary', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
+Route::get('/personal/resident/issue/download/{uid}/{method}', [App\Http\Controllers\HomeController::class, 'resident_issue_download']);
 
 Route::get('/personal/clearance/get/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans']);
 

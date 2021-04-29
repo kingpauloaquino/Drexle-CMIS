@@ -2,7 +2,7 @@
 
 @section('content')
 <center>
-    <table border="0" style="width: 730px;">
+    <table border="0" style="width: 510px; margin-top: 30px;">
         <tr>
             <td class="text-center">
                 <h3 style="margin: 0; padding: 0;">

@@ -6,29 +6,40 @@
         <tr>
             <td class="text-center">
                 <h3 style="margin: 0; padding: 0;">
-                    CERTIFICATION
+                    CERTIFICATION OF INDIGENCY
                 </h3>
             </td>
         </tr>
         <tr>
             <td style="padding: 10px;">
                 <p style="padding: 0; margin: 0;">
-                    To Whom it may concern:<br /><br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that <b>{{ $data["title"] }} {{ $data["fullname"] }}</b>, legal age, presently residing at <b>{{ $data["address"] }}</b>, East Bajac – Bajac, Olongapo is is a bonafide resident of this Barangay.
+                    THIS IS TO ENDORSE<br /><br />
+                    <b>FACEBOOK Inc.</b><br />
+                    (Business Name of Trade Activity)
                 </p>
             </td>
         </tr>
         <tr>
             <td style="padding: 10px;">
                 <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This further certify that the above-named person has no record of complaints filed against him/her at the Katarungang Pambarangay of this office as of this date.
+                    <b>East Bajac-bajac Olongapo City</b><br />
+                    (Business Address)
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px;">
+                <p style="padding: 0; margin: 0;">
+                    <b>Google App</b><br />
+                    (Operator / Manager)
                 </p>
             </td>
         </tr>
         <tr>
             <td>
                 <p style="padding: 0 0 0 50px; margin: 0;">
-                    Signed this <b>{{ $data["day"] }}</b> day of <b>{{ $data["month"] }}</b>, <b>{{ $data["year"] }}</b> at the Barangay Hall of East Bajac – Bajac, Olongapo City.
+                    <b>East Bajac-bajac Olongapo City</b><br />
+                    (Residence Address)
                 </p>
             </td>
         </tr>

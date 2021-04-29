@@ -163,50 +163,52 @@ class HomeController extends Controller
         $cert = new CertController();
 
         switch($request->method) {
+            case "Solo Parent":
             case "Indigency":
+                $method = 1;
                 $res = $cert->bgry_indigency_pdf($resident["data"]);
                 break;
             case "First Time JobSeeker":
+                $method = 2;
                 $res = $cert->first_time_jobseekers_generate($resident["data"]);
                 break;
             default:
+                $method = 0;
                 $res = $cert->bgry_clearance_pdf($resident["data"]);
         }
 
-        // dd($res);
-
-        // if($res["status"] == 200) {
-        //     $data = new Transaction();
-        //     $data->method = $request->method;
-        //     $data->residence_uid = $request->uid;
-        //     $data->date_issued = Carbon::now();
-        //     if ($data->save()) {
-        //         return ["status" => 200, "url" => $res["url"]];
-        //     }
-        // }
-
-        return ["status" => 200, "html" => $res];
+        return ["status" => 200, "html" => $res, "method" => $method, "uid" => $request->uid] ;
 
     }
 
-    public function resident_issue_download(Request $request)
+    public function resident_issue_download($uid, $method)
     {
-        $resident = $this->get_resident($request->uid);
+        $resident = $this->get_resident($uid);
 
         $cert = new CertController();
 
-        switch ($request->method) {
-            case "Indigency":
+        switch ((int)$method) {
+            case 1:
                 $res = $cert->bgry_indigency_pdf($resident["data"], true);
                 break;
-            case "First Time JobSeeker":
+            case 2:
                 $res = $cert->first_time_jobseekers_generate($resident["data"], true);
                 break;
             default:
                 $res = $cert->bgry_clearance_pdf($resident["data"], true);
         }
 
-        return ["status" => $res["status"], "url" => $res["url"]];
+         if($res["status"] == 200) {
+            $data = new Transaction();
+            $data->method = $method;
+            $data->residence_uid = $uid;
+            $data->date_issued = Carbon::now();
+            if ($data->save()) {
+                return redirect($res["url"]);
+            }
+        }
+
+        return ["status" => 500];
     }
 
     public function get_resident_trans($method)

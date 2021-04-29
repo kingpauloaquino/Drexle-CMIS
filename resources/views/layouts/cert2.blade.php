@@ -50,57 +50,139 @@
                     </center>
                 </td>
             </tr>
+        </table>
+
+        <table border="0" style="width: 730px;">
             <tr>
-                <td>&nbsp;</td>
-                <td class="text-center"><b>{{ $data["control_number"] }}</b></td>
-                <td>&nbsp;</td>
+                <td valign="top" style="width: 200px;">
+                    <table border="0" style="width: 200px; background-color:aquamarine; margin-top: 20px;">
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 18px; padding: 0; margin: 0; font-weight: 600;">Barangay Officials<br /><small style="font-size: 10px; padding: 0; margin: 0;">2018-2021</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. GILBERT G. PIÑERO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">PUNONG BARANGAY</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ERICK JAYSON Y. CANO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. RYAN KRISTOFER P. ALBAY</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. REYNALYN E. TABLAN</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ROMEO G. MANALANG</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. NELSON B. YCO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. OLIVER P. GUERRERO</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">KAGAWAD</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. BERGEL A. LAGMAN</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">SK CHAIRPERSON</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. JUANITO R. FABABIER</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">SECRETARY</small></h3>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: center;">
+                                <h3 style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>HON. ARIS C. BANIQUED</b><br /><small style="font-size: 10px; padding: 0; margin: 0;">TREASURER</small></h3>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table border="0" style="width: 200px;">
+                        <tr>
+                            <td class="text-center">
+                                <p style="font-size: 12px; padding: 0; margin: 10px 0 0 0;"><b>{{ $data["control_number"] }}</b></p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td valign="top">
+                    <div class="p-2">
+                        @yield('content')
+                    </div>
+
+                    <center>
+                        <table border="0" style="width: 500px; margin-top: 30px">
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td style="text-align: center; width: 200px;">
+                                    <p style="padding: 0; margin: 0;">
+                                        <b>GILBERT G. PIÑERO</b>
+                                    </p>
+                                    <p style="padding: 0; margin: -9px 0 0 0;">
+                                        Punong Barangay
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; width: 200px;">
+                                    <p style="padding: 0; margin: 0;">
+                                        Attested by:
+                                    </p>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; width: 200px;">
+                                    <p style="padding: 0; margin: 0;">
+                                        <b>JUANITO R. FABABIER</b>
+                                    </p>
+                                    <p style="padding: 0; margin: -9px 0 0 0;">
+                                        Barangay Secretary
+                                    </p>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </table>
+                    </center>
+
+                </td>
             </tr>
         </table>
 
-        <div class="mt-5 p-2">
-            @yield('content')
-        </div>
-
-        <table border="0" style="width: 730px; margin-top: 30px">
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td style="text-align: center; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        <b>GILBERT G. PIÑERO</b>
-                    </p>
-                    <p style="padding: 0; margin: -9px 0 0 0;">
-                        Punong Barangay
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: left; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        Attested by:
-                    </p>
-                </td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td style="text-align: center; width: 200px;">
-                    <p style="padding: 0; margin: 0;">
-                        <b>JUANITO R. FABABIER</b>
-                    </p>
-                    <p style="padding: 0; margin: -9px 0 0 0;">
-                        Barangay Secretary
-                    </p>
-                </td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-        </table>
     </div>
 </body>
 

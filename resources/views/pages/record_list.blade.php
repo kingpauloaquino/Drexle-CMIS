@@ -163,7 +163,6 @@
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>
                                 <option value="Lot Certication">Lot Certication</option>
-                                <option value="Application Cert. Form">Lot Application Cert. Form</option>
                                 <option value="Business Permit">Business Permit</option>
                                 <option value="Business Closure">Business Closure</option>
                             </select>
@@ -272,10 +271,15 @@
         }
 
         function store(data) {
+
+            console.log(data);
+
+            var issue = data.issue;
+
             $.ajax({
                 dataType: 'json',
                 type: "GET",
-                url: "/personal/resident/issue/store",
+                url: "/personal/resident/issue/summary",
                 data: data,
                 beforeSend: function() {
                     $("#btnIssueNow").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
@@ -283,8 +287,14 @@
             }).done(function(res) {
                 if (res.status == 200) {
                     alert("Done!");
-                    var myWindow = window.open("", "Preview Certificate", "width=750,height=950");
-                    myWindow.document.write(res.html);
+
+                    var value = res.uid + "/" + res.method;
+
+                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'><button>Download PDF</button></form></div>";
+
+                    console.log(tags);
+                    var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
+                    myWindow.document.write(tags + res.html);
                 } else if (res.status == 404) {
                     alert("No available certificate.");
 
