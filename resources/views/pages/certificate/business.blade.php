@@ -20,7 +20,7 @@
         <tr>
             <td style="text-align: center;">
                 <p style="padding: 0; margin: 0;">
-                    <b>FACEBOOK Inc.</b><br />
+                    <b>{{ $data["name"] }}</b><br />
                     (Business Name of Trade Activity)
                 </p>
             </td>
@@ -28,7 +28,7 @@
         <tr>
             <td style="text-align: center;">
                 <p style="padding: 0; margin: 15px 0 0 0;">
-                    <b>East Bajac-bajac Olongapo City</b><br />
+                    <b>{{ $data["address1"] }}</b><br />
                     (Business Address)
                 </p>
             </td>
@@ -36,7 +36,7 @@
         <tr>
             <td style="text-align: center;">
                 <p style="padding: 0; margin: 15px 0 0 0;">
-                    <b>Google App</b><br />
+                    <b>{{ $data["operator"] }}</b><br />
                     (Operator / Manager)
                 </p>
             </td>
@@ -44,7 +44,7 @@
         <tr>
             <td style="text-align: center;">
                 <p style="padding: 0; margin: 15px 0 0 0;">
-                    <b>East Bajac-bajac Olongapo City</b><br />
+                    <b>{{ $data["address2"] }}</b><br />
                     (Residence Address)
                 </p>
             </td>

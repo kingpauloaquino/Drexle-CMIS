@@ -149,7 +149,7 @@ class CertController extends Controller
         return $this->toPDF($html, $this->random_number(), "brg-firstimejobseeker", $pdf);
     }
 
-    public function business_permit_generate($resident, $pdf = false)
+    public function business_permit_generate($resident, Request $request, $pdf = false)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -157,10 +157,10 @@ class CertController extends Controller
         $data = [
             "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
             "renewal" => false,
-            "name" => ucwords(strtolower($resident->bname)),
-            "address1" => $resident->baddresss,
-            "address2" => $resident->raddress,
-            "operator" => ucwords(strtolower($resident->operator)),
+            "name" => ucwords(strtolower($request->bname)),
+            "address1" => $request->baddresss,
+            "address2" => $request->raddress,
+            "operator" => ucwords(strtolower($request->operator)),
             "img_a" => $img_a,
             "img_b" => $img_b
         ];
@@ -168,6 +168,8 @@ class CertController extends Controller
         view()->share('data', $data);
 
         $html = view('pages.certificate.business', $data)->render();
+
+        // dd($data);
 
         if (!$pdf) {
             return $html;

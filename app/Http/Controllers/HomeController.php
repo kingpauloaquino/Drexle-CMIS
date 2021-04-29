@@ -174,7 +174,7 @@ class HomeController extends Controller
                 break;
             case "Business Permit":
                 $method = 3;
-                $res = $cert->business_permit_generate($resident["data"]);
+                $res = $cert->business_permit_generate($resident["data"], $request);
                 break;
             default:
                 $method = 0;
