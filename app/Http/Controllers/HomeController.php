@@ -172,6 +172,10 @@ class HomeController extends Controller
                 $method = 2;
                 $res = $cert->first_time_jobseekers_generate($resident["data"]);
                 break;
+            case "Business Permit":
+                $method = 3;
+                $res = $cert->business_permit_generate($resident["data"]);
+                break;
             default:
                 $method = 0;
                 $res = $cert->bgry_clearance_pdf($resident["data"]);
@@ -193,6 +197,9 @@ class HomeController extends Controller
                 break;
             case 2:
                 $res = $cert->first_time_jobseekers_generate($resident["data"], true);
+                break;
+            case 3:
+                $res = $cert->business_permit_generate($resident["data"], true);
                 break;
             default:
                 $res = $cert->bgry_clearance_pdf($resident["data"], true);

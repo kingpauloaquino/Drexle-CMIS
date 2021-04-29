@@ -69,7 +69,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Basic Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="btnCloseModal1" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -170,8 +170,59 @@
                                 <button id="btnIssueNow" class="btn btn-danger" type="button">Issue Now</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal2" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Business Information</h5>
+                <button type="button" id="btnCloseModal2" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" class="form-control" id="buid" />
+                <input type="hidden" class="form-control" id="bmethod" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Name: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="bname" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Address: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="baddresss" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Operator / Manager: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="operator" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Residence Address: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="raddress" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancel" class="btn btn-secondary" type="button">Cancel</button>
+                <button id="btnSubmit" class="btn btn-danger" type="button">Submit</button>
             </div>
         </div>
     </div>
@@ -215,6 +266,44 @@
                 method: issue,
                 uid: uid
             };
+
+            if (issue == "Business Permit") {
+                $("#buid").val(uid);
+                $("#bmethod").val(issue);
+
+                $('#myModal2').modal($('#myModal2').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }));
+                $("#btnCloseModal1").click()
+                $('#myModal2').modal('show');
+                return false;
+            }
+
+            store(data);
+        })
+
+        $("#btnCancel").on("click", function() {
+            $("#btnCloseModal2").click()
+        })
+
+        $("#btnSubmit").on("click", function() {
+            var buid = $("#buid").val();
+            var bmethod = $("#bmethod").val();
+            var bname = $("#bname").val();
+            var baddresss = $("#baddresss").val();
+            var operator = $("#operator").val();
+            var raddress = $("#raddress").val();
+
+            var data = {
+                bname: bname,
+                baddresss: baddresss,
+                operator: operator,
+                raddress: raddress,
+                method: bmethod,
+                uid: buid
+            };
+
             store(data);
         })
 

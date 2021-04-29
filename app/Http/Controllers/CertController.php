@@ -149,6 +149,33 @@ class CertController extends Controller
         return $this->toPDF($html, $this->random_number(), "brg-firstimejobseeker", $pdf);
     }
 
+    public function business_permit_generate($resident, $pdf = false)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+        $data = [
+            "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
+            "renewal" => false,
+            "name" => ucwords(strtolower($resident->bname)),
+            "address1" => $resident->baddresss,
+            "address2" => $resident->raddress,
+            "operator" => ucwords(strtolower($resident->operator)),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+        view()->share('data', $data);
+
+        $html = view('pages.certificate.business', $data)->render();
+
+        if (!$pdf) {
+            return $html;
+        }
+
+        return $this->toPDF($html, $this->random_number(), "brg-businesspermit", $pdf);
+    }
+
     private function toPDF($html, $filename, $prefix, $pdf) {
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
