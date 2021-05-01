@@ -221,20 +221,7 @@ class HomeController extends Controller
     public function get_resident_trans($method)
     {
 
-        $type = "Barangay Clearance";
-        switch($method) {
-            case "jobseeker";
-                $type = "First Time JobSeeker";
-                break;
-            case "indigency";
-                $type = "Indigency";
-                break;
-            case "lot-certication";
-                $type = "Application Cert. Form";
-                break;
-            default:
-                break;
-        }
+        $type = (int)$method;
 
         $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_trans WHERE method = '{$type}';");
         $data = DB::select("SELECT * FROM get_trans WHERE method = '{$type}';");

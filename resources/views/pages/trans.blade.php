@@ -41,7 +41,7 @@
                     <tbody>
                         @for($i = 0; $i < COUNT($data); $i++) <tr>
                             <td>{{ $data[$i]->fullname  }}</td>
-                            <td>{{ $data[$i]->method }}</td>
+                            <td>{{ $data[$i]->typeName }}</td>
                             <td>{{ $data[$i]->date_issued }}</td>
                             </tr>
                             @endfor

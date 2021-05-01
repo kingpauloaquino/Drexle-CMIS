@@ -125,7 +125,21 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="blood">Blood Type:</label>
-                                                <input type="text" class="form-control" id="blood" name="blood" placeholder="I.e.: AB+">
+                                                <select id="blood" name="blood" class="form-control">
+                                                    <option value="0" selected>Choose...</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="AB">AB</option>
+                                                    <option value="O">O</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="AB+">AB+</option>
+                                                    <option value="O+">O+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="O-">O-</option>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -161,7 +175,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label for="gender">Purpose:</label>
-                                                <select class="custom-select" id="ddlPurpose">
+                                                <select class="custom-select" id="purpose" name="purpose">
                                                     <option value="0" selected>Choose...</option>
                                                     <option value="Indigency">Indigency</option>
                                                     <option value="First Time JobSeeker">First Time JobSeeker</option>

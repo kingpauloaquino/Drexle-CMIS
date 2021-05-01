@@ -42,6 +42,7 @@ Route::any('/personal/resident/issue/summary', [App\Http\Controllers\HomeControl
 Route::get('/personal/resident/issue/download/{uid}/{method}', [App\Http\Controllers\HomeController::class, 'resident_issue_download']);
 
 Route::get('/personal/clearance/get/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans']);
+Route::get('/business/clearance/get/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans']);
 
 Route::any('/brgy/clearance/issue/pdf', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
 

@@ -150,6 +150,10 @@
                         <td>Skill:</td>
                         <td id="dtSkill" style="text-align: right;">***</td>
                     </tr>
+                    <tr>
+                        <td>Purpose:</td>
+                        <td id="dtPurpose" style="text-align: right; color:red;">***</td>
+                    </tr>
                 </table>
 
                 <div class="form-row mt-3">
@@ -319,7 +323,14 @@
                 console.log(res);
                 $("#editbutton").attr("href", "/personal/edit-person/" + uid);
                 $("#dtIdNumber").empty().prepend(res.data.id_number);
-                $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + res.data.middlename);
+
+                var middleName = res.data.middlename;
+                if (res.data.middlename == null) {
+                    middleName = "";
+                }
+
+                $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + middleName);
+
                 $("#dtAge").empty().prepend(res.data.age);
                 $("#dtAddress1").empty().prepend(res.data.address1);
                 $("#dtAddress2").empty().prepend(res.data.address2);
@@ -356,6 +367,7 @@
                 $("#dtMobile").empty().prepend(res.data.mobile);
                 $("#dtOccupation").empty().prepend(res.data.work);
                 $("#dtSkill").empty().prepend(res.data.skill);
+                $("#dtPurpose").empty().prepend(res.data.purpose);
             });
         }
 
