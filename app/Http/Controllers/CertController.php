@@ -119,7 +119,7 @@ class CertController extends Controller
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
         $misis = "Ms.";
-        if ((int)$resident->civil_status >1) {
+        if ((int)$resident->civil_status > 1) {
             $misis = "Mrs.";
         }
 
@@ -154,6 +154,13 @@ class CertController extends Controller
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
+        $business = [
+            "name" => ucwords(strtolower($request->bname)),
+            "address1" => $request->baddresss,
+            "address2" => $request->raddress,
+            "operator" => ucwords(strtolower($request->operator))
+        ];
+
         $data = [
             "control_number" => "Control#: " . $this->SerializeNumber($resident->id),
             "renewal" => false,
@@ -169,10 +176,9 @@ class CertController extends Controller
 
         $html = view('pages.certificate.business', $data)->render();
 
-        // dd($data);
 
         if (!$pdf) {
-            return $html;
+            return ["html" => $html, "business" => $business];
         }
 
         return $this->toPDF($html, $this->random_number(), "brg-businesspermit", $pdf);

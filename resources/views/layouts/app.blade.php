@@ -78,7 +78,7 @@
 
                             <h6 class="collapse-header">Businesses:</h6>
                             <a class="collapse-item" href="/business/clearance/get/3">Business Permit</a>
-                            <a class="collapse-item" href="/business/clearance/get/3">Business Closure</a>
+                            <a class="collapse-item" href="/business/clearance/get/4">Business Closure</a>
                         </div>
                     </div>
                 </li>

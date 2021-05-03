@@ -180,6 +180,8 @@ class HomeController extends Controller
     {
         $resident = $this->get_resident($request->uid);
 
+        $busines = null;
+
         $cert = new CertController();
 
         switch($request->method) {
@@ -194,18 +196,20 @@ class HomeController extends Controller
                 break;
             case "Business Permit":
                 $method = 3;
-                $res = $cert->business_permit_generate($resident["data"], $request);
+                $results = $cert->business_permit_generate($resident["data"], $request);
+                $res = $results["html"];
+                $busines = $results["business"];
                 break;
             default:
                 $method = 0;
                 $res = $cert->bgry_clearance_pdf($resident["data"]);
         }
 
-        return ["status" => 200, "html" => $res, "method" => $method, "uid" => $request->uid] ;
+        return ["status" => 200, "html" => $res, "method" => $method, "uid" => $request->uid, "busines" => $busines] ;
 
     }
 
-    public function resident_issue_download($uid, $method)
+    public function resident_issue_download($uid, $method, Request $request)
     {
         $resident = $this->get_resident($uid);
 
@@ -219,7 +223,7 @@ class HomeController extends Controller
                 $res = $cert->first_time_jobseekers_generate($resident["data"], true);
                 break;
             case 3:
-                $res = $cert->business_permit_generate($resident["data"], true);
+                $res = $cert->business_permit_generate($resident["data"], $request, true);
                 break;
             default:
                 $res = $cert->bgry_clearance_pdf($resident["data"], true);
@@ -233,6 +237,10 @@ class HomeController extends Controller
             $data->method = $method;
             $data->residence_uid = $uid;
             $data->date_issued = Carbon::now();
+            $data->business_name = $request->bname;
+            $data->business_address = $request->baddresss;
+            $data->business_operator = $request->operator;
+            $data->business_residence_address = $request->raddress;
             if ($data->save()) {
                 return redirect($res["url"]);
             }

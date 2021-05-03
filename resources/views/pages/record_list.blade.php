@@ -396,11 +396,6 @@
         }
 
         function store(data) {
-
-            console.log(data);
-
-            var issue = data.issue;
-
             $.ajax({
                 dataType: 'json',
                 type: "GET",
@@ -414,10 +409,11 @@
                     alert("Done!");
 
                     var value = res.uid + "/" + res.method;
-
-                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'><button>Download PDF</button></form></div>";
-
-                    console.log(tags);
+                    var hidden = "<input type='hidden' class='form-control' name='bname' value='" + res.busines.name + "'>";
+                    hidden += "<input type='hidden' class='form-control' name='baddresss' value='" + res.busines.address1 + "'>";
+                    hidden += "<input type='hidden' class='form-control' name='operator' value='" + res.busines.operator + "'>";
+                    hidden += "<input type='hidden' class='form-control' name='raddress' value='" + res.busines.address2 + "'>";
+                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'>" + hidden + "<button>Download PDF</button></form></div>";
                     var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
                     myWindow.document.write(tags + res.html);
                 } else if (res.status == 404) {

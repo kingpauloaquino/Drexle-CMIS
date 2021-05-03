@@ -129,7 +129,21 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="blood">Blood Type:</label>
-                                                <input type="text" class="form-control" id="blood" name="blood" placeholder="I.e.: AB+" value="{{ $resident->blood }}">
+                                                <select id="blood" name="blood" class="form-control">
+                                                    <option value="0" selected>Choose...</option>
+                                                    <option value="A" {{ $resident->blood == "A" ? "selected=true": "" }}>A</option>
+                                                    <option value="B" {{ $resident->blood == "B" ? "selected=true": "" }}>B</option>
+                                                    <option value="AB" {{ $resident->blood == "AB" ? "selected=true": "" }}>AB</option>
+                                                    <option value="O" {{ $resident->blood == "O" ? "selected=true": "" }}>O</option>
+                                                    <option value="A+" {{ $resident->blood == "A+" ? "selected=true": "" }}>A+</option>
+                                                    <option value="B+" {{ $resident->blood == "B+" ? "selected=true": "" }}>B+</option>
+                                                    <option value="AB+" {{ $resident->blood == "AB+" ? "selected=true": "" }}>AB+</option>
+                                                    <option value="O+" {{ $resident->blood == "O+" ? "selected=true": "" }}>O+</option>
+                                                    <option value="A-" {{ $resident->blood == "A-" ? "selected=true": "" }}>A-</option>
+                                                    <option value="B-" {{ $resident->blood == "B-" ? "selected=true": "" }}>B-</option>
+                                                    <option value="AB-" {{ $resident->blood == "AB-" ? "selected=true": "" }}>AB-</option>
+                                                    <option value="O-" {{ $resident->blood == "O-" ? "selected=true": "" }}>O-</option>
+                                                </select>
                                             </div>
                                         </div>
 
