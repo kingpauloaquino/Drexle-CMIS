@@ -43,10 +43,20 @@ class HomeController extends Controller
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
         // $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y years, %m months and %d days');
 
+        $validatedData = $request->validate([
+            'stay' => 'required|min:0'
+        ]);
+
+        if ((int)$validatedData['stay'] < 0) {
+            return redirect("/personal/add-person")->with("error", "Oops, year's stay cannot be negative.");
+        }
+
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+
         $data = new Residence();
         $data->id_number = $request->id_number;
         $data->firstname = $request->firstname;
-        $data->middlename = $request->middlename;
+        $data->middlename = $middlename;
         $data->lastname = $request->lastname;
         $data->age = (int)$age;
         $data->address1 = $request->address1;
@@ -81,10 +91,20 @@ class HomeController extends Controller
     {
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
 
+         $validatedData = $request->validate([
+            'stay' => 'required|min:0'
+        ]);
+
+        if((int)$validatedData['stay'] < 0) {
+            return redirect("/personal/edit-person/{$uid}")->with("error", "Oops, year's stay cannot be negative.");
+        }
+
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+
         $data = [
             "id_number" => $request->id_number,
             "firstname" => $request->firstname,
-            "middlename" => $request->middlename,
+            "middlename" => $middlename,
             "lastname" => $request->lastname,
             "age" => (int)$age,
             "address1" => $request->address1,
@@ -139,7 +159,7 @@ class HomeController extends Controller
 
     public function residence_list()
     {
-        $data = Residence::get();
+        $data = Residence::orderBy("is_read", "ASC")->orderBy("schedule", "DESC")->get();
         return view('pages.record_list', compact('data'));
     }
 
@@ -149,7 +169,7 @@ class HomeController extends Controller
 
         $key = $request->search;
 
-        $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR id_number LIKE '%{$key}%';");
+        $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR id_number LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%';");
 
         // dd($data);
 
@@ -206,6 +226,9 @@ class HomeController extends Controller
         }
 
          if($res["status"] == 200) {
+
+            $resident = Residence::where("id", $uid)->update(["purpose" => "", "is_read" => 1]);
+
             $data = new Transaction();
             $data->method = $method;
             $data->residence_uid = $uid;

@@ -39,13 +39,13 @@
                             <th>Gender</th>
                             <th>Work</th>
                             <th>Mobile</th>
-                            <th>Schedule</th>
-                            <th>Date Added</th>
+                            <th style="width: 150px;">Schedule</th>
+                            <th style="width: 220px;">Date Added</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for($i = 0; $i < COUNT($data); $i++) <tr>
+                        @for($i = 0; $i < COUNT($data); $i++) @if($data[$i]["is_read"]==0) @if($data[$i]["schedule"] !=null) <tr style="color: red;">
                             <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
                             <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
@@ -54,6 +54,29 @@
                             <td>{{ $data[$i]["created_at"] }}</td>
                             <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>
+                            @else
+                            <tr>
+                                <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
+                                <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
+                                <td>{{ $data[$i]["work"] }}</td>
+                                <td>{{ $data[$i]["mobile"] }}</td>
+                                <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
+                                <td>{{ $data[$i]["created_at"] }}</td>
+                                <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            </tr>
+                            @endif
+
+                            @else
+                            <tr>
+                                <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
+                                <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
+                                <td>{{ $data[$i]["work"] }}</td>
+                                <td>{{ $data[$i]["mobile"] }}</td>
+                                <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
+                                <td>{{ $data[$i]["created_at"] }}</td>
+                                <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            </tr>
+                            @endif
                             @endfor
                     </tbody>
                 </table>
@@ -163,6 +186,7 @@
                             <select class="custom-select" id="ddlListOfIssues">
                                 <option value="0" selected>Choose...</option>
                                 <option value="Solo Parent">Solo Parent</option>
+                                <option value="Barangay Clearance">Resident</option>
                                 <option value="Indigency">Indigency</option>
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>

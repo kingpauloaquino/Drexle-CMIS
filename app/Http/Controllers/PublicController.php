@@ -18,11 +18,22 @@ class PublicController extends Controller
     {
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
 
+
+        $validatedData = $request->validate([
+            'stay' => 'required|min:0'
+        ]);
+
+        if((int)$validatedData['stay'] < 0) {
+            return redirect("/personal/registration")->with("error", "Oops, year's stay cannot be negative.");
+        }
+
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+
         try {
             $data = new Residence();
             $data->id_number = $request->id_number;
             $data->firstname = $request->firstname;
-            $data->middlename = $request->middlename;
+            $data->middlename = $middlename;
             $data->lastname = $request->lastname;
             $data->age = (int)$age;
             $data->address1 = $request->address1;
@@ -41,6 +52,7 @@ class PublicController extends Controller
             $data->skill = $request->skill;
             $data->schedule = $request->schedule;
             $data->purpose = $request->purpose;
+            $data->is_read = 0;
 
             if ($data->save()) {
                 return redirect("/personal/registration")->with("message", "Good Job!");

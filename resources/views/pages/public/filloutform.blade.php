@@ -177,11 +177,14 @@
                                                 <label for="gender">Purpose:</label>
                                                 <select class="custom-select" id="purpose" name="purpose">
                                                     <option value="0" selected>Choose...</option>
+                                                    <option value="Solo Parent">Solo Parent</option>
+                                                    <option value="Barangay Clearance">Resident</option>
                                                     <option value="Indigency">Indigency</option>
                                                     <option value="First Time JobSeeker">First Time JobSeeker</option>
                                                     <option value="Barangay Clearance">Barangay Clearance</option>
                                                     <option value="Lot Certication">Lot Certication</option>
-                                                    <option value="Application Cert. Form">Lot Application Cert. Form</option>
+                                                    <option value="Business Permit">Business Permit</option>
+                                                    <option value="Business Closure">Business Closure</option>
                                                 </select>
                                             </div>
                                         </div>
