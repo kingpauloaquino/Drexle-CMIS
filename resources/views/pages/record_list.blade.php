@@ -308,7 +308,7 @@
                 return false;
             }
 
-            store(data);
+            store(data, false);
         })
 
         $("#btnCancel").on("click", function() {
@@ -332,7 +332,7 @@
                 uid: buid
             };
 
-            store(data);
+            store(data, true);
         })
 
         function get(uid) {
@@ -395,7 +395,7 @@
             });
         }
 
-        function store(data) {
+        function store(data, isBusiness) {
             $.ajax({
                 dataType: 'json',
                 type: "GET",
@@ -409,11 +409,17 @@
                     alert("Done!");
 
                     var value = res.uid + "/" + res.method;
-                    var hidden = "<input type='hidden' class='form-control' name='bname' value='" + res.busines.name + "'>";
-                    hidden += "<input type='hidden' class='form-control' name='baddresss' value='" + res.busines.address1 + "'>";
-                    hidden += "<input type='hidden' class='form-control' name='operator' value='" + res.busines.operator + "'>";
-                    hidden += "<input type='hidden' class='form-control' name='raddress' value='" + res.busines.address2 + "'>";
-                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'>" + hidden + "<button>Download PDF</button></form></div>";
+
+                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'><button>Download PDF</button></form></div>";
+
+                    if (isBusiness) {
+                        var hidden = "<input type='hidden' class='form-control' name='bname' value='" + res.busines.name + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='baddresss' value='" + res.busines.address1 + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='operator' value='" + res.busines.operator + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='raddress' value='" + res.busines.address2 + "'>";
+                        tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'>" + hidden + "<button>Download PDF</button></form></div>";
+                    }
+
                     var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
                     myWindow.document.write(tags + res.html);
                 } else if (res.status == 404) {
