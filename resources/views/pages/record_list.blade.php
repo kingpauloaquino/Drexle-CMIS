@@ -420,8 +420,11 @@
                         tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'>" + hidden + "<button>Download PDF</button></form></div>";
                     }
 
-                    var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
-                    myWindow.document.write(tags + res.html);
+                    // var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
+                    // myWindow.document.write(tags + res.html);
+
+
+                    printdiv(res.html);
                 } else if (res.status == 404) {
                     alert("No available certificate.");
 
@@ -430,6 +433,28 @@
                 }
                 $("#btnIssueNow").empty().prepend("Issue Now");
             });
+        }
+
+        function PrintElem(html) {
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write(html);
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+
+        function printdiv(printpage) {
+            var oldstr = printpage;
+            document.body.innerHTML = printpage;
+            window.print();
+            document.body.innerHTML = oldstr;
+            return false;
         }
     })
 </script>
