@@ -47,6 +47,10 @@
         .footer-area::before {
             background-color: rgba(255, 255, 255, 0.95);
         }
+
+        .header-top-wrapper .header-top-right .header-link a {
+            color: #fff;
+        }
     </style>
 
 </head>
