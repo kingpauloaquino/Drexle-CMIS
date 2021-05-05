@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
-use PDF;
 use File;
 
 
@@ -57,6 +56,95 @@ class CertController extends Controller
         }
 
         return $this->toPDF($html, $this->random_number(),"brg-clearance-indigency", $pdf);
+    }
+
+    public function bgry_indigency_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $requestor = IsSet($request->requestor) ? $request->requestor : null;
+        $purpose = $request->purpose;
+
+        $data = [
+            "control_number" => $this->SerializeNumber($resident->id),
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "gender" => $gender,
+            "address" => $resident->address1 . " " . $resident->address2,
+            "requestor" => $requestor,
+            "purpose" => $purpose,
+            "day" => date("d"),
+            "month" => date("M"),
+            "year" => date("Y"),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+
+        return view('pages.certificate.brgy_indigency', compact('data'));
+    }
+
+    public function bgry_clearance_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $requestor = isset($request->requestor) ? $request->requestor : null;
+        $purpose = $request->purpose;
+
+        $data = [
+            "control_number" => $this->SerializeNumber($resident->id),
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "gender" => $gender,
+            "address" => $resident->address1 . " " . $resident->address2,
+            "requestor" => $requestor,
+            "purpose" => $purpose,
+            "remark" => "N/A",
+            "day" => date("d"),
+            "month" => date("M"),
+            "year" => date("Y"),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+
+        return view('pages.certificate.brgy_clearance', compact('data'));
     }
 
     public static function SerializeNumber($count)

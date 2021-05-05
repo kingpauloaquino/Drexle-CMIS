@@ -46,6 +46,9 @@ Route::get('/business/clearance/get/{method}', [App\Http\Controllers\HomeControl
 
 Route::any('/brgy/clearance/issue/pdf', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
 
+Route::any('/brgy/indigency/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_indigency_preview']);
+Route::any('/brgy/clearance/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_clearance_preview']);
+
 Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);
 Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);
 Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, 'sms_list']);

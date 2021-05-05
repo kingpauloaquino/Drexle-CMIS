@@ -20,9 +20,6 @@
             </td>
         </tr>
 
-
-        @if($data["requestor"] != null)
-
         <tr>
             <td style="padding: 10px;">
                 <p style="padding: 0; margin: 0;">
@@ -37,23 +34,6 @@
                 </p>
             </td>
         </tr>
-
-        @else
-
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-                <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This certification is being issued upon the request of the above said person for <b>{{ $data["purpose"] }}</b> purposes.
-                </p>
-            </td>
-        </tr>
-
-        @endif
 
         <tr>
             <td class="text-center">

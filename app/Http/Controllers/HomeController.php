@@ -251,7 +251,6 @@ class HomeController extends Controller
 
     public function get_resident_trans($method)
     {
-
         $type = (int)$method;
 
         $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_trans WHERE method = '{$type}';");
