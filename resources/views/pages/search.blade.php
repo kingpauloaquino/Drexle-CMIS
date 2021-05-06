@@ -46,7 +46,17 @@
                     </thead>
                     <tbody>
                         @for($i = 0; $i < COUNT($data); $i++) <tr>
-                            <td>{{ $data[$i]->lastname . ", " .$data[$i]->firstname . " " . $data[$i]->middlename }}</td>
+                            <td>
+                                <?php
+                                if ($data[$i]->middlename != "N/A") {
+                                    $fullname =  $data[$i]->lastname . ", " . $data[$i]->firstname . " " . $data[$i]->middlename;
+                                } else {
+                                    $fullname =  $data[$i]->lastname  . ", " . $data[$i]->firstname;
+                                }
+                                $fullname = ucwords(strtolower($fullname))
+                                ?>
+                                {{ $fullname }}
+                            </td>
                             <td>{{ $data[$i]->gender == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]->work }}</td>
                             <td>{{ $data[$i]->mobile }}</td>
@@ -69,7 +79,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Basic Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="btnCloseModal1" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -158,14 +168,14 @@
                         <div class="input-group">
                             <select class="custom-select" id="ddlListOfIssues">
                                 <option value="0" selected>Choose...</option>
-                                <!-- <option value="Residency">Residency</option> -->
-                                <!-- <option value="Solo Parent">Solo Parent</option> -->
+                                <option value="Solo Parent">Solo Parent</option>
+                                <option value="Residency">Residency</option>
                                 <option value="Indigency">Indigency</option>
-                                <!-- <option value="Solicitation">Solicitation</option> -->
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>
-                                <option value="Lot Certication">Lot Certication</option>
-                                <option value="Application Cert. Form">Lot Application Cert. Form</option>
+                                <!-- <option value="Lot Certication">Lot Certication</option> -->
+                                <option value="Business Permit">Business Permit</option>
+                                <option value="Business Closure">Business Closure</option>
                             </select>
                             <div class="input-group-append">
                                 <button id="btnIssueNow" class="btn btn-danger" type="button">Issue Now</button>
@@ -173,6 +183,119 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal1" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Additional Information</h5>
+                <button type="button" id="btnCloseModal2" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" class="form-control" id="buid" />
+                <input type="hidden" class="form-control" id="bmethod" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Requestor Name: <span class="required">(Optional)</span></label>
+                        <input type="text" class="form-control" id="requestor_name" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Purpose: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="purpose" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Remark: <span class="required">(Optional)</span></label>
+                        <input type="text" class="form-control" id="remark" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancel" class="btn btn-secondary" type="button">Cancel</button>
+                <button id="btnSubmit1" class="btn btn-danger" type="button">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal2" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Business Information</h5>
+                <button type="button" id="btnCloseModal2" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" class="form-control" id="buid" />
+                <input type="hidden" class="form-control" id="bmethod" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Code: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="bcode" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Name: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="bname" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Address: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="baddresss" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Operator / Manager: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="operator" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Residence Address: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="raddress" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="btype">Type:</label>
+                        <select id="btype" name="btype" class="form-control">
+                            <option value="-0" selected>Choose...</option>
+                            <option value="0">New Business</option>
+                            <option value="1">Renewal</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancel" class="btn btn-secondary" type="button">Cancel</button>
+                <button id="btnSubmit" class="btn btn-danger" type="button">Submit</button>
             </div>
         </div>
     </div>
@@ -212,11 +335,93 @@
                 return false;
             }
 
-            var data = {
-                method: issue,
-                uid: uid
-            };
-            store(data);
+            if (issue == "Business Permit") {
+                $("#buid").val(uid);
+                $("#bmethod").val(issue);
+
+                $('#myModal2').modal($('#myModal2').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }));
+                $("#btnCloseModal1").click()
+                $('#myModal2').modal('show');
+                return false;
+            } else {
+
+                if (issue == "First Time JobSeeker") {
+                    var myWindow = window.open("/brgy/jobseeker/issue/preview/" + uid, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    return false;
+                }
+                $("#buid").val(uid);
+                $("#bmethod").val(issue);
+
+                $("#requestor_name").attr("disabled", true);
+                switch (issue) {
+                    case "Indigency":
+                        $("#requestor_name").attr("disabled", false);
+                        break;
+                }
+
+                $('#myModal1').modal($('#myModal1').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }));
+                $("#btnCloseModal1").click()
+                $('#myModal1').modal('show');
+            }
+        })
+
+        $("#btnCancel").on("click", function() {
+            $("#btnCloseModal2").click()
+        })
+
+        $("#btnSubmit1").on("click", function() {
+            var buid = $("#buid").val();
+            var bmethod = $("#bmethod").val();
+            var requestor = $("#requestor_name").val();
+            var purpose = $("#purpose").val();
+            var remark = $("#remark").val();
+
+            var params = "?";
+
+            if (requestor.length > 0) {
+                params = "?requestor=" + requestor + "&purpose=" + purpose + "&remark=" + remark;
+            } else {
+                params = "?purpose=" + purpose + "&remark=" + remark;
+            }
+
+            switch (bmethod) {
+                case "Residency":
+                    var myWindow = window.open("/brgy/residency/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Indigency":
+                    var myWindow = window.open("/brgy/indigency/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Solo Parent":
+                    var myWindow = window.open("/brgy/soloparent/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Barangay Clearance":
+                    var myWindow = window.open("/brgy/clearance/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "First Time JobSeeker":
+                    var myWindow = window.open("/brgy/jobseeker/issue/preview/" + buid, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+            }
+        })
+
+        $("#btnSubmit").on("click", function() {
+            var buid = $("#buid").val();
+            var bmethod = $("#bmethod").val();
+            var bname = $("#bname").val();
+            var baddresss = $("#baddresss").val();
+            var operator = $("#operator").val();
+            var raddress = $("#raddress").val();
+            var bcode = $("#bcode").val();
+            var btype = $("#btype").val();
+
+            var params = "?bname=" + bname + "&baddresss=" + baddresss + "&operator=" + operator + "&raddress=" + raddress + "&bcode=" + bcode + "&renewal=" + btype;
+
+            var myWindow = window.open("/brgy/business/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
         })
 
         function get(uid) {
@@ -231,7 +436,14 @@
                 console.log(res);
                 $("#editbutton").attr("href", "/personal/edit-person/" + uid);
                 $("#dtIdNumber").empty().prepend(res.data.id_number);
-                $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + res.data.middlename);
+
+                var middleName = res.data.middlename;
+                if (res.data.middlename == null) {
+                    middleName = "";
+                }
+
+                $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + middleName);
+
                 $("#dtAge").empty().prepend(res.data.age);
                 $("#dtAddress1").empty().prepend(res.data.address1);
                 $("#dtAddress2").empty().prepend(res.data.address2);
@@ -268,14 +480,15 @@
                 $("#dtMobile").empty().prepend(res.data.mobile);
                 $("#dtOccupation").empty().prepend(res.data.work);
                 $("#dtSkill").empty().prepend(res.data.skill);
+                $("#dtPurpose").empty().prepend(res.data.purpose);
             });
         }
 
-        function store(data) {
+        function store(data, isBusiness) {
             $.ajax({
                 dataType: 'json',
                 type: "GET",
-                url: "/personal/resident/issue/store",
+                url: "/personal/resident/issue/summary",
                 data: data,
                 beforeSend: function() {
                     $("#btnIssueNow").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
@@ -283,7 +496,24 @@
             }).done(function(res) {
                 if (res.status == 200) {
                     alert("Done!");
-                    window.location.href = res.url;
+
+                    var value = res.uid + "/" + res.method;
+
+                    var tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'><button>Download PDF</button></form></div>";
+
+                    if (isBusiness) {
+                        var hidden = "<input type='hidden' class='form-control' name='bname' value='" + res.busines.name + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='baddresss' value='" + res.busines.address1 + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='operator' value='" + res.busines.operator + "'>";
+                        hidden += "<input type='hidden' class='form-control' name='raddress' value='" + res.busines.address2 + "'>";
+                        tags = "<div style='padding: 2px;'><form action='/personal/resident/issue/download/" + value + "' method='GET'>" + hidden + "<button>Download PDF</button></form></div>";
+                    }
+
+                    // var myWindow = window.open("", "Preview Certificate", "width=750,height=950,top=10,left=560");
+                    // myWindow.document.write(tags + res.html);
+
+
+                    printdiv(res.html);
                 } else if (res.status == 404) {
                     alert("No available certificate.");
 
@@ -292,6 +522,28 @@
                 }
                 $("#btnIssueNow").empty().prepend("Issue Now");
             });
+        }
+
+        function PrintElem(html) {
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write(html);
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+
+        function printdiv(printpage) {
+            var oldstr = printpage;
+            document.body.innerHTML = printpage;
+            window.print();
+            document.body.innerHTML = oldstr;
+            return false;
         }
     })
 </script>

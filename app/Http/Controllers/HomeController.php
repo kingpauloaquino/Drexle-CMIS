@@ -249,13 +249,72 @@ class HomeController extends Controller
         return ["status" => 500];
     }
 
+    public function issue_save_print(Request $request)
+    {
+        $resident = Residence::where("id", $request->uid)->update(["purpose" => "", "is_read" => 1]);
+
+        $data = new Transaction();
+        $data->method = $request->method;
+        $data->residence_uid = $request->uid;
+        $data->date_issued = Carbon::now();
+
+        $data->purpose = $request->purpose;
+        $data->requestor = $request->requestor;
+        $data->remark = $request->remark;
+
+        $data->business_renewal = $request->renewal;
+        $data->business_code = $request->code;
+        $data->business_name = $request->name;
+        $data->business_address = $request->address1;
+        $data->business_operator = $request->operator;
+        $data->business_residence_address = $request->address2;
+
+        if ($data->save()) {
+            return ["status" => 200];
+        }
+
+        return ["status" => 500];
+    }
+
     public function get_resident_trans($method)
     {
-        $type = (int)$method;
 
-        $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_trans WHERE method = '{$type}';");
-        $data = DB::select("SELECT * FROM get_trans WHERE method = '{$type}';");
+        switch($method) {
+            case "residency" :
+                $record_method = "Residency";
+                break;
+            case "soloparent":
+                $record_method = "Solo Parent";
+                break;
+            case "indigency":
+                $record_method = "Indigency";
+                break;
+            case "bgryclearance":
+                $record_method = "Barangay Clearance";
+                break;
+            case "jobseeker":
+                $record_method = "First Time Job Seeker";
+                break;
+            case "businesspermit":
+                $record_method = "Business Permit";
+                break;
+        }
 
-        return view('pages.trans', compact('data', 'data_count'));
+
+        $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_cert_trans WHERE method = '{$method}';");
+        $data = DB::select("SELECT * FROM get_cert_trans WHERE method = '{$method}';");
+
+        return view('pages.trans', compact('data', 'data_count', 'record_method'));
+    }
+
+    public function get_resident_trans_detailed($uid, $method)
+    {
+        $data = Transaction::where("residence_uid", $uid)->where("method", $method)->get();
+
+        if(COUNT($data) > 0) {
+            return ["status" => 200, "data" => $data];
+        }
+
+        return ["status" => 404, "data" => []];
     }
 }

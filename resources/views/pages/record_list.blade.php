@@ -46,7 +46,17 @@
                     </thead>
                     <tbody>
                         @for($i = 0; $i < COUNT($data); $i++) @if($data[$i]["is_read"]==0) @if($data[$i]["schedule"] !=null) <tr style="color: red;">
-                            <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
+                            <td>
+                                <?php
+                                if ($data[$i]["middlename"] != "N/A") {
+                                    $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"] . " " . $data[$i]["middlename"];
+                                } else {
+                                    $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"];
+                                }
+                                $fullname = ucwords(strtolower($fullname))
+                                ?>
+                                {{ $fullname }}
+                            </td>
                             <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
                             <td>{{ $data[$i]["mobile"] }}</td>
@@ -56,7 +66,17 @@
                             </tr>
                             @else
                             <tr>
-                                <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
+                                <td>
+                                    <?php
+                                    if ($data[$i]["middlename"] != "N/A") {
+                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"] . " " . $data[$i]["middlename"];
+                                    } else {
+                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"];
+                                    }
+                                    $fullname = ucwords(strtolower($fullname))
+                                    ?>
+                                    {{ $fullname }}
+                                </td>
                                 <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                                 <td>{{ $data[$i]["work"] }}</td>
                                 <td>{{ $data[$i]["mobile"] }}</td>
@@ -68,7 +88,17 @@
 
                             @else
                             <tr>
-                                <td>{{ $data[$i]["lastname"] . ", " .$data[$i]["firstname"] . " " . $data[$i]["middlename"] }}</td>
+                                <td>
+                                    <?php
+                                    if ($data[$i]["middlename"] != "N/A") {
+                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"] . " " . $data[$i]["middlename"];
+                                    } else {
+                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"];
+                                    }
+                                    $fullname = ucwords(strtolower($fullname))
+                                    ?>
+                                    {{ $fullname }}
+                                </td>
                                 <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                                 <td>{{ $data[$i]["work"] }}</td>
                                 <td>{{ $data[$i]["mobile"] }}</td>
@@ -186,11 +216,11 @@
                             <select class="custom-select" id="ddlListOfIssues">
                                 <option value="0" selected>Choose...</option>
                                 <option value="Solo Parent">Solo Parent</option>
-                                <option value="Barangay Clearance">Resident</option>
+                                <option value="Residency">Residency</option>
                                 <option value="Indigency">Indigency</option>
                                 <option value="First Time JobSeeker">First Time JobSeeker</option>
                                 <option value="Barangay Clearance">Barangay Clearance</option>
-                                <option value="Lot Certication">Lot Certication</option>
+                                <!-- <option value="Lot Certication">Lot Certication</option> -->
                                 <option value="Business Permit">Business Permit</option>
                                 <option value="Business Closure">Business Closure</option>
                             </select>
@@ -201,6 +231,50 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal1" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Additional Information</h5>
+                <button type="button" id="btnCloseModal2" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" class="form-control" id="buid" />
+                <input type="hidden" class="form-control" id="bmethod" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Requestor Name: <span class="required">(Optional)</span></label>
+                        <input type="text" class="form-control" id="requestor_name" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Purpose: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="purpose" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Remark: <span class="required">(Optional)</span></label>
+                        <input type="text" class="form-control" id="remark" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancel" class="btn btn-secondary" type="button">Cancel</button>
+                <button id="btnSubmit1" class="btn btn-danger" type="button">Submit</button>
             </div>
         </div>
     </div>
@@ -219,6 +293,13 @@
 
                 <input type="hidden" class="form-control" id="buid" />
                 <input type="hidden" class="form-control" id="bmethod" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="age">Business Code: <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="bcode" />
+                    </div>
+                </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
@@ -247,6 +328,18 @@
                         <input type="text" class="form-control" id="raddress" />
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="btype">Type:</label>
+                        <select id="btype" name="btype" class="form-control">
+                            <option value="-0" selected>Choose...</option>
+                            <option value="0">New Business</option>
+                            <option value="1">Renewal</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button id="btnCancel" class="btn btn-secondary" type="button">Cancel</button>
@@ -290,11 +383,6 @@
                 return false;
             }
 
-            var data = {
-                method: issue,
-                uid: uid
-            };
-
             if (issue == "Business Permit") {
                 $("#buid").val(uid);
                 $("#bmethod").val(issue);
@@ -306,13 +394,67 @@
                 $("#btnCloseModal1").click()
                 $('#myModal2').modal('show');
                 return false;
-            }
+            } else {
 
-            store(data, false);
+                if (issue == "First Time JobSeeker") {
+                    var myWindow = window.open("/brgy/jobseeker/issue/preview/" + uid, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    return false;
+                }
+                $("#buid").val(uid);
+                $("#bmethod").val(issue);
+
+                $("#requestor_name").attr("disabled", true);
+                switch (issue) {
+                    case "Indigency":
+                        $("#requestor_name").attr("disabled", false);
+                        break;
+                }
+
+                $('#myModal1').modal($('#myModal1').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }));
+                $("#btnCloseModal1").click()
+                $('#myModal1').modal('show');
+            }
         })
 
         $("#btnCancel").on("click", function() {
             $("#btnCloseModal2").click()
+        })
+
+        $("#btnSubmit1").on("click", function() {
+            var buid = $("#buid").val();
+            var bmethod = $("#bmethod").val();
+            var requestor = $("#requestor_name").val();
+            var purpose = $("#purpose").val();
+            var remark = $("#remark").val();
+
+            var params = "?";
+
+            if (requestor.length > 0) {
+                params = "?requestor=" + requestor + "&purpose=" + purpose + "&remark=" + remark;
+            } else {
+                params = "?purpose=" + purpose + "&remark=" + remark;
+            }
+
+            switch (bmethod) {
+                case "Residency":
+                    var myWindow = window.open("/brgy/residency/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Indigency":
+                    var myWindow = window.open("/brgy/indigency/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Solo Parent":
+                    var myWindow = window.open("/brgy/soloparent/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "Barangay Clearance":
+                    var myWindow = window.open("/brgy/clearance/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+                case "First Time JobSeeker":
+                    var myWindow = window.open("/brgy/jobseeker/issue/preview/" + buid, "Preview Certificate", "width=990,height=950,top=10,left=360");
+                    break;
+            }
         })
 
         $("#btnSubmit").on("click", function() {
@@ -322,17 +464,12 @@
             var baddresss = $("#baddresss").val();
             var operator = $("#operator").val();
             var raddress = $("#raddress").val();
+            var bcode = $("#bcode").val();
+            var btype = $("#btype").val();
 
-            var data = {
-                bname: bname,
-                baddresss: baddresss,
-                operator: operator,
-                raddress: raddress,
-                method: bmethod,
-                uid: buid
-            };
+            var params = "?bname=" + bname + "&baddresss=" + baddresss + "&operator=" + operator + "&raddress=" + raddress + "&bcode=" + bcode + "&renewal=" + btype;
 
-            store(data, true);
+            var myWindow = window.open("/brgy/business/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
         })
 
         function get(uid) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use File;
+use Carbon\Carbon;
+
 
 
 class CertController extends Controller
@@ -58,7 +60,53 @@ class CertController extends Controller
         return $this->toPDF($html, $this->random_number(),"brg-clearance-indigency", $pdf);
     }
 
-    public function bgry_indigency_preview($uid, Request $request)
+    public function bgry_residency_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $requestor = isset($request->requestor) ? $request->requestor : null;
+        $purpose = $request->purpose;
+        $remark = $request->remark;
+
+        $data = [
+            "uid" => $uid,
+            "method" => "residency",
+            "control_number" => $this->SerializeNumber($resident->id),
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "gender" => $gender,
+            "address" => $resident->address1 . " " . $resident->address2,
+            "requestor" => $requestor,
+            "purpose" => $purpose,
+            "remark" => $remark,
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(1)->format('F j, Y'),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+
+        return view('pages.certificate.brgy_residency', compact('data'));
+    }
+
+    public function bgry_soloparent_preview($uid, Request $request)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -81,8 +129,11 @@ class CertController extends Controller
 
         $requestor = IsSet($request->requestor) ? $request->requestor : null;
         $purpose = $request->purpose;
+        $remark = $request->remark;
 
         $data = [
+            "uid" => $uid,
+            "method" => "soloparent",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
@@ -91,9 +142,56 @@ class CertController extends Controller
             "address" => $resident->address1 . " " . $resident->address2,
             "requestor" => $requestor,
             "purpose" => $purpose,
-            "day" => date("d"),
-            "month" => date("M"),
-            "year" => date("Y"),
+            "remark" => $remark,
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(1)->format('F j, Y'),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+
+        return view('pages.certificate.brgy_indigency', compact('data'));
+    }
+
+    public function bgry_indigency_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $requestor = isset($request->requestor) ? $request->requestor : null;
+        $purpose = $request->purpose;
+        $remark = $request->remark;
+
+        $data = [
+            "uid" => $uid,
+            "method" => "indigency",
+            "control_number" => $this->SerializeNumber($resident->id),
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "gender" => $gender,
+            "address" => $resident->address1 . " " . $resident->address2,
+            "requestor" => $requestor,
+            "purpose" => $purpose,
+            "remark" => $remark,
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(1)->format('F j, Y'),
             "img_a" => $img_a,
             "img_b" => $img_b
         ];
@@ -125,8 +223,11 @@ class CertController extends Controller
 
         $requestor = isset($request->requestor) ? $request->requestor : null;
         $purpose = $request->purpose;
+        $remark = $request->remark;
 
         $data = [
+            "uid" => $uid,
+            "method" => "bgryclearance",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
@@ -135,16 +236,106 @@ class CertController extends Controller
             "address" => $resident->address1 . " " . $resident->address2,
             "requestor" => $requestor,
             "purpose" => $purpose,
-            "remark" => "N/A",
-            "day" => date("d"),
-            "month" => date("M"),
-            "year" => date("Y"),
+            "remark" => $remark,
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(1)->format('F j, Y'),
             "img_a" => $img_a,
             "img_b" => $img_b
         ];
 
 
         return view('pages.certificate.brgy_clearance', compact('data'));
+    }
+
+    public function bgry_jobseeker_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $requestor = isset($request->requestor) ? $request->requestor : null;
+        $purpose = $request->purpose;
+        $remark = $request->remark;
+
+        $data = [
+            "uid" => $uid,
+            "method" => "jobseeker",
+            "control_number" => $this->SerializeNumber($resident->id),
+            "title" => $title,
+            "fullname" => ucwords(strtolower($fullname)),
+            "age" => $resident->age,
+            "gender" => $gender,
+            "address" => $resident->address1 . " " . $resident->address2,
+            "requestor" => $requestor,
+            "purpose" => $purpose,
+            "remark" => $remark,
+            "day" => date("d"),
+            "month" => date("M"),
+            "year" => date("Y"),
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(1)->format('F j, Y'),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+
+        return view('pages.certificate.brgy_firstjobseeker', compact('data'));
+    }
+
+    public function bgry_business_preview($uid, Request $request)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+        $home = new HomeController();
+
+        $resident = $home->get_resident($uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+
+
+        $data = [
+            "uid" => $uid,
+            "method" => "businesspermit",
+            "control_number" => $this->SerializeNumber($resident->id),
+            "renewal" => (int)$request->renewal,
+            "code" => $request->bcode,
+            "name" => ucwords(strtolower($request->bname)),
+            "address1" => $request->baddresss,
+            "address2" => $request->raddress,
+            "operator" => ucwords(strtolower($request->operator)),
+            "issued" => Carbon::now()->format('F j, Y'),
+            "valid" => Carbon::now()->addMonth(12)->format('F j, Y'),
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+        return view('pages.certificate.brgy_business', compact('data'));
     }
 
     public static function SerializeNumber($count)

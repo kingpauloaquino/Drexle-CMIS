@@ -21,8 +21,6 @@
         .required {
             color: red;
         }
-
-
     </style>
 
 </head>
@@ -72,14 +70,15 @@
                             <a class="collapse-item" href="/personal/residence-list">View List</a>
 
                             <h6 class="collapse-header">Clearances:</h6>
-                            <a class="collapse-item" href="/personal/clearance/get/0">Barangay Clearance</a>
-                            <a class="collapse-item" href="/personal/clearance/get/1">Solo Parent</a>
-                            <a class="collapse-item" href="/personal/clearance/get/1">Indigency</a>
-                            <a class="collapse-item" href="/personal/clearance/get/2">First Time JobSeeker</a>
-                            <a class="collapse-item" href="/personal/clearance/get/0">Lot Certication</a>
+                            <a class="collapse-item" href="/personal/clearance/get/bgryclearance">Barangay Clearance</a>
+                            <a class="collapse-item" href="/personal/clearance/get/residency">Residency</a>
+                            <a class="collapse-item" href="/personal/clearance/get/soloparent">Solo Parent</a>
+                            <a class="collapse-item" href="/personal/clearance/get/indigency">Indigency</a>
+                            <a class="collapse-item" href="/personal/clearance/get/jobseeker">First Time JobSeeker</a>
+                            <!-- <a class="collapse-item" href="/personal/clearance/get/0">Lot Certication</a> -->
 
                             <h6 class="collapse-header">Businesses:</h6>
-                            <a class="collapse-item" href="/business/clearance/get/3">Business Permit</a>
+                            <a class="collapse-item" href="/business/clearance/get/businesspermit">Business Permit</a>
                             <a class="collapse-item" href="/business/clearance/get/4">Business Closure</a>
                         </div>
                     </div>

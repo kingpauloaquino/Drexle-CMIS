@@ -11,7 +11,51 @@
     <link media="screen" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link media="screen" href="{{ asset('/css/print.css') }}" rel="stylesheet">
 
-    <script language="javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+
+    <script>
+        var uid = "{{ $data['uid'] }}";
+        var method = "{{ $data['method'] }}";
+        var requestor = "{{ $data['requestor'] }}";
+        var purpose = "{{ $data['purpose'] }}";
+        var remark = "{{ $data['remark'] }}";
+
+        function do_save_print(element) {
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                data = {
+                    uid: uid,
+                    method: method,
+                    requestor: requestor,
+                    purpose: purpose,
+                    remark: remark,
+                };
+
+                $.ajax({
+                    dataType: 'json',
+                    type: "GET",
+                    url: "/brgy/clearance/save/print",
+                    data: data,
+                    beforeSend: function() {
+                        $(".btnPrint").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
+                    }
+                }).done(function(res) {
+                    if (res.status == 200) {
+                        printdiv(element);
+                    } else {
+                        alert("Something went wrong.");
+                    }
+
+                    $(".btnPrint").empty().prepend("Print");
+                });
+            });
+        }
+
         function printdiv(printpage) {
             var headstr = "<html><head><meta charset='UTF-8'>";
             headstr += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
@@ -19,7 +63,7 @@
             headstr += "<link rel='stylesheet' media='screen' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'>";
             headstr += "<link media='screen' rel='preconnect' href='https://fonts.gstatic.com'>";
             headstr += "<link media='screen' href='https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap' rel='stylesheet'>";
-            headstr += "<link media='screen' href='{{ asset('css/print.css', true) }}' rel='stylesheet'>";
+            headstr += "<link media='screen' href='{{ asset('css/print.css') }}' rel='stylesheet'>";
             headstr += "<title></title><style>body { -webkit-print-color-adjust: exact !important; }</style></head><body>";
             var footstr = "</body>";
             var newstr = document.all.item(printpage).innerHTML;
@@ -36,7 +80,7 @@
 
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
-            <button class="btn btn-danger" onclick="printdiv('cert');">Print</button>
+            <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
 
@@ -159,7 +203,7 @@
                                             <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0;"><b>Date Issued:</b></p>
                                         </td>
                                         <td>
-                                            <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0; text-align: right;"><b>{{ $data["control_number"] }}</b></p>
+                                            <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0; text-align: right;"><b>{{ $data["issued"] }}</b></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -167,7 +211,7 @@
                                             <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0;"><b>Valid Until:</b></p>
                                         </td>
                                         <td>
-                                            <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0; text-align: right;"><b>{{ $data["control_number"] }}</b></p>
+                                            <p style="font-size: 14px; padding: 0; margin: 10px 0 0 0; text-align: right;"><b>{{ $data["valid"] }}</b></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -266,7 +310,7 @@
 
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
-            <button class="btn btn-danger" onclick="printdiv('cert');">Print</button>
+            <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
 </body>

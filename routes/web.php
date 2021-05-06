@@ -46,8 +46,16 @@ Route::get('/business/clearance/get/{method}', [App\Http\Controllers\HomeControl
 
 Route::any('/brgy/clearance/issue/pdf', [App\Http\Controllers\CertController::class, 'bgry_clearance_pdf']);
 
+
+Route::any('/brgy/residency/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_residency_preview']);
+Route::any('/brgy/soloparent/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_soloparent_preview']);
 Route::any('/brgy/indigency/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_indigency_preview']);
+Route::any('/brgy/jobseeker/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_jobseeker_preview']);
 Route::any('/brgy/clearance/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_clearance_preview']);
+Route::any('/brgy/business/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_business_preview']);
+
+Route::any('/brgy/clearance/save/print', [App\Http\Controllers\HomeController::class, 'issue_save_print']);
+Route::any('/brgy/issue/list/{uid}/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans_detailed']);
 
 Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);
 Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);

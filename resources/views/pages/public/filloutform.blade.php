@@ -182,7 +182,7 @@
                                                     <option value="Indigency">Indigency</option>
                                                     <option value="First Time JobSeeker">First Time JobSeeker</option>
                                                     <option value="Barangay Clearance">Barangay Clearance</option>
-                                                    <option value="Lot Certication">Lot Certication</option>
+                                                    <!-- <option value="Lot Certication">Lot Certication</option> -->
                                                     <option value="Business Permit">Business Permit</option>
                                                     <option value="Business Closure">Business Closure</option>
                                                 </select>

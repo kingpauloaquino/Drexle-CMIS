@@ -20,31 +20,9 @@
             </td>
         </tr>
 
-
-        @if($data["requestor"] != null)
-
         <tr>
-            <td style="padding: 10px;">
-                <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is further certified that <b>{{ $data["title"] }} {{ $data["fullname"] }}</b> has no permanent source of income and could hardly suffice {{ $data["gender"]["b"] }} daily needs. Furthermore, {{ $data["gender"]["a"] }} belongs to the indigent families of this Barangay.
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-                <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This certification is being issued upon the request of <b>{{ $data["requestor"] }}</b> of the above said person for <b>{{ $data["purpose"] }}</b> purposes.
-                </p>
-            </td>
-        </tr>
-
-        @else
-
-        <tr>
-            <td style="padding: 10px;">
-                <p style="padding: 0; margin: 0;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is further certified that <b>{{ $data["title"] }} {{ $data["fullname"] }}</b> has no permanent source of income and could hardly suffice {{ $data["gender"]["b"] }} daily needs. Furthermore, {{ $data["gender"]["a"] }} belongs to the indigent families of this Barangay.
-                </p>
+            <td>
+                &nbsp;
             </td>
         </tr>
         <tr>
@@ -54,8 +32,6 @@
                 </p>
             </td>
         </tr>
-
-        @endif
 
         <tr>
             <td class="text-center">
