@@ -76,7 +76,7 @@ class HomeController extends Controller
         $data->skill = $request->skill;
 
         if($data->save()) {
-            return redirect("/personal/add-person")->with("message", "Good Job!");
+            return redirect("/personal/residence-list")->with("message", "Good Job!");
         }
         return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
     }
@@ -159,7 +159,7 @@ class HomeController extends Controller
 
     public function residence_list()
     {
-        $data = Residence::orderBy("is_read", "ASC")->orderBy("schedule", "DESC")->get();
+        $data = Residence::orderBy("created_at", "DESC")->get();
         return view('pages.record_list', compact('data'));
     }
 

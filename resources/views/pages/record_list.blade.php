@@ -20,6 +20,18 @@
     <div class="container mt-4">
         <div class="card mb-4">
             <div class="card-body">
+                @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ Session::get('error')}}
+                </div>
+                @endif
+
+                @if(Session::has('message'))
+                <div class="alert alert-success">
+                    <i class="fa fa-check" aria-hidden="true"></i> {{ Session::get('message')}}
+                </div>
+                @endif
+
                 <form action="/personal/residence-list/search" method="POST">
 
                     @csrf
