@@ -23,6 +23,8 @@
         var operator = "{{ $data['operator'] }}";
         var address2 = "{{ $data['address2'] }}";
 
+
+
         function do_save_print(element) {
             $(document).ready(function() {
                 $.ajaxSetup({
@@ -30,6 +32,34 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+                if (method == "businessclosure") {
+
+                    var buid = "{{ $data['buid'] }}";
+
+                    data = {
+                        buid: buid
+                    };
+
+                    $.ajax({
+                        dataType: 'json',
+                        type: "GET",
+                        url: "/brgy/clearance/closure/print",
+                        data: data,
+                        beforeSend: function() {
+                            $(".btnPrint").empty().prepend("<span class='spinner-border spinner-border-sm'></span> Please wait...");
+                        }
+                    }).done(function(res) {
+                        if (res.status == 200) {
+                            printdiv(element);
+                        } else {
+                            alert("Something went wrong.");
+                        }
+                        $(".btnPrint").empty().prepend("Print");
+                    });
+
+                    return false;
+                }
 
                 data = {
                     uid: uid,
@@ -56,7 +86,6 @@
                     } else {
                         alert("Something went wrong.");
                     }
-
                     $(".btnPrint").empty().prepend("Print");
                 });
             });

@@ -35,7 +35,10 @@ Route::get('/personal/delete-person/{uid}', [App\Http\Controllers\HomeController
 Route::post('/personal/delete-person/delete/{uid}', [App\Http\Controllers\HomeController::class, 'delete_person_delete']);
 
 Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
+
 Route::any('/personal/residence-list/search', [App\Http\Controllers\HomeController::class, 'residence_list_seasrch']);
+Route::any('/personal/cert-list/search', [App\Http\Controllers\HomeController::class, 'cert_list_seasrch']);
+
 Route::get('/personal/resident/get/{uid}', [App\Http\Controllers\HomeController::class, 'get_resident']);
 
 Route::any('/personal/resident/issue/summary', [App\Http\Controllers\HomeController::class, 'resident_issue_store']);
@@ -53,8 +56,10 @@ Route::any('/brgy/indigency/issue/preview/{uid}', [App\Http\Controllers\CertCont
 Route::any('/brgy/jobseeker/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_jobseeker_preview']);
 Route::any('/brgy/clearance/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_clearance_preview']);
 Route::any('/brgy/business/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_business_preview']);
+Route::any('/brgy/closure/issue/preview/{uid}', [App\Http\Controllers\CertController::class, 'bgry_business_closure_preview']);
 
 Route::any('/brgy/clearance/save/print', [App\Http\Controllers\HomeController::class, 'issue_save_print']);
+Route::any('/brgy/clearance/closure/print', [App\Http\Controllers\HomeController::class, 'issue_closure_print']);
 Route::any('/brgy/issue/list/{uid}/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans_detailed']);
 
 Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);

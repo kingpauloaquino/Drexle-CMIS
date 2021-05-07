@@ -57,6 +57,13 @@
 
 <body>
 
+    @if(Session::has('message'))
+    <script>
+        alert("You have successfully registered.");
+    </script>
+    @endif
+
+
     <!--====== Header Start ======-->
 
     <header class="header-area">

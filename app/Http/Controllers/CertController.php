@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 use Dompdf\Dompdf;
 use File;
 use Carbon\Carbon;
@@ -317,8 +318,6 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-
-
         $data = [
             "uid" => $uid,
             "method" => "businesspermit",
@@ -336,6 +335,49 @@ class CertController extends Controller
         ];
 
         return view('pages.certificate.brgy_business', compact('data'));
+    }
+
+    public function bgry_business_closure_preview($buid)
+    {
+        $img_a = asset('/img/barangay-logo.png');
+        $img_b = asset('/img/city-logo.png');
+
+        $home = new HomeController();
+
+        $business_details = Transaction::where("id", $buid)->first();
+
+        $resident = $home->get_resident($business_details->residence_uid);
+        $resident = $resident["data"];
+
+        $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        $misis = "Ms.";
+        if ((int)$resident->civil_status > 1) {
+            $misis = "Mrs.";
+        }
+
+        $title = $resident->gender == 1 ? "Mr." : $misis;
+        $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
+
+        $data = [
+            "buid" => $buid,
+            "uid" => $business_details->residence_uid,
+            "method" => "businessclosure",
+            "control_number" => $this->SerializeNumber($resident->id),
+            "renewal" => 0,
+            "code" => $business_details->business_code,
+            "name" => $business_details->business_name,
+            "address1" => $business_details->business_address,
+            "address2" => $business_details->business_residence_address,
+            "requestor" => $fullname,
+            "operator" => $business_details->business_operator,
+            "issued" => $business_details->date_issued,
+            "valid" => $business_details->date_issued,
+            "img_a" => $img_a,
+            "img_b" => $img_b
+        ];
+
+        return view('pages.certificate.brgy_business_closure', compact('data'));
     }
 
     public static function SerializeNumber($count)

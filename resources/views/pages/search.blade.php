@@ -407,6 +407,7 @@
                     var myWindow = window.open("/brgy/jobseeker/issue/preview/" + buid, "Preview Certificate", "width=990,height=950,top=10,left=360");
                     break;
             }
+            location.reload();
         })
 
         $("#btnSubmit").on("click", function() {
@@ -422,6 +423,7 @@
             var params = "?bname=" + bname + "&baddresss=" + baddresss + "&operator=" + operator + "&raddress=" + raddress + "&bcode=" + bcode + "&renewal=" + btype;
 
             var myWindow = window.open("/brgy/business/issue/preview/" + buid + params, "Preview Certificate", "width=990,height=950,top=10,left=360");
+            location.reload();
         })
 
         function get(uid) {

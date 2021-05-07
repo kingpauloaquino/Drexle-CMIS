@@ -165,7 +165,6 @@ class HomeController extends Controller
 
     public function residence_list_seasrch(Request $request)
     {
-        // $data = Residence::whereLike(['firstname','lastname','mobile','id_number'], $request->search)->get();
 
         $key = $request->search;
 
@@ -174,6 +173,43 @@ class HomeController extends Controller
         // dd($data);
 
         return view('pages.search', compact('data'));
+    }
+
+    public function cert_list_seasrch(Request $request)
+    {
+
+        $method = $request->method;
+        $key = $request->search;
+
+        switch ($method) {
+            case "residency":
+                $record_method = "Residency";
+                break;
+            case "soloparent":
+                $record_method = "Solo Parent";
+                break;
+            case "indigency":
+                $record_method = "Indigency";
+                break;
+            case "bgryclearance":
+                $record_method = "Barangay Clearance";
+                break;
+            case "jobseeker":
+                $record_method = "First Time Job Seeker";
+                break;
+            case "businesspermit":
+                $record_method = "Business Permit";
+                break;
+            case "businessclosure":
+                $record_method = "Business Closure";
+                break;
+        }
+
+        $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_cert_trans WHERE method = '{$method}';");
+
+        $data = DB::select("SELECT * FROM get_cert_trans WHERE method = '{$method}' AND fullname LIKE '%{$key}%';");
+
+        return view('pages.trans_search', compact('data', 'data_count', 'record_method', 'method'));
     }
 
     public function resident_issue_store(Request $request)
@@ -276,6 +312,17 @@ class HomeController extends Controller
         return ["status" => 500];
     }
 
+    public function issue_closure_print(Request $request)
+    {
+        $data = Transaction::where("id", $request->buid)->update(["status"=>2]);
+
+        if ($data) {
+            return ["status" => 200];
+        }
+
+        return ["status" => 500];
+    }
+
     public function get_resident_trans($method)
     {
 
@@ -298,13 +345,16 @@ class HomeController extends Controller
             case "businesspermit":
                 $record_method = "Business Permit";
                 break;
+            case "businessclosure":
+                $record_method = "Business Closure";
+                break;
         }
 
 
         $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_cert_trans WHERE method = '{$method}';");
         $data = DB::select("SELECT * FROM get_cert_trans WHERE method = '{$method}';");
 
-        return view('pages.trans', compact('data', 'data_count', 'record_method'));
+        return view('pages.trans', compact('data', 'data_count', 'record_method', 'method'));
     }
 
     public function get_resident_trans_detailed($uid, $method)

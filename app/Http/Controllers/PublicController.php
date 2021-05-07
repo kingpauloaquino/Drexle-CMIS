@@ -55,7 +55,7 @@ class PublicController extends Controller
             $data->is_read = 0;
 
             if ($data->save()) {
-                return redirect("/personal/registration")->with("message", "Good Job!");
+                return redirect("/")->with("message", "Good Job!");
             }
             return redirect("/personal/registration")->with("error", "Oops, something went wrong.");
         } catch (\Exception $e) {
