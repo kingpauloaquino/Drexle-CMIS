@@ -73,6 +73,10 @@ class CertController extends Controller
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
+
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
             $misis = "Mrs.";
@@ -103,7 +107,6 @@ class CertController extends Controller
             "img_b" => $img_b
         ];
 
-
         return view('pages.certificate.brgy_residency', compact('data'));
     }
 
@@ -112,13 +115,16 @@ class CertController extends Controller
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
-
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
         $resident = $resident["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
 
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
@@ -150,7 +156,6 @@ class CertController extends Controller
             "img_b" => $img_b
         ];
 
-
         return view('pages.certificate.brgy_indigency', compact('data'));
     }
 
@@ -159,13 +164,16 @@ class CertController extends Controller
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
 
-
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
         $resident = $resident["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
 
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
@@ -197,7 +205,6 @@ class CertController extends Controller
             "img_b" => $img_b
         ];
 
-
         return view('pages.certificate.brgy_indigency', compact('data'));
     }
 
@@ -213,6 +220,10 @@ class CertController extends Controller
         $resident = $resident["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
 
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
@@ -244,7 +255,6 @@ class CertController extends Controller
             "img_b" => $img_b
         ];
 
-
         return view('pages.certificate.brgy_clearance', compact('data'));
     }
 
@@ -260,6 +270,10 @@ class CertController extends Controller
         $resident = $resident["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
 
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
@@ -294,7 +308,6 @@ class CertController extends Controller
             "img_b" => $img_b
         ];
 
-
         return view('pages.certificate.brgy_firstjobseeker', compact('data'));
     }
 
@@ -310,6 +323,10 @@ class CertController extends Controller
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
+
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {
             $misis = "Mrs.";
@@ -319,6 +336,7 @@ class CertController extends Controller
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
         $data = [
+            "buid" => 0,
             "uid" => $uid,
             "method" => "businesspermit",
             "control_number" => $this->SerializeNumber($resident->id),
@@ -350,6 +368,10 @@ class CertController extends Controller
         $resident = $resident["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
+
+        if ($resident->middlename == "N/A") {
+            $fullname = $resident->firstname . " " . $resident->lastname;
+        }
 
         $misis = "Ms.";
         if ((int)$resident->civil_status > 1) {

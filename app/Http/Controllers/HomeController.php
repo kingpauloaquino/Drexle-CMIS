@@ -314,7 +314,7 @@ class HomeController extends Controller
 
     public function issue_closure_print(Request $request)
     {
-        $data = Transaction::where("id", $request->buid)->update(["status"=>2]);
+        $data = Transaction::where("id", $request->buid)->update(["status"=>2, "method" => "businessclosure"]);
 
         if ($data) {
             return ["status" => 200];
@@ -349,7 +349,6 @@ class HomeController extends Controller
                 $record_method = "Business Closure";
                 break;
         }
-
 
         $data_count = DB::select("SELECT COUNT(*) AS totalCount FROM get_cert_trans WHERE method = '{$method}';");
         $data = DB::select("SELECT * FROM get_cert_trans WHERE method = '{$method}';");
