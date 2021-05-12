@@ -62,7 +62,46 @@
                                                 <select id="recipients" name="recipients" class="form-control">
                                                     <option value="0" selected>Choose...</option>
                                                     <option value="1">All Residencies</option>
-                                                    <option value="2">Custom</option>
+                                                    <option value="2">By Street</option>
+                                                    <option value="3">Custom</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div id="divStreets" class="form-row" style="display: none;">
+                                            <div class="form-group col-md-12">
+                                                <label for="custom">Street:</label>
+                                                <select id="street" name="street" class="form-control">
+                                                    <option value="0" selected>Choose...</option>
+                                                    <option value="17th Street">17th Street</option>
+                                                    <option value="18th Street">18th Street</option>
+                                                    <option value="20th Street">20th Street</option>
+                                                    <option value="21st Street">21st Street</option>
+                                                    <option value="23rd Street">23rd Street</option>
+                                                    <option value="24th Street">24th Street</option>
+                                                    <option value="25th Street">25th Street</option>
+                                                    <option value="26th Street">26th Street</option>
+                                                    <option value="27th Street">27th Street</option>
+                                                    <option value="Afable">Afable</option>
+                                                    <option value="Ardoin">Ardoin</option>
+                                                    <option value="Barretto">Barretto</option>
+                                                    <option value="Canda">Canda</option>
+                                                    <option value="Dahl">Dahl</option>
+                                                    <option value="Elecaño">Elecaño</option>
+                                                    <option value="Fontaine">Fontaine</option>
+                                                    <option value="Graham">Graham</option>
+                                                    <option value="Harris">Harris</option>
+                                                    <option value="Ibarra">Ibarra</option>
+                                                    <option value="Johnson">Johnson</option>
+                                                    <option value="Johnson Ext.">Johnson Ext.</option>
+                                                    <option value="Katipunan">Katipunan</option>
+                                                    <option value="Lapu-Lapu">Lapu-Lapu</option>
+                                                    <option value="Little Baguio 1">Little Baguio 1</option>
+                                                    <option value="Little Baguio 2">Little Baguio 2</option>
+                                                    <option value="Mabini">Mabini</option>
+                                                    <option value="Rizal Avenue">Rizal Avenue</option>
+                                                    <option value="Upper Sibul 1">Upper Sibul 1</option>
+                                                    <option value="Upper Sibul 2">Upper Sibul 2</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -103,10 +142,14 @@
                 return false;
             }
 
-            if (parseInt(selected) > 1) {
+            $("#divStreets").hide();
+            $("#divCustomNumbers").hide();
+
+            if (parseInt(selected) == 2) {
+                $("#divStreets").show();
+            }
+            if (parseInt(selected) == 3) {
                 $("#divCustomNumbers").show();
-            } else {
-                $("#divCustomNumbers").hide();
             }
         });
 
