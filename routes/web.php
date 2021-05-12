@@ -62,6 +62,11 @@ Route::any('/brgy/clearance/save/print', [App\Http\Controllers\HomeController::c
 Route::any('/brgy/clearance/closure/print', [App\Http\Controllers\HomeController::class, 'issue_closure_print']);
 Route::any('/brgy/issue/list/{uid}/{method}', [App\Http\Controllers\HomeController::class, 'get_resident_trans_detailed']);
 
+Route::get('/blotter/create', [App\Http\Controllers\BlotterController::class, 'create']);
+Route::get('/blotter/view-list', [App\Http\Controllers\BlotterController::class, 'view_list']);
+Route::any('/blotter/create/store', [App\Http\Controllers\BlotterController::class, 'store']);
+
+
 Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);
 Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);
 Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, 'sms_list']);

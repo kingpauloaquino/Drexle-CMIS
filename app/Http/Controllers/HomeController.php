@@ -29,7 +29,11 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        return view('pages.dashboard');
+
+        $total_released = DB::select("SELECT COUNT(*) AS totalCount FROM residence_transaction;");
+        $total_pending_request = DB::select("SELECT COUNT(*) AS totalCount FROM db_brgy.residence WHERE is_read = 0;");
+
+        return view('pages.dashboard', compact('total_released', 'total_pending_request'));
     }
 
     public function add_person()

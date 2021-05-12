@@ -85,6 +85,20 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#blotter" aria-expanded="true" aria-controls="blotter">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Blotter</span>
+                    </a>
+                    <div id="blotter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Residence:</h6>
+                            <a class="collapse-item" href="/blotter/create">Create</a>
+                            <a class="collapse-item" href="/blotter/view-list">View List</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sms" aria-expanded="true" aria-controls="sms">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>SMS Advisory</span>
