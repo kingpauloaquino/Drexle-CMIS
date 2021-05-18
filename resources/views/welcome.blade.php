@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="css/style.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.8.2/dist/sweetalert2.all.min.js" integrity="sha256-VkcwHXtZS2ZHfHSFSP8r1AzueZi37jGMPeHv4OfV1Cg=" crossorigin="anonymous"></script>
     <style>
         .slider-area {
             padding-top: 49px;
@@ -59,7 +61,11 @@
 
     @if(Session::has('message'))
     <script>
-        alert("You have successfully registered.");
+        Swal.fire(
+            'Good Job!',
+            'You have successfully registered. We have sent an SMS to your mobile#.',
+            'success'
+        )
     </script>
     @endif
 
@@ -79,6 +85,7 @@
                         <div class="header-link">
                             <a class="login" href="tel:0471234567">Hotline: 047 1234 567</a>
                             <a class="register" href="/personal/registration">Register</a>
+                            <a class="register" href="/login">Login</a>
                         </div>
                     </div>
                 </div>

@@ -59,96 +59,25 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
-                        <span>Permit and Certificate</span>
+                        <span>Request Certificate</span>
                     </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Residence:</h6>
-                            <a class="collapse-item" href="/personal/add-person">Add Record</a>
-                            <a class="collapse-item" href="/personal/residence-list">Registered List</a>
-
                             <h6 class="collapse-header">Clearances:</h6>
-                            <a class="collapse-item" href="/personal/clearance/get/bgryclearance">Barangay Clearance</a>
-                            <a class="collapse-item" href="/personal/clearance/get/residency">Residency</a>
-                            <a class="collapse-item" href="/personal/clearance/get/soloparent">Solo Parent</a>
-                            <a class="collapse-item" href="/personal/clearance/get/indigency">Indigency</a>
-                            <a class="collapse-item" href="/personal/clearance/get/jobseeker">First Time JobSeeker</a>
-                            <!-- <a class="collapse-item" href="/personal/clearance/get/0">Lot Certication</a> -->
+                            <a class="collapse-item" href="/personal/clearance/request/bgryclearance">Barangay Clearance</a>
+                            <a class="collapse-item" href="/personal/clearance/request/residency">Residency</a>
+                            <a class="collapse-item" href="/personal/clearance/request/soloparent">Solo Parent</a>
+                            <a class="collapse-item" href="/personal/clearance/request/indigency">Indigency</a>
+                            <a class="collapse-item" href="/personal/clearance/request/jobseeker">First Time JobSeeker</a>
 
                             <h6 class="collapse-header">Businesses:</h6>
-                            <a class="collapse-item" href="/business/clearance/get/businesspermit">Business Permit</a>
-                            <a class="collapse-item" href="/business/clearance/get/businessclosure">Business Closure</a>
+                            <a class="collapse-item" href="/business/clearance/request/businesspermit">Business Permit</a>
+                            <a class="collapse-item" href="/business/clearance/request/businessclosure">Business Closure</a>
                         </div>
                     </div>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#blotter" aria-expanded="true" aria-controls="blotter">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Blotter</span>
-                    </a>
-                    <div id="blotter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Residence:</h6>
-                            <a class="collapse-item" href="/blotter/create">Create</a>
-                            <a class="collapse-item" href="/blotter/view-list">View List</a>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sms" aria-expanded="true" aria-controls="sms">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>SMS Advisory</span>
-                    </a>
-                    <div id="sms" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Residence:</h6>
-                            <a class="collapse-item" href="/sms-advisory">Create</a>
-                            <a class="collapse-item" href="/sms/message-history">View List</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Settings
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Accounts</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Authorized:</h6>
-                            <a class="collapse-item" href="login.html">Add Account</a>
-                            <a class="collapse-item" href="register.html">View Accounts</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Settings</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
 
             </ul>
 
@@ -221,7 +150,7 @@
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
+                            <span>Copyright &copy; Your Website 2021</span>
                         </div>
                     </div>
                 </footer>

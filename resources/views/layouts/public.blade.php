@@ -78,22 +78,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Outbound SMS</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Mobile Verification</h5>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">To:</label>
-                            <input type="text" class="form-control" id="txtMobile" aria-describedby="emailHelp" placeholder="I.e.: +15556661234 / +63917123456">
-                            <small id="txtMobile" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Message</label>
-                            <textarea id="txtMessage" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message here... 160 characters only."></textarea>
+                            <label for="exampleInputEmail1">Enter OTP Code:</label>
+                            <input type="text" class="form-control" id="txtCode" aria-describedby="emailHelp" placeholder="I.e.: 123456" onkeypress="return isNumberKey(event)">
+                            <small id="txtCode" class="form-text text-muted">We'll never share your mobile# with anyone else.</small>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button id="btnSendNow" type="submit" class="btn btn-primary" style="float: right;"><i class="fas fa-paper-plane"></i> Send Now</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-envelope-open-text"></i> Resend OTP Code</button>
+                        <button id="btnVerifyNow" type="submit" class="btn btn-primary" style="float: right;"><i class="fas fa-paper-plane"></i> Verify Now</button>
                     </div>
                 </div>
             </div>
@@ -111,7 +107,124 @@
                     $("#middlename").attr("required", true);
                 }
             });
+
+            $('#mobile').keypress(function() {
+                if (this.value.length >= 11) {
+                    return false;
+                }
+            });
+
+            $('#mobile').focusout(function() {
+                var mobile = $(this).val();
+                Swal.fire({
+                    title: 'Mobile Verfication!',
+                    text: "You should enter your valid mobile number. We will verify it via sending an OTP.",
+                    icon: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK, send it!'
+                }).then((result) => {
+                    console.log(result);
+                    if (result) {
+
+                        data = {
+                            mobile: mobile
+                        };
+
+                        processing(data);
+                    }
+                })
+            })
+
+            $("#btnVerifyNow").on("click", function() {
+
+                var otp = $("#txtCode").val();
+                var code = getCookie("otp");
+
+                if (code != otp) {
+                    Swal.fire(
+                        'Invalid',
+                        'Oops, you entered an invalid OTP Code.',
+                        'error'
+                    )
+                    return false;
+                }
+
+                $("#verified").val("1");
+                console.log(otp);
+                console.log(code);
+
+                Swal.fire(
+                    'Good Job!',
+                    'You entered a valid OTP Code',
+                    'success'
+                )
+
+                // $("#mobile").attr("disabled", true);
+
+                $('#exampleModal').modal("hide");
+            })
         })
+
+        function processing(data) {
+            $.ajax({
+                dataType: 'json',
+                type: "GET",
+                url: "/personal/mobile-verify",
+                data: data
+            }).done(function(res) {
+                if (res.status == 200) {
+                    setCookie("otp", res.otp, 1);
+                    $('#exampleModal').modal($('#exampleModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    }));
+                } else if (res.status == 404) {
+                    Swal.fire(
+                        'Oops',
+                        'Invalid mobile prefix number.',
+                        'error'
+                    )
+                } else {
+                    Swal.fire(
+                        'Oops',
+                        'Something went wrong.',
+                        'error'
+                    )
+                }
+            });
+        }
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
     </script>
 </body>
 

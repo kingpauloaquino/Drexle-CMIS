@@ -29,6 +29,11 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
+        $user = \Auth::user();
+
+        if($user->role == 0) {
+            return view('pages.resident.dashboard');
+        }
 
         $total_released = DB::select("SELECT COUNT(*) AS totalCount FROM residence_transaction;");
         $total_pending_request = DB::select("SELECT COUNT(*) AS totalCount FROM db_brgy.residence WHERE is_read = 0;");
@@ -172,7 +177,7 @@ class HomeController extends Controller
 
         $key = $request->search;
 
-        $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR id_number LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%';");
+        $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR age LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%';");
 
         // dd($data);
 

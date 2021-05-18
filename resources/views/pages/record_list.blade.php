@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-auto">
                         <h1 class="page-header-title">
-                            Record List
+                            Registered List
                         </h1>
                         <div class="page-header-subtitle"></div>
                     </div>
@@ -51,7 +51,6 @@
                             <th>Gender</th>
                             <th>Work</th>
                             <th>Mobile</th>
-                            <th style="width: 150px;">Schedule</th>
                             <th style="width: 220px;">Date Added</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
@@ -72,7 +71,6 @@
                             <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
                             <td>{{ $data[$i]["mobile"] }}</td>
-                            <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
                             <td>{{ $data[$i]["created_at"] }}</td>
                             <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>

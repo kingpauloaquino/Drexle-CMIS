@@ -23,6 +23,7 @@ Route::get('/home', function () {
 
 Route::get('/personal/registration', [App\Http\Controllers\PublicController::class, 'personal_registration']);
 Route::post('/personal/registration/store', [App\Http\Controllers\PublicController::class, 'personal_registration_store']);
+Route::get('/personal/mobile-verify', [App\Http\Controllers\PublicController::class, 'send_otp']);
 
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);

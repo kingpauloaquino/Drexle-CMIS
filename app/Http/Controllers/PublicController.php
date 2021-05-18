@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Residence;
+use App\Http\Controllers\SMSController;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\SMS;
 use Carbon\Carbon;
 use DB;
 
@@ -12,6 +16,12 @@ class PublicController extends Controller
     public function personal_registration()
     {
         return view('pages.public.filloutform');
+    }
+
+    public function send_otp(Request $request)
+    {
+        $sms = new SMSController();
+        return $sms->sendOTP($request->mobile);
     }
 
     public function personal_registration_store(Request $request)
@@ -27,11 +37,35 @@ class PublicController extends Controller
             return redirect("/personal/registration")->with("error", "Oops, year's stay cannot be negative.");
         }
 
-        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : "N/A";
+
+        $mobile = "+63" . substr($request->mobile, 1, 10);
+
+        if((int)$request->verified != 1) {
+            return redirect("/personal/registration")->with("error", "Oops, your mobile number is not valid.");
+        }
+
+        $brgId = "EBB" .  date("ymds") . mt_rand(100000, 999999);
 
         try {
+            $password = mt_rand(10000000, 99999999);
+            $user = new User();
+            $user->firstname = $request->firstname;
+            $user->lastname = $request->lastname;
+            $user->email = $brgId;
+            $user->mobile = $mobile;
+            $user->brgy_id = $brgId;
+            $user->password = Hash::make($password);
+
+            if(!$user->save()) {
+                return redirect("/personal/registration")->with("error", "Oops, something went wrong.");
+            }
+
+            $sms = new SMSController();
+            $sms->sendWelcome($mobile, $request->firstname, $brgId, $password);
+
             $data = new Residence();
-            $data->id_number = $request->id_number;
+            $data->brgy_id = $brgId;
             $data->firstname = $request->firstname;
             $data->middlename = $middlename;
             $data->lastname = $request->lastname;
@@ -47,11 +81,9 @@ class PublicController extends Controller
             $data->nationality = $request->nationality;
             $data->blood = $request->blood;
             $data->email = $request->email;
-            $data->mobile = $request->mobile;
+            $data->mobile = $mobile;
             $data->work = $request->work;
             $data->skill = $request->skill;
-            $data->schedule = $request->schedule;
-            $data->purpose = $request->purpose;
             $data->is_read = 0;
 
             if ($data->save()) {

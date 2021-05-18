@@ -43,13 +43,6 @@
                                         @csrf
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="age">ID number: <span class="required">*</span></label>
-                                                <input type="text" class="form-control" id="id_number" name="id_number" placeholder="I.e.: Driver's License ID#" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="firstname">First Name: <span class="required">*</span></label>
                                                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Juan" required>
@@ -108,12 +101,12 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="stay">Total Years Stay:</label>
-                                                <input type="number" class="form-control" id="stay" name="stay" placeholder="I.e.: 1 year">
+                                                <label for="stay">Total Years Stay <span class="required">*</span>:</label>
+                                                <input type="number" class="form-control" id="stay" name="stay" placeholder="I.e.: 1 year" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="household">Total Household Member/s:</label>
-                                                <input type="number" class="form-control" id="household" name="household" placeholder="I.e.: 5">
+                                                <label for="household">Total Household Member/s <span class="required">*</span>:</label>
+                                                <input type="number" class="form-control" id="household" name="household" placeholder="I.e.: 5" required>
                                             </div>
                                         </div>
 
@@ -123,14 +116,14 @@
                                                 <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Email" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="birhtplace">Place of Birth:</label>
+                                                <label for="birhtplace">Place of Birth <span class="required">*</span>:</label>
                                                 <input type="text" class="form-control" id="birhtplace" name="birhtplace" placeholder="I.e.: Quezon City" required>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="gender">Gender:</label>
+                                                <label for="gender">Gender <span class="required">*</span>:</label>
                                                 <select id="gender" name="gender" class="form-control">
                                                     <option value="0" selected>Choose...</option>
                                                     <option value="1">Male</option>
@@ -138,7 +131,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="civil">Civil Status:</label>
+                                                <label for="civil">Civil Status <span class="required">*</span>:</label>
                                                 <select id="civil" name="civil" class="form-control">
                                                     <option value="0" selected>Choose...</option>
                                                     <option value="1">Single</option>
@@ -155,7 +148,7 @@
                                                 <input type="text" class="form-control" id="nationality" name="nationality" placeholder="I.e.: Filipino" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="blood">Blood Type:</label>
+                                                <label for="blood">Blood Type <span class="required">*</span>:</label>
                                                 <select id="blood" name="blood" class="form-control">
                                                     <option value="0" selected>Choose...</option>
                                                     <option value="A">A</option>
@@ -176,51 +169,29 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="email">Email Address (Optional):</label>
-                                                <input type="text" class="form-control" id="email" name="email" placeholder="I.e.: yourname@gmail.com">
+                                                <label for="email">Email Address <span class="required">*</span>:</label>
+                                                <input type="text" class="form-control" id="email" name="email" placeholder="I.e.: yourname@gmail.com" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="mobile">Mobile Number: <span class="required">*</span></label>
-                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567" required>
+                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567" onkeypress="return isNumberKey(event)" required>
                                             </div>
                                         </div>
+
+                                        <input type="hidden" id="verified" name="verified" />
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="work">Occupation/Work:</label>
-                                                <input type="text" class="form-control" id="work" name="work" placeholder="I.e.: Software Engineer">
+                                                <label for="work">Occupation/Work <span class="required">*</span>:</label>
+                                                <input type="text" class="form-control" id="work" name="work" placeholder="I.e.: Software Engineer" required>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="skill">Skill:</label>
-                                                <input type="text" class="form-control" id="skill" name="skill" placeholder="I.e.: Driving, Welding, Computer Repair">
+                                                <label for="skill">Skill <span class="required">*</span>:</label>
+                                                <input type="text" class="form-control" id="skill" name="skill" placeholder="I.e.: Driving, Welding, Computer Repair" required>
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="birthdate">Schedule: <span class="required">*</span></label>
-                                                <input type="date" class="form-control" id="schedule" name="schedule" placeholder="Schedule" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="gender">Purpose:</label>
-                                                <select class="custom-select" id="purpose" name="purpose">
-                                                    <option value="0" selected>Choose...</option>
-                                                    <option value="Solo Parent">Solo Parent</option>
-                                                    <option value="Barangay Clearance">Resident</option>
-                                                    <option value="Indigency">Indigency</option>
-                                                    <option value="First Time JobSeeker">First Time JobSeeker</option>
-                                                    <option value="Barangay Clearance">Barangay Clearance</option>
-                                                    <!-- <option value="Lot Certication">Lot Certication</option> -->
-                                                    <option value="Business Permit">Business Permit</option>
-                                                    <option value="Business Closure">Business Closure</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <button class="btn btn-primary btn-user btn-block">Submit</button>
+                                        <button class="btn btn-primary btn-user btn-block"><i class="fas fa-paper-plane"></i> Submit</button>
                                     </form>
                                 </div>
                             </div>
