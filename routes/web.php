@@ -72,5 +72,9 @@ Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init'])
 Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);
 Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, 'sms_list']);
 
+
+
+Route::get('/personal/clearance/request', [App\Http\Controllers\ResidentController::class, 'request_certificate']);
+
 Auth::routes();
 // Auth::routes(['register' => false]);

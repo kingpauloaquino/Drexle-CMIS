@@ -179,8 +179,6 @@ class HomeController extends Controller
 
         $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR age LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%';");
 
-        // dd($data);
-
         return view('pages.search', compact('data'));
     }
 
