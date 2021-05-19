@@ -75,6 +75,7 @@ Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, '
 
 
 Route::get('/personal/user/profile', [App\Http\Controllers\ResidentController::class, 'profile']);
+Route::any('/personal/user/profile/execute', [App\Http\Controllers\ResidentController::class, 'profile_edit']);
 Route::get('/personal/clearance/request', [App\Http\Controllers\ResidentController::class, 'request_certificate']);
 Route::any('/personal/clearance/request/check-point', [App\Http\Controllers\ResidentController::class, 'check_request']);
 Route::any('/personal/clearance/request/post', [App\Http\Controllers\ResidentController::class, 'submit_request']);

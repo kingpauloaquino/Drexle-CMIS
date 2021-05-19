@@ -19,7 +19,82 @@ class ResidentController extends Controller
     }
 
     public function profile() {
-        return view("pages.resident.profile");
+
+        $user = \Auth::user();
+
+        $res = Residence::where("brgy_id", $user->brgy_id)->first();
+
+        return view("pages.resident.profile", compact('res'));
+    }
+
+    public function profile_edit(Request $request)
+    {
+        $user = \Auth::user();
+
+        $request->validate([
+            'file' => 'required|mimes:png,jpg,jpeg|max:6144'
+        ]);
+
+        $path = storage_path('/public/image-library');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $fileOrigName = "";
+        $fileName = "";
+        $filePath = "";
+        if ($request->file()) {
+            $fileOrigName = $request->file->getClientOriginalName();
+            $fileName = time() . '_' . $fileOrigName;
+            $relPathAndName = $request->file->storePubliclyAs('/public/image-library', $fileName);
+            $filePath  = str_replace('public', 'storage', $relPathAndName);
+        }
+
+        $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
+
+        $validatedData = $request->validate([
+            'stay' => 'required|min:0'
+        ]);
+
+        $uid = $user->brgy_id;
+
+        if ((int)$validatedData['stay'] < 0) {
+            return redirect("/personal/user/profile")->with("error", "Oops, year's stay cannot be negative.");
+        }
+
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+
+        $data = [
+            "firstname" => $request->firstname,
+            "middlename" => $middlename,
+            "lastname" => $request->lastname,
+            "age" => (int)$age,
+            "address1" => $request->address1,
+            "address2" => $request->address2,
+            "address3" => $request->address3,
+            "year_stay" => $request->stay,
+            "household" => $request->household,
+            "birthdate" => $request->birthdate,
+            "birthplace" => $request->birhtplace,
+            "gender" => $request->gender,
+            "civil_status" => $request->civil,
+            "nationality" => $request->nationality,
+            "blood" => $request->blood,
+            "email" => $request->email,
+            "mobile" => $request->mobile,
+            "work" => $request->work,
+            "skill" => $request->skill,
+            "image" => $filePath
+        ];
+
+        $resident = Residence::where("brgy_id", $uid)->update($data);
+
+        if ($resident) {
+            return redirect("/personal/user/profile")->with("message", "Updated!");
+        }
+        return redirect("/personal/user/profile")->with("error", "Oops, something went wrong.");
+
     }
 
     public function request_certificate()
