@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Residence;
 use App\Models\Transaction;
-
+use App\Models\Schedule;
 use App\Http\Controllers\CertController;
 use Carbon\Carbon;
 use DB;
@@ -32,7 +32,11 @@ class HomeController extends Controller
         $user = \Auth::user();
 
         if($user->role == 0) {
-            return view('pages.resident.dashboard');
+
+            $schedule_date = Schedule::where("residence_uid", $user->id)->where("status", 0)->first();
+            $trans_pending = Transaction::where("residence_uid", $user->id)->where("status", 0)->get()->count();
+            $trans_released = Transaction::where("residence_uid", $user->id)->where("status", 1)->get()->count();
+            return view('pages.resident.dashboard', compact('schedule_date', 'trans_pending', 'trans_released'));
         }
 
         $total_released = DB::select("SELECT COUNT(*) AS totalCount FROM residence_transaction;");

@@ -74,7 +74,12 @@ Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, '
 
 
 
+Route::get('/personal/user/profile', [App\Http\Controllers\ResidentController::class, 'profile']);
 Route::get('/personal/clearance/request', [App\Http\Controllers\ResidentController::class, 'request_certificate']);
+Route::any('/personal/clearance/request/check-point', [App\Http\Controllers\ResidentController::class, 'check_request']);
+Route::any('/personal/clearance/request/post', [App\Http\Controllers\ResidentController::class, 'submit_request']);
+Route::any('/personal/clearance/trans/request', [App\Http\Controllers\ResidentController::class, 'get_request_trans']);
+Route::any('/personal/1212121', [App\Http\Controllers\ResidentController::class, 'set_schedule']);
 
 Auth::routes();
 // Auth::routes(['register' => false]);
