@@ -190,7 +190,8 @@ class HomeController extends Controller
     {
         $dateToday = Carbon::today();
         $dateTodayFormated = $dateToday->format('Y-m-d');
-        $data = DB::select("SELECT * FROM get_request_list WHERE scheduled = '{$dateTodayFormated}';");
+        // $data = DB::select("SELECT * FROM get_request_list WHERE scheduled = '{$dateTodayFormated}';");
+        $data = DB::select("SELECT * FROM get_request_list;");
         return view('pages.trans', compact('data'));
     }
 

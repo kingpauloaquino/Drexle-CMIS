@@ -40,6 +40,7 @@
                         <tr>
                             <th>Name</th>
                             <th style="width: 160px; text-align: center;">Method</th>
+                            <th style="width: 160px; text-align: center;">Schedule</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
@@ -50,6 +51,7 @@
                             ?>
                             <td>{{ ucwords(strtolower($fullname)) }}</td>
                             <td style="text-align: center;">{{ $data[$i]->method }}</td>
+                            <td style="text-align: center;">{{ $data[$i]->scheduled }}</td>
                             <td style="text-align: center;"><button class="btn btn-block btn-sm btn-primary" data-fullname="{{ $fullname }}" data-method="{{ $data[$i]->method }}" data-uid="{{ $data[$i]->id }}" data-cid="{{ $data[$i]->cid }}"><i class="fa fa-print" aria-hidden="true"></i></button></td>
                             </tr>
                             @endfor
