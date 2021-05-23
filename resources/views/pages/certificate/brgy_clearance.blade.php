@@ -50,7 +50,7 @@
                     <tr>
                         <td style="width: 228px;">
                             <center>
-                                <img src="https://icons.iconarchive.com/icons/hopstarter/soft-scraps/128/User-Administrator-Blue-icon.png" style="border: 2px solid gray; margin: 10px 0 0 0;" />
+                                <img src="{{ asset($data['image']) }}" style="border: 2px solid gray; margin: 10px 0 0 0;  width: 128px; height: 128px;" />
                                 <br />
                                 <br />
                                 <p>Signature</p>

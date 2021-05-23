@@ -56,7 +56,7 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <label for="exampleFormControlFile1">Upload your 2x2 Photo</label>
-                                                            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+                                                            <input type="file" name="file" class="form-control-file" id="file" accept="image/png, image/jpeg">
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -536,17 +536,21 @@
                             'error'
                         )
 
-                        var d = msg.method;
-                        for (var i = 0; i < selected_certificates.length; i++) {
-                            if (selected_certificates[i] == d) {
-                                selected_certificates.splice(i, 1);
-                            }
-                        }
-                        $("#checklist-" + d).prop("checked", false);
-                        $("#checklist-" + d).attr("disabled", true);
-                        $("#" + d).removeAttr("style");
-                        $("#" + d + "-requirement").removeAttr("style");
-                        $("#" + d + "-requirement").empty();
+                        setInterval(() => {
+                            location.reload();
+                        }, 2000);
+
+                        // var d = msg.method;
+                        // for (var i = 0; i < selected_certificates.length; i++) {
+                        //     if (selected_certificates[i] == d) {
+                        //         selected_certificates.splice(i, 1);
+                        //     }
+                        // }
+                        // $("#checklist-" + d).prop("checked", false);
+                        // $("#checklist-" + d).attr("disabled", true);
+                        // $("#" + d).removeAttr("style");
+                        // $("#" + d + "-requirement").removeAttr("style");
+                        // $("#" + d + "-requirement").empty();
                     }
                 });
 

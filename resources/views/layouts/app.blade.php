@@ -68,18 +68,8 @@
                             <h6 class="collapse-header">Residence:</h6>
                             <a class="collapse-item" href="/personal/add-person">Add Record</a>
                             <a class="collapse-item" href="/personal/residence-list">Registered List</a>
-
-                            <h6 class="collapse-header">Clearances:</h6>
-                            <a class="collapse-item" href="/personal/clearance/get/bgryclearance">Barangay Clearance</a>
-                            <a class="collapse-item" href="/personal/clearance/get/residency">Residency</a>
-                            <a class="collapse-item" href="/personal/clearance/get/soloparent">Solo Parent</a>
-                            <a class="collapse-item" href="/personal/clearance/get/indigency">Indigency</a>
-                            <a class="collapse-item" href="/personal/clearance/get/jobseeker">First Time JobSeeker</a>
-                            <!-- <a class="collapse-item" href="/personal/clearance/get/0">Lot Certication</a> -->
-
-                            <h6 class="collapse-header">Businesses:</h6>
-                            <a class="collapse-item" href="/business/clearance/get/businesspermit">Business Permit</a>
-                            <a class="collapse-item" href="/business/clearance/get/businessclosure">Business Closure</a>
+                            <a class="collapse-item" href="/personal/request-list">Request List</a>
+                            <a class="collapse-item" href="/personal/released-list">Released List</a>
                         </div>
                     </div>
                 </li>
@@ -175,7 +165,7 @@
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                         <?php
                                         // $fullname =  Auth::user()->lastname . ", " .  Auth::user()->firstname;
-                                        $fullname = "a" ; // ucwords(strtolower($fullname))
+                                        $fullname = "a"; // ucwords(strtolower($fullname))
                                         ?>
                                         {{ $fullname }}
                                     </span>
@@ -197,7 +187,6 @@
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
-
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

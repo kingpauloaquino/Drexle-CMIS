@@ -170,10 +170,71 @@ class HomeController extends Controller
         return ["status" => 200, "data" => $data];
     }
 
+    public function get_resident_transaction($uid)
+    {
+        $data = Transaction::where("id", (int)$uid)->first();
+
+        if ($data == null) {
+            return ["status" => 404];
+        }
+        return ["status" => 200, "data" => $data];
+    }
+
     public function residence_list()
     {
         $data = Residence::orderBy("created_at", "DESC")->get();
         return view('pages.record_list', compact('data'));
+    }
+
+    public function request_list()
+    {
+        $dateToday = Carbon::today();
+        $dateTodayFormated = $dateToday->format('Y-m-d');
+        $data = DB::select("SELECT * FROM get_request_list WHERE scheduled = '{$dateTodayFormated}';");
+        return view('pages.trans', compact('data'));
+    }
+
+    public function request_single(Request $request)
+    {
+
+        $cert = new CertController();
+
+        $intUid = (int)$request->cid;
+        $method = $request->method;
+        $cert_string = "";
+
+        switch ($method) {
+            case "residency":
+                $record_method = "Residency";
+                $cert_string = $cert->bgry_indigency_pdf($request);
+                break;
+            case "soloparent":
+                $record_method = "Solo Parent";
+                break;
+            case "indigency":
+                $record_method = "Indigency";
+                break;
+            case "bgryclearance":
+                $record_method = "Barangay Clearance";
+                break;
+            case "jobseeker":
+                $record_method = "First Time Job Seeker";
+                break;
+            case "businesspermit":
+                $record_method = "Business Permit";
+                break;
+            case "businessclosure":
+                $record_method = "Business Closure";
+                break;
+        }
+
+        $data = DB::select("SELECT * FROM get_request_list WHERE cid = {$intUid};");
+
+        if(COUNT($data) > 0) {
+            return ["status" => 200, "data" => $data];
+        }
+
+        return ["status" => 404];
     }
 
     public function residence_list_seasrch(Request $request)

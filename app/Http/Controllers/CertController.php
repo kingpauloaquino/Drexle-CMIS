@@ -9,7 +9,6 @@ use File;
 use Carbon\Carbon;
 
 
-
 class CertController extends Controller
 {
     private function random_number($length = 12)
@@ -21,6 +20,43 @@ class CertController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public function check_cert($uid, $cid, $method) {
+
+        $cert_string = "";
+        switch ($method) {
+            case "residency":
+                $record_method = "Residency";
+                $cert_string = $this->bgry_residency_preview($uid, $cid);
+                break;
+            case "soloparent":
+                $record_method = "Solo Parent";
+                $cert_string = $this->bgry_soloparent_preview($uid, $cid);
+                break;
+            case "indigency":
+                $record_method = "Indigency";
+                $cert_string = $this->bgry_indigency_preview($uid, $cid);
+                break;
+            case "bgryclearance":
+                $record_method = "Barangay Clearance";
+                $cert_string = $this->bgry_clearance_preview($uid, $cid);
+                break;
+            case "jobseeker":
+                $record_method = "First Time Job Seeker";
+                $cert_string = $this->bgry_jobseeker_preview($uid, $cid);
+                break;
+            case "businesspermit":
+                $record_method = "Business Permit";
+                $cert_string = $this->bgry_business_preview($uid, $cid);
+                break;
+            case "businessclosure":
+                $record_method = "Business Closure";
+                $cert_string = $this->bgry_business_closure_preview($cid);
+                break;
+        }
+
+        return $cert_string;
     }
 
     public function bgry_indigency_pdf($resident, $pdf = false)
@@ -61,7 +97,7 @@ class CertController extends Controller
         return $this->toPDF($html, $this->random_number(),"brg-clearance-indigency", $pdf);
     }
 
-    public function bgry_residency_preview($uid, Request $request)
+    public function bgry_residency_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -69,7 +105,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -85,9 +123,9 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-        $requestor = isset($request->requestor) ? $request->requestor : null;
-        $purpose = $request->purpose;
-        $remark = $request->remark;
+        $requestor = isset($resident_trans->requestor) ? $resident_trans->requestor : null;
+        $purpose = $resident_trans->purpose;
+        $remark = $resident_trans->remark;
 
         $data = [
             "uid" => $uid,
@@ -110,7 +148,7 @@ class CertController extends Controller
         return view('pages.certificate.brgy_residency', compact('data'));
     }
 
-    public function bgry_soloparent_preview($uid, Request $request)
+    public function bgry_soloparent_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -118,7 +156,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -134,9 +174,9 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-        $requestor = IsSet($request->requestor) ? $request->requestor : null;
-        $purpose = $request->purpose;
-        $remark = $request->remark;
+        $requestor = IsSet($resident_trans->requestor) ? $resident_trans->requestor : null;
+        $purpose = $resident_trans->purpose;
+        $remark = $resident_trans->remark;
 
         $data = [
             "uid" => $uid,
@@ -159,7 +199,7 @@ class CertController extends Controller
         return view('pages.certificate.brgy_indigency', compact('data'));
     }
 
-    public function bgry_indigency_preview($uid, Request $request)
+    public function bgry_indigency_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -167,7 +207,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -183,9 +225,9 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-        $requestor = isset($request->requestor) ? $request->requestor : null;
-        $purpose = $request->purpose;
-        $remark = $request->remark;
+        $requestor = isset($resident_trans->requestor) ? $resident_trans->requestor : null;
+        $purpose = $resident_trans->purpose;
+        $remark = $resident_trans->remark;
 
         $data = [
             "uid" => $uid,
@@ -208,7 +250,7 @@ class CertController extends Controller
         return view('pages.certificate.brgy_indigency', compact('data'));
     }
 
-    public function bgry_clearance_preview($uid, Request $request)
+    public function bgry_clearance_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -217,7 +259,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -233,14 +277,15 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-        $requestor = isset($request->requestor) ? $request->requestor : null;
-        $purpose = $request->purpose;
-        $remark = $request->remark;
+        $requestor = isset($resident_trans->requestor) ? $resident_trans->requestor : null;
+        $purpose = $resident_trans->purpose;
+        $remark = $resident_trans->remark;
 
         $data = [
             "uid" => $uid,
             "method" => "bgryclearance",
             "control_number" => $this->SerializeNumber($resident->id),
+            "image" => $resident->image,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -258,7 +303,7 @@ class CertController extends Controller
         return view('pages.certificate.brgy_clearance', compact('data'));
     }
 
-    public function bgry_jobseeker_preview($uid, Request $request)
+    public function bgry_jobseeker_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -267,7 +312,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -283,9 +330,9 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
-        $requestor = isset($request->requestor) ? $request->requestor : null;
-        $purpose = $request->purpose;
-        $remark = $request->remark;
+        $requestor = isset($resident_trans->requestor) ? $resident_trans->requestor : null;
+        $purpose = $resident_trans->purpose;
+        $remark = $resident_trans->remark;
 
         $data = [
             "uid" => $uid,
@@ -311,7 +358,7 @@ class CertController extends Controller
         return view('pages.certificate.brgy_firstjobseeker', compact('data'));
     }
 
-    public function bgry_business_preview($uid, Request $request)
+    public function bgry_business_preview($uid, $cid)
     {
         $img_a = asset('/img/barangay-logo.png');
         $img_b = asset('/img/city-logo.png');
@@ -319,7 +366,9 @@ class CertController extends Controller
         $home = new HomeController();
 
         $resident = $home->get_resident($uid);
+        $resident_trans = $home->get_resident_transaction($cid);
         $resident = $resident["data"];
+        $resident_trans = $resident_trans["data"];
 
         $fullname = $resident->firstname . " " . $resident->middlename . " " . $resident->lastname;
 
@@ -340,12 +389,12 @@ class CertController extends Controller
             "uid" => $uid,
             "method" => "businesspermit",
             "control_number" => $this->SerializeNumber($resident->id),
-            "renewal" => (int)$request->renewal,
-            "code" => $request->bcode,
-            "name" => ucwords(strtolower($request->bname)),
-            "address1" => $request->baddresss,
-            "address2" => $request->raddress,
-            "operator" => ucwords(strtolower($request->operator)),
+            "renewal" => (int)$resident_trans->renewal,
+            "code" => $resident_trans->bcode,
+            "name" => ucwords(strtolower($resident_trans->bname)),
+            "address1" => $resident_trans->baddresss,
+            "address2" => $resident_trans->raddress,
+            "operator" => ucwords(strtolower($resident_trans->operator)),
             "issued" => Carbon::now()->format('F j, Y'),
             "valid" => Carbon::now()->addMonth(12)->format('F j, Y'),
             "img_a" => $img_a,

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Residence;
 use App\Models\Transaction;
 use App\Models\Schedule;
+use App\Models\User;
 
 use App\Http\Controllers\CertController;
 use Carbon\Carbon;
@@ -31,9 +33,7 @@ class ResidentController extends Controller
     {
         $user = \Auth::user();
 
-        $request->validate([
-            'file' => 'required|mimes:png,jpg,jpeg|max:6144'
-        ]);
+        $uid = $user->brgy_id;
 
         $path = storage_path('/public/image-library');
 
@@ -57,7 +57,6 @@ class ResidentController extends Controller
             'stay' => 'required|min:0'
         ]);
 
-        $uid = $user->brgy_id;
 
         if ((int)$validatedData['stay'] < 0) {
             return redirect("/personal/user/profile")->with("error", "Oops, year's stay cannot be negative.");
@@ -95,6 +94,31 @@ class ResidentController extends Controller
         }
         return redirect("/personal/user/profile")->with("error", "Oops, something went wrong.");
 
+    }
+
+    public function settings()
+    {
+        $user = \Auth::user();
+
+        return view("pages.resident.settings");
+    }
+
+    public function settings_edit(Request $request)
+    {
+        $user = \Auth::user();
+
+        if($request->password != $request->rpassword) {
+            return redirect("/personal/user/settings")->with("error", "Oops, Your new password did not match with the re-type password.");
+        }
+
+        $newpassword = Hash::make($request->password);
+
+        $usr = User::where("id", $user->id)->update(["password" => $newpassword]);
+
+        if ($usr) {
+            return redirect("/personal/user/settings")->with("message", "Your password was updated!");
+        }
+        return redirect("/personal/user/settings")->with("error", "Oops, something went wrong.");
     }
 
     public function request_certificate()
