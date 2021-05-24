@@ -102,10 +102,26 @@ class SMSController extends Controller
 
     public function sendWelcome($mobile, $firstname, $brgy_id, $password)
     {
-        $message = "Welcome {$firstname}! your brgyid: {$brgy_id} and your password: {$password} Do not share it with anyone. Thank You!";
+        $message = "Welcome {$firstname}! your barangay id: {$brgy_id} and your password: {$password} Do not share it with anyone. Thank You!";
 
         $sms = new SMS();
         $sms->subject = "Welcome Message";
+        $sms->mobile = $mobile;
+        $sms->message = $message;
+
+        if ($sms->save()) {
+            return ["status" => 200];
+        }
+
+        return ["status" => 500];
+    }
+
+    public function sendSchedule($mobile, $firstname, $schedule)
+    {
+        $message = "Hi {$firstname}! your schedule is {$schedule} Thank You!";
+
+        $sms = new SMS();
+        $sms->subject = "Schedule";
         $sms->mobile = $mobile;
         $sms->message = $message;
 

@@ -37,7 +37,7 @@
                     @csrf
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Firstname, lastname, id#, mobile#" aria-label="Recipient's username" aria-describedby="btnSearch">
+                        <input type="text" class="form-control" name="search" placeholder="Firstname, lastname, mobile#, or etc." aria-label="Recipient's username" aria-describedby="btnSearch">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary">Search</button>
                         </div>
@@ -51,12 +51,12 @@
                             <th>Gender</th>
                             <th>Work</th>
                             <th>Mobile</th>
-                            <th style="width: 220px;">Date Added</th>
-                            <!-- <th style="width: 50px;">Action</th> -->
+                            <th style="width: 160px;">Date Registered</th>
+                            <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for($i = 0; $i < COUNT($data); $i++) @if($data[$i]["is_read"]==0) @if($data[$i]["schedule"] !=null) <tr style="color: red;">
+                        @for($i = 0; $i < COUNT($data); $i++) <tr>
                             <td>
                                 <?php
                                 if ($data[$i]["middlename"] != "N/A") {
@@ -71,52 +71,9 @@
                             <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]["work"] }}</td>
                             <td>{{ $data[$i]["mobile"] }}</td>
-                            <td>{{ $data[$i]["created_at"] }}</td>
-                            <!-- <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td> -->
+                            <td>{{ \Carbon\Carbon::parse($data[$i]->created_at)->format('M d, Y') }}</td>
+                            <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>
-                            @else
-                            <tr>
-                                <td>
-                                    <?php
-                                    if ($data[$i]["middlename"] != "N/A") {
-                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"] . " " . $data[$i]["middlename"];
-                                    } else {
-                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"];
-                                    }
-                                    $fullname = ucwords(strtolower($fullname))
-                                    ?>
-                                    {{ $fullname }}
-                                </td>
-                                <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
-                                <td>{{ $data[$i]["work"] }}</td>
-                                <td>{{ $data[$i]["mobile"] }}</td>
-                                <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
-                                <td>{{ $data[$i]["created_at"] }}</td>
-                                <!-- <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td> -->
-                            </tr>
-                            @endif
-
-                            @else
-                            <tr>
-                                <td>
-                                    <?php
-                                    if ($data[$i]["middlename"] != "N/A") {
-                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"] . " " . $data[$i]["middlename"];
-                                    } else {
-                                        $fullname =  $data[$i]["lastname"] . ", " . $data[$i]["firstname"];
-                                    }
-                                    $fullname = ucwords(strtolower($fullname))
-                                    ?>
-                                    {{ $fullname }}
-                                </td>
-                                <td>{{ $data[$i]["gender"] == 1 ? "Male" : "Female" }}</td>
-                                <td>{{ $data[$i]["work"] }}</td>
-                                <td>{{ $data[$i]["mobile"] }}</td>
-                                <td>{{ $data[$i]["schedule"] != null ? $data[$i]["schedule"] : "N/A" }}</td>
-                                <td>{{ $data[$i]["created_at"] }}</td>
-                                <!-- <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]['id'] }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td> -->
-                            </tr>
-                            @endif
                             @endfor
                     </tbody>
                 </table>
@@ -141,10 +98,6 @@
                 <a id="editbutton" type="button" class="btn btn-primary btn-sm pull-right">Edit</a>
 
                 <table class="mt-3" style="width: 100%;">
-                    <tr>
-                        <td>ID Number:</td>
-                        <td id="dtIdNumber" style="text-align: right;">***</td>
-                    </tr>
                     <tr>
                         <td>Name:</td>
                         <td id="dtName" style="text-align: right;">***</td>
@@ -212,10 +165,6 @@
                     <tr>
                         <td>Skill:</td>
                         <td id="dtSkill" style="text-align: right;">***</td>
-                    </tr>
-                    <tr>
-                        <td>Purpose:</td>
-                        <td id="dtPurpose" style="text-align: right; color:red;">***</td>
                     </tr>
                 </table>
 
@@ -503,7 +452,6 @@
                 }
 
                 $("#dtName").empty().prepend(res.data.lastname + ", " + res.data.firstname + " " + middleName);
-
                 $("#dtAge").empty().prepend(res.data.age);
                 $("#dtAddress1").empty().prepend(res.data.address1);
                 $("#dtAddress2").empty().prepend(res.data.address2);
@@ -540,7 +488,6 @@
                 $("#dtMobile").empty().prepend(res.data.mobile);
                 $("#dtOccupation").empty().prepend(res.data.work);
                 $("#dtSkill").empty().prepend(res.data.skill);
-                $("#dtPurpose").empty().prepend(res.data.purpose);
             });
         }
 

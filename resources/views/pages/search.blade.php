@@ -25,7 +25,7 @@
                     @csrf
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Firstname, lastname, id#, mobile#" aria-label="Recipient's username" aria-describedby="btnSearch">
+                        <input type="text" class="form-control" name="search" placeholder="Firstname, lastname, mobile#, or etc." aria-label="Recipient's username" aria-describedby="btnSearch">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary">Search</button>
                         </div>
@@ -39,7 +39,7 @@
                             <th>Gender</th>
                             <th>Work</th>
                             <th>Mobile</th>
-                            <th>Date Added</th>
+                            <th style="width: 160px;">Date Registered</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                             <td>{{ $data[$i]->gender == 1 ? "Male" : "Female" }}</td>
                             <td>{{ $data[$i]->work }}</td>
                             <td>{{ $data[$i]->mobile }}</td>
-                            <td>{{ $data[$i]->created_at }}</td>
+                            <td>{{ \Carbon\Carbon::parse($data[$i]->created_at)->format('M d, Y') }}</td>
                             <td><button class="btn btn-block btn-sm btn-secondary" data-value="{{ $data[$i]->id }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                             </tr>
                             @endfor
@@ -86,10 +86,6 @@
                 <a id="editbutton" type="button" class="btn btn-primary btn-sm pull-right">Edit</a>
 
                 <table class="mt-3" style="width: 100%;">
-                    <tr>
-                        <td>ID Number:</td>
-                        <td id="dtIdNumber" style="text-align: right;">***</td>
-                    </tr>
                     <tr>
                         <td>Name:</td>
                         <td id="dtName" style="text-align: right;">***</td>
@@ -480,7 +476,6 @@
                 $("#dtMobile").empty().prepend(res.data.mobile);
                 $("#dtOccupation").empty().prepend(res.data.work);
                 $("#dtSkill").empty().prepend(res.data.skill);
-                $("#dtPurpose").empty().prepend(res.data.purpose);
             });
         }
 

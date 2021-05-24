@@ -178,9 +178,11 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="mobile">Mobile Number: <span class="required">*</span></label>
-                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567" required>
+                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="I.e.: 09171234567" onkeypress="return isNumberKey(event)" required>
                                             </div>
                                         </div>
+
+                                        <input type="hidden" id="verified" name="verified" />
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -203,9 +205,31 @@
             </div>
         </div>
 </main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mobile Verification</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Enter OTP Code:</label>
+                    <input type="text" class="form-control" id="txtCode" aria-describedby="emailHelp" placeholder="I.e.: 123456" onkeypress="return isNumberKey(event)">
+                    <small id="txtCode" class="form-text text-muted">We'll never share your mobile# with anyone else.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-envelope-open-text"></i> Resend OTP Code</button>
+                <button id="btnVerifyNow" type="submit" class="btn btn-primary" style="float: right;"><i class="fas fa-paper-plane"></i> Verify Now</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.8.2/dist/sweetalert2.all.min.js" integrity="sha256-VkcwHXtZS2ZHfHSFSP8r1AzueZi37jGMPeHv4OfV1Cg=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $("#noMiddlename").change(function() {
@@ -215,6 +239,119 @@
                 $("#middlename").attr("required", true);
             }
         });
+
+        $('#mobile').keypress(function() {
+            if (this.value.length >= 11) {
+                return false;
+            }
+        });
+
+        $('#mobile').focusout(function() {
+            var mobile = $(this).val();
+            Swal.fire({
+                title: 'Mobile Verfication!',
+                text: "You should enter your valid mobile number. We will verify it via sending an OTP.",
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK, send it!'
+            }).then((result) => {
+                console.log(result);
+                if (result) {
+
+                    data = {
+                        mobile: mobile
+                    };
+
+                    processing(data);
+                }
+            })
+        })
+
+        $("#btnVerifyNow").on("click", function() {
+            var otp = $("#txtCode").val();
+            var code = getCookie("otp");
+
+            if (code != otp) {
+                Swal.fire(
+                    'Invalid',
+                    'Oops, you entered an invalid OTP Code.',
+                    'error'
+                )
+                return false;
+            }
+
+            $("#verified").val("1");
+            console.log(otp);
+            console.log(code);
+
+            Swal.fire(
+                'Good Job!',
+                'You entered a valid OTP Code',
+                'success'
+            )
+            $('#exampleModal').modal("hide");
+        })
     })
+
+    function processing(data) {
+        $.ajax({
+            dataType: 'json',
+            type: "GET",
+            url: "/personal/mobile-verify",
+            data: data
+        }).done(function(res) {
+            if (res.status == 200) {
+                setCookie("otp", res.otp, 1);
+                $('#exampleModal').modal($('#exampleModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }));
+            } else if (res.status == 404) {
+                Swal.fire(
+                    'Oops',
+                    'Invalid mobile prefix number.',
+                    'error'
+                )
+            } else {
+                Swal.fire(
+                    'Oops',
+                    'Something went wrong.',
+                    'error'
+                )
+            }
+        });
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 </script>
 @endsection

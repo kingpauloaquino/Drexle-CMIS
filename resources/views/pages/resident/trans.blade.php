@@ -28,8 +28,8 @@
                         <tr>
                             <th>Type of Certificate</th>
                             <th style="width: 120px; text-align: center;">Status</th>
-                            <th style="width: 210px; text-align: center;">Date Requested</th>
                             <th style="width: 210px; text-align: center;">Date Released</th>
+                            <th style="width: 210px; text-align: center;">Date Requested</th>
                         </tr>
                     </thead>
                     <tbody>

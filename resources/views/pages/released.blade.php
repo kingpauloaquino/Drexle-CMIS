@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-auto">
                         <h1 class="page-header-title">
-                            Request List
+                            Released List
                         </h1>
                         <div class="page-header-subtitle">As of {{ date("Y-m-d") }}</div>
                     </div>
@@ -21,7 +21,7 @@
         <div class="card mb-4">
             <div class="card-body">
 
-                <form action="/personal/request-list/search" method="POST">
+                <form action="/personal/released-list/search" method="POST">
 
                     @csrf
 
@@ -40,8 +40,8 @@
                         <tr>
                             <th>Name</th>
                             <th style="width: 260px; text-align: center;">Method</th>
-                            <th style="width: 160px; text-align: center;">Schedule</th>
-                            <th style="width: 160px; text-align: center;">Date Requested</th>
+                            <th style="width: 160px; text-align: center;">Date Released</th>
+                            <th style="width: 160px; text-align: center;">Expiration Date</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
@@ -79,8 +79,8 @@
                                 ?>
                                 {{ $record_method }}
                             </td>
-                            <td style="text-align: center;">{{ \Carbon\Carbon::parse($data[$i]->scheduled)->format('M d, Y') }}</td>
-                            <td style="text-align: center;">{{ \Carbon\Carbon::parse($data[$i]->created_at)->format('M d, Y') }}</td>
+                            <td style="text-align: center;">{{ \Carbon\Carbon::parse($data[$i]->updated_at)->format('M d, Y') }}</td>
+                            <td style="text-align: center;">{{ \Carbon\Carbon::parse($data[$i]->updated_at)->addDay(1)->format('M d, Y') }}</td>
                             <td style="text-align: center;"><button class="btn btn-block btn-sm btn-primary" data-fullname="{{ $fullname }}" data-method="{{ $data[$i]->method }}" data-uid="{{ $data[$i]->id }}" data-cid="{{ $data[$i]->cid }}"><i class="fa fa-print" aria-hidden="true"></i></button></td>
                             </tr>
                             @endfor
@@ -129,7 +129,7 @@
         $("td button.btn").on("click", function() {
             var data = $(this).data();
             $('#fullname').text(data.fullname);
-            var url = "/brgy/residency/issue/preview/" + data.uid + "/" + data.cid + "/" + data.method;
+            var url = "/brgy/residency/issue/preview/" + data.uid + "/" + data.cid + "/" + data.method + "?show=preview";
             var myWindow = window.open(url, "Preview Certificate", "width=990,height=950,top=10,left=360");
         })
     })

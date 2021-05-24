@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/forgot/password', function () {
+    return view('auth.forgot');
+});
+
 Route::get('/home', function () {
     return redirect("/dashboard");
 });
@@ -38,9 +42,11 @@ Route::post('/personal/delete-person/delete/{uid}', [App\Http\Controllers\HomeCo
 Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
 Route::get('/personal/request-list', [App\Http\Controllers\HomeController::class, 'request_list']);
 Route::get('/personal/request-list/get-details', [App\Http\Controllers\HomeController::class, 'request_single']);
-Route::get('/personal/released-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
+Route::get('/personal/released-list', [App\Http\Controllers\HomeController::class, 'released_list']);
 
 Route::any('/personal/residence-list/search', [App\Http\Controllers\HomeController::class, 'residence_list_seasrch']);
+Route::any('/personal/request-list/search', [App\Http\Controllers\HomeController::class, 'request_list_seasrch']);
+Route::any('/personal/released-list/search', [App\Http\Controllers\HomeController::class, 'released_list_seasrch']);
 Route::any('/personal/cert-list/search', [App\Http\Controllers\HomeController::class, 'cert_list_seasrch']);
 
 Route::get('/personal/resident/get/{uid}', [App\Http\Controllers\HomeController::class, 'get_resident']);
@@ -69,6 +75,7 @@ Route::any('/brgy/issue/list/{uid}/{method}', [App\Http\Controllers\HomeControll
 Route::get('/blotter/create', [App\Http\Controllers\BlotterController::class, 'create']);
 Route::get('/blotter/view-list', [App\Http\Controllers\BlotterController::class, 'view_list']);
 Route::any('/blotter/create/store', [App\Http\Controllers\BlotterController::class, 'store']);
+Route::any('/blotter/status/update', [App\Http\Controllers\BlotterController::class, 'update_status']);
 
 
 Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init']);

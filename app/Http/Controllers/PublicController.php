@@ -28,7 +28,6 @@ class PublicController extends Controller
     {
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
 
-
         $validatedData = $request->validate([
             'stay' => 'required|min:0'
         ]);

@@ -22,7 +22,7 @@ class CertController extends Controller
         return $randomString;
     }
 
-    public function check_cert($uid, $cid, $method) {
+    public function check_cert($uid, $cid, $method, $show = null) {
 
         $cert_string = "";
         switch ($method) {
@@ -129,6 +129,7 @@ class CertController extends Controller
 
         $data = [
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "residency",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
@@ -180,6 +181,7 @@ class CertController extends Controller
 
         $data = [
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "soloparent",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
@@ -231,6 +233,7 @@ class CertController extends Controller
 
         $data = [
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "indigency",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
@@ -283,6 +286,7 @@ class CertController extends Controller
 
         $data = [
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "bgryclearance",
             "control_number" => $this->SerializeNumber($resident->id),
             "image" => $resident->image,
@@ -336,6 +340,7 @@ class CertController extends Controller
 
         $data = [
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "jobseeker",
             "control_number" => $this->SerializeNumber($resident->id),
             "title" => $title,
@@ -387,6 +392,7 @@ class CertController extends Controller
         $data = [
             "buid" => 0,
             "uid" => $uid,
+            "cid" => $cid,
             "method" => "businesspermit",
             "control_number" => $this->SerializeNumber($resident->id),
             "renewal" => (int)$resident_trans->renewal,

@@ -134,6 +134,12 @@
             }
         });
 
+        $('#message').keypress(function() {
+            if (this.value.length >= 160) {
+                return false;
+            }
+        });
+
         $('#recipients').on('change', function() {
             var selected = $(this).find(":selected").val();
 

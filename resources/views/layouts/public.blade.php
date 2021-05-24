@@ -138,7 +138,6 @@
             })
 
             $("#btnVerifyNow").on("click", function() {
-
                 var otp = $("#txtCode").val();
                 var code = getCookie("otp");
 
@@ -160,9 +159,6 @@
                     'You entered a valid OTP Code',
                     'success'
                 )
-
-                // $("#mobile").attr("disabled", true);
-
                 $('#exampleModal').modal("hide");
             })
         })

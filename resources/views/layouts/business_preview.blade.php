@@ -15,15 +15,7 @@
 
     <script>
         var uid = "{{ $data['uid'] }}";
-        var method = "{{ $data['method'] }}";
-        var renewal = "{{ $data['renewal'] }}";
-        var code = "{{ $data['code'] }}";
-        var name = "{{ $data['name'] }}";
-        var address1 = "{{ $data['address1'] }}";
-        var operator = "{{ $data['operator'] }}";
-        var address2 = "{{ $data['address2'] }}";
-
-
+        var cid = "{{ $data['cid'] }}";
 
         function do_save_print(element) {
             $(document).ready(function() {
@@ -63,13 +55,7 @@
 
                 data = {
                     uid: uid,
-                    method: method,
-                    renewal: renewal,
-                    code: code,
-                    name: name,
-                    address1: address1,
-                    operator: operator,
-                    address2: address2,
+                    cid: cid,
                 };
 
                 $.ajax({
@@ -113,11 +99,19 @@
 
 <body>
 
+    @if(!IsSet($_GET["show"]))
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
             <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
+    @else
+    <div style="margin: 0 auto; width: 949px;">
+        <div style="padding: 10px 0 10px 0;">
+
+        </div>
+    </div>
+    @endif
 
     <center>
         <div id="cert" class="container1">
@@ -336,11 +330,19 @@
         </div>
     </center>
 
+    @if(!IsSet($_GET["show"]))
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
             <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
+    @else
+    <div style="margin: 0 auto; width: 949px;">
+        <div style="padding: 10px 0 10px 0;">
+
+        </div>
+    </div>
+    @endif
 </body>
 
 </html>

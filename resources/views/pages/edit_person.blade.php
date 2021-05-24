@@ -43,13 +43,6 @@
                                         @csrf
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="age">ID number: <span class="required">*</span></label>
-                                                <input type="text" class="form-control" id="id_number" name="id_number" placeholder="I.e.: Driver's License ID#" value="{{ $resident->id_number }}" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="firstname">First Name: <span class="required">*</span></label>
                                                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Juan" value="{{ $resident->firstname }}" required>

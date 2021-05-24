@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\User;
 
 use App\Http\Controllers\CertController;
+use App\Http\Controllers\SMSController;
 use Carbon\Carbon;
 use DB;
 
@@ -186,12 +187,15 @@ class ResidentController extends Controller
         $sched->date_assigned= $schedule;
         $sched->save();
 
+        $sms = new SMSController();
+        $sms->sendSchedule($user->mobile, $user->firstname, $schedule);
+
         return ["status" => 200];
     }
 
     public function set_schedule() {
 
-        $started = 3;
+        $started = 1;
         do {
             $dateAdd3day = Carbon::today()->addDay($started);
             $dateAdd3dayFormated = $dateAdd3day->format('Y-m-d');

@@ -33,9 +33,14 @@ class BlotterController extends Controller
 
     public function view_list()
     {
-
         $blotters = Blotter::get();
-
         return view('pages.blotter.view', compact('blotters'));
+    }
+
+    public function update_status(Request $request)
+    {
+        $blotters = Blotter::where("id", $request->uid)->update(["status" => $request->status]);
+
+        return ["status" => $blotters ? 200 : 500];
     }
 }

@@ -15,10 +15,9 @@
 
     <script>
         var uid = "{{ $data['uid'] }}";
-        var method = "{{ $data['method'] }}";
-        var requestor = "{{ $data['requestor'] }}";
-        var purpose = "{{ $data['purpose'] }}";
-        var remark = "{{ $data['remark'] }}";
+        var cid = "{{ $data['cid'] }}";
+
+
 
         function do_save_print(element) {
             $(document).ready(function() {
@@ -30,10 +29,7 @@
 
                 data = {
                     uid: uid,
-                    method: method,
-                    requestor: requestor,
-                    purpose: purpose,
-                    remark: remark,
+                    cid: cid,
                 };
 
                 $.ajax({
@@ -78,11 +74,19 @@
 
 <body>
 
+    @if(!IsSet($_GET["show"]))
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
             <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
+    @else
+    <div style="margin: 0 auto; width: 949px;">
+        <div style="padding: 10px 0 10px 0;">
+
+        </div>
+    </div>
+    @endif
 
     <center>
         <div id="cert" class="container1">
@@ -308,11 +312,18 @@
         </div>
     </center>
 
+    @if(!IsSet($_GET["show"]))
     <div style="margin: 0 auto; width: 949px;">
         <div style="padding: 10px 0 10px 0;">
             <button class="btnPrint btn btn-danger" onclick="do_save_print('cert');">Print</button>
         </div>
     </div>
+    @else
+    <div style="margin: 0 auto; width: 949px;">
+        <div style="padding: 10px 0 10px 0;">
+        </div>
+    </div>
+    @endif
 </body>
 
 </html>

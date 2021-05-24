@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Residence;
 use App\Models\Transaction;
 use App\Models\Schedule;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\CertController;
 use Carbon\Carbon;
 use DB;
@@ -39,10 +41,11 @@ class HomeController extends Controller
             return view('pages.resident.dashboard', compact('schedule_date', 'trans_pending', 'trans_released'));
         }
 
+        $total_registered = DB::select("SELECT COUNT(*) AS totalCount FROM residence;");
         $total_released = DB::select("SELECT COUNT(*) AS totalCount FROM residence_transaction;");
         $total_pending_request = DB::select("SELECT COUNT(*) AS totalCount FROM db_brgy.residence WHERE is_read = 0;");
 
-        return view('pages.dashboard', compact('total_released', 'total_pending_request'));
+        return view('pages.dashboard', compact('total_registered', 'total_released', 'total_pending_request'));
     }
 
     public function add_person()
@@ -64,10 +67,34 @@ class HomeController extends Controller
             return redirect("/personal/add-person")->with("error", "Oops, year's stay cannot be negative.");
         }
 
-        $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
+        $middlename = strlen($request->middlename) > 0 ? $request->middlename : "N/A";
+
+        $mobile = "+63" . substr($request->mobile, 1, 10);
+
+        if ((int)$request->verified != 1) {
+            return redirect("/personal/add-person")->with("error", "Oops, your mobile number is not valid.");
+        }
+
+        $brgId = "EBB" .  date("ymds") . mt_rand(100000, 999999);
+
+        $password = mt_rand(10000000, 99999999);
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $brgId;
+        $user->mobile = $mobile;
+        $user->brgy_id = $brgId;
+        $user->password = Hash::make($password);
+
+        if (!$user->save()) {
+            return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
+        }
+
+        $sms = new SMSController();
+        $sms->sendWelcome($mobile, $request->firstname, $brgId, $password);
 
         $data = new Residence();
-        $data->id_number = $request->id_number;
+        $data->brgy_id = $brgId;
         $data->firstname = $request->firstname;
         $data->middlename = $middlename;
         $data->lastname = $request->lastname;
@@ -84,9 +111,10 @@ class HomeController extends Controller
         $data->nationality = $request->nationality;
         $data->blood = $request->blood;
         $data->email = $request->email;
-        $data->mobile = $request->mobile;
+        $data->mobile = $mobile;
         $data->work = $request->work;
         $data->skill = $request->skill;
+        $data->is_read = 1;
 
         if($data->save()) {
             return redirect("/personal/residence-list")->with("message", "Good Job!");
@@ -152,7 +180,7 @@ class HomeController extends Controller
 
     public function delete_person_delete($uid, Request $request)
     {
-        $resident = Residence::where("id", $uid)->delete();
+        $resident = Residence::where("id", $uid)->update(["status" => 99]);
 
         if ($resident) {
             return redirect("/personal/residence-list")->with("message", "Updated!");
@@ -182,7 +210,7 @@ class HomeController extends Controller
 
     public function residence_list()
     {
-        $data = Residence::orderBy("created_at", "DESC")->get();
+        $data = Residence::where("status", 0)->orderBy("created_at", "DESC")->get();
         return view('pages.record_list', compact('data'));
     }
 
@@ -191,8 +219,14 @@ class HomeController extends Controller
         $dateToday = Carbon::today();
         $dateTodayFormated = $dateToday->format('Y-m-d');
         // $data = DB::select("SELECT * FROM get_request_list WHERE scheduled = '{$dateTodayFormated}';");
-        $data = DB::select("SELECT * FROM get_request_list;");
+        $data = DB::select("SELECT * FROM get_request_list WHERE cstatus = 0;");
         return view('pages.trans', compact('data'));
+    }
+
+    public function released_list()
+    {
+        $data = DB::select("SELECT * FROM get_request_list WHERE cstatus = 1;");
+        return view('pages.released', compact('data'));
     }
 
     public function request_single(Request $request)
@@ -240,12 +274,29 @@ class HomeController extends Controller
 
     public function residence_list_seasrch(Request $request)
     {
-
         $key = $request->search;
 
         $data = DB::select("SELECT * FROM residence WHERE firstname LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR age LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%';");
 
         return view('pages.search', compact('data'));
+    }
+
+    public function request_list_seasrch(Request $request)
+    {
+        $key = $request->search;
+
+        $data = DB::select("SELECT * FROM get_request_list WHERE firstname LIKE '%{$key}%' OR middlename LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR age LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%' AND cstatus = 0;");
+
+        return view('pages.trans', compact('data'));
+    }
+
+    public function released_list_seasrch(Request $request)
+    {
+        $key = $request->search;
+
+        $data = DB::select("SELECT * FROM get_request_list WHERE firstname LIKE '%{$key}%' OR middlename LIKE '%{$key}%' OR lastname LIKE '%{$key}%' OR mobile LIKE '%{$key}%' OR age LIKE '%{$key}%' OR work LIKE '%{$key}%' OR skill LIKE '%{$key}%' OR blood LIKE '%{$key}%' AND cstatus = 1;");
+
+        return view('pages.released', compact('data'));
     }
 
     public function cert_list_seasrch(Request $request)
@@ -360,25 +411,10 @@ class HomeController extends Controller
 
     public function issue_save_print(Request $request)
     {
-        $resident = Residence::where("id", $request->uid)->update(["purpose" => "", "is_read" => 1]);
+        $resident = Residence::where("id", $request->uid)->update(["is_read" => 1]);
+        $resident = Transaction::where("id", $request->cid)->update(["date_issued" =>Carbon::now(), "status" => 1]);
 
-        $data = new Transaction();
-        $data->method = $request->method;
-        $data->residence_uid = $request->uid;
-        $data->date_issued = Carbon::now();
-
-        $data->purpose = $request->purpose;
-        $data->requestor = $request->requestor;
-        $data->remark = $request->remark;
-
-        $data->business_renewal = $request->renewal;
-        $data->business_code = $request->code;
-        $data->business_name = $request->name;
-        $data->business_address = $request->address1;
-        $data->business_operator = $request->operator;
-        $data->business_residence_address = $request->address2;
-
-        if ($data->save()) {
+        if ($resident) {
             return ["status" => 200];
         }
 

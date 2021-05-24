@@ -36,7 +36,7 @@
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">Brgy Admin</div>
+                    <div class="sidebar-brand-text mx-3">Admin</div>
                 </a>
 
                 <!-- Divider -->
@@ -163,12 +163,20 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                        @if (auth()->guest())
                                         <?php
-                                        // $fullname =  Auth::user()->lastname . ", " .  Auth::user()->firstname;
-                                        $fullname = "a"; // ucwords(strtolower($fullname))
+                                        $fullname = "N/A";
                                         ?>
+                                        @else
+                                        <?php
+                                        $fullname =  Auth::user()->lastname . ", " .  Auth::user()->firstname;
+                                        $fullname = ucwords(strtolower($fullname))
+                                        ?>
+                                        @endif
                                         {{ $fullname }}
                                     </span>
+
+
                                     <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                                 </a>
                                 <!-- Dropdown - User Information -->
