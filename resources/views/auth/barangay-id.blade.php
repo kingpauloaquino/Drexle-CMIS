@@ -14,7 +14,7 @@
                     <div class="col-lg-12">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Forgot Password</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Forgot Barangay ID</h1>
                             </div>
 
                             @error('email')
@@ -44,7 +44,7 @@
                             <form class="user" method="POST" action="/forgot/password-brgy-id/post">
                                 @csrf
 
-                                <input type="hidden" name="method" value="0" />
+                                <input type="hidden" name="method" value="1" />
 
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="mobile" name="mobile" aria-describedby="emailHelp" placeholder="Enter Mobile Number..." required autofocus>
@@ -56,7 +56,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/forgot/barangay-id">Forgot Barangay ID?</a>
+                                <a class="small" href="/forgot/password">Forgot Password?</a>
                             </div>
                             <hr>
                             <div class="text-center">

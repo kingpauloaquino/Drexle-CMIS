@@ -16,6 +16,7 @@
     <script>
         var uid = "{{ $data['uid'] }}";
         var cid = "{{ $data['cid'] }}";
+        var control_number = "{{ $data['control_number'] }}";
 
         function do_save_print(element) {
             $(document).ready(function() {
@@ -56,6 +57,7 @@
                 data = {
                     uid: uid,
                     cid: cid,
+                    cn: control_number
                 };
 
                 $.ajax({

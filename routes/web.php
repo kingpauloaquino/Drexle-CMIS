@@ -21,6 +21,10 @@ Route::get('/forgot/password', function () {
     return view('auth.forgot');
 });
 
+Route::get('/forgot/barangay-id', function () {
+    return view('auth.barangay-id');
+});
+
 Route::get('/home', function () {
     return redirect("/dashboard");
 });
@@ -31,6 +35,7 @@ Route::get('/personal/mobile-verify', [App\Http\Controllers\PublicController::cl
 
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard']);
+Route::any('/forgot/password-brgy-id/post', [App\Http\Controllers\PublicController::class, 'forgot_everything']);
 
 Route::get('/personal/add-person', [App\Http\Controllers\HomeController::class, 'add_person']);
 Route::post('/personal/add-person/store', [App\Http\Controllers\HomeController::class, 'add_person_store']);

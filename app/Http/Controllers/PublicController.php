@@ -18,6 +18,39 @@ class PublicController extends Controller
         return view('pages.public.filloutform');
     }
 
+    public function forgot_everything(Request $request)
+    {
+
+        $method = (int)$request->method;
+        $mobile = "+63" . substr($request->mobile, 1, 10);
+        $u = User::where("mobile", $mobile);
+        $u_select = $u->first();
+        if($u_select == null) {
+
+            if($method > 0) {
+                return redirect("/forgot/barangay-id")->with("error", "Oops, your mobile number did not found.");
+            }
+            return redirect("/forgot/password")->with("error", "Oops, your mobile number did not found.");
+        }
+
+        $sms = new SMSController();
+
+        if ($method > 0) {
+            $message = "Hi ". $u_select->firstname . "! here is your Barangay ID: " . $u_select->brgy_id . " Thank You!";
+            $sms-> sendMessage($mobile, $message);
+            return redirect("/forgot/barangay-id")->with("message", "We have sent it to your mobile#.");
+        }
+        $password = mt_rand(10000000, 99999999);
+        $res = $u->update(["password" => Hash::make($password)]);
+
+        if ($res) {
+            $message = "Hi " . $u_select->firstname . "! here is your new password: " . $password . " Thank You!";
+            $sms->sendMessage($mobile, $message);
+            return redirect("/forgot/password")->with("message", "We have sent it to your mobile#.");
+        }
+        return redirect("/personal/registration")->with("error", "Oops, something went wrong.");
+    }
+
     public function send_otp(Request $request)
     {
         $sms = new SMSController();

@@ -127,11 +127,17 @@ class CertController extends Controller
         $purpose = $resident_trans->purpose;
         $remark = $resident_trans->remark;
 
+        $cn = $this->SerializeNumber($resident->id);
+        if ($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "uid" => $uid,
             "cid" => $cid,
+            "brgy_id" => $resident->brgy_id,
             "method" => "residency",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -179,11 +185,17 @@ class CertController extends Controller
         $purpose = $resident_trans->purpose;
         $remark = $resident_trans->remark;
 
+        $cn = $this->SerializeNumber($resident->id);
+        if ($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "uid" => $uid,
             "cid" => $cid,
+            "brgy_id" => $resident->brgy_id,
             "method" => "soloparent",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -231,11 +243,17 @@ class CertController extends Controller
         $purpose = $resident_trans->purpose;
         $remark = $resident_trans->remark;
 
+        $cn = $this->SerializeNumber($resident->id);
+        if ($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "uid" => $uid,
             "cid" => $cid,
+            "brgy_id" => $resident->brgy_id,
             "method" => "indigency",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -284,11 +302,16 @@ class CertController extends Controller
         $purpose = $resident_trans->purpose;
         $remark = $resident_trans->remark;
 
+        $cn = $this->SerializeNumber($resident->id);
+        if ($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "uid" => $uid,
             "cid" => $cid,
             "method" => "bgryclearance",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "image" => $resident->image,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
@@ -338,11 +361,16 @@ class CertController extends Controller
         $purpose = $resident_trans->purpose;
         $remark = $resident_trans->remark;
 
+        $cn = $this->SerializeNumber($resident->id);
+        if ($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "uid" => $uid,
             "cid" => $cid,
             "method" => "jobseeker",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "title" => $title,
             "fullname" => ucwords(strtolower($fullname)),
             "age" => $resident->age,
@@ -389,12 +417,17 @@ class CertController extends Controller
         $title = $resident->gender == 1 ? "Mr." : $misis;
         $gender = $resident->gender == 1 ? ["a" => "he", "b" => "his"] : ["a" => "she", "b" => "her"];
 
+        $cn = $this->SerializeNumber($resident->id);
+        if($resident_trans->control_number != null) {
+            $cn = $resident_trans->control_number;
+        }
+
         $data = [
             "buid" => 0,
             "uid" => $uid,
             "cid" => $cid,
             "method" => "businesspermit",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => $cn,
             "renewal" => (int)$resident_trans->renewal,
             "code" => $resident_trans->bcode,
             "name" => ucwords(strtolower($resident_trans->bname)),
@@ -440,7 +473,7 @@ class CertController extends Controller
             "buid" => $buid,
             "uid" => $business_details->residence_uid,
             "method" => "businessclosure",
-            "control_number" => $this->SerializeNumber($resident->id),
+            "control_number" => "N/A",
             "renewal" => 0,
             "code" => $business_details->business_code,
             "name" => $business_details->business_name,
@@ -459,16 +492,17 @@ class CertController extends Controller
 
     public static function SerializeNumber($count)
     {
-        if ($count >= 0 && $count <= 9) {
-            $count = "000" . $count;
-        } else if ($count >= 10 && $count <= 99) {
-            $count = "00" . $count;
-        } else if ($count >= 99 && $count <= 999) {
-            $count = "0" . $count;
-        } else if ($count >= 999 && $count <= 9999) {
-            $count = $count;
-        }
-        return $count;
+        // if ($count >= 0 && $count <= 9) {
+        //     $count = "000" . $count;
+        // } else if ($count >= 10 && $count <= 99) {
+        //     $count = "00" . $count;
+        // } else if ($count >= 99 && $count <= 999) {
+        //     $count = "0" . $count;
+        // } else if ($count >= 999 && $count <= 9999) {
+        //     $count = $count;
+        // }
+        $cn =  date("ymd") . $count . mt_rand(10, 99);
+        return $cn;
     }
 
     public function bgry_clearance_pdf($resident, $pdf = false)

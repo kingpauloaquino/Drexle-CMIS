@@ -64,7 +64,38 @@
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="household">Street: <span class="required">*</span></label>
-                                                <input type="text" class="form-control" id="address2" name="address2" placeholder="I.e.: Murphy" value="{{ $resident->address2 }}" required>
+                                                <select id="address2" name="address2" class="form-control">
+                                                    <option value="0" selected>Choose...</option>
+                                                    <option value="17th Street">17th Street</option>
+                                                    <option value="18th Street">18th Street</option>
+                                                    <option value="20th Street">20th Street</option>
+                                                    <option value="21st Street">21st Street</option>
+                                                    <option value="23rd Street">23rd Street</option>
+                                                    <option value="24th Street">24th Street</option>
+                                                    <option value="25th Street">25th Street</option>
+                                                    <option value="26th Street">26th Street</option>
+                                                    <option value="27th Street">27th Street</option>
+                                                    <option value="Afable">Afable</option>
+                                                    <option value="Ardoin">Ardoin</option>
+                                                    <option value="Barretto">Barretto</option>
+                                                    <option value="Canda">Canda</option>
+                                                    <option value="Dahl">Dahl</option>
+                                                    <option value="Elecaño">Elecaño</option>
+                                                    <option value="Fontaine">Fontaine</option>
+                                                    <option value="Graham">Graham</option>
+                                                    <option value="Harris">Harris</option>
+                                                    <option value="Ibarra">Ibarra</option>
+                                                    <option value="Johnson">Johnson</option>
+                                                    <option value="Johnson Ext.">Johnson Ext.</option>
+                                                    <option value="Katipunan">Katipunan</option>
+                                                    <option value="Lapu-Lapu">Lapu-Lapu</option>
+                                                    <option value="Little Baguio 1">Little Baguio 1</option>
+                                                    <option value="Little Baguio 2">Little Baguio 2</option>
+                                                    <option value="Mabini">Mabini</option>
+                                                    <option value="Rizal Avenue">Rizal Avenue</option>
+                                                    <option value="Upper Sibul 1">Upper Sibul 1</option>
+                                                    <option value="Upper Sibul 2">Upper Sibul 2</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="household">Purok: </label>

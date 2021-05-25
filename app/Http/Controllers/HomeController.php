@@ -48,6 +48,7 @@ class HomeController extends Controller
         return view('pages.dashboard', compact('total_registered', 'total_released', 'total_pending_request'));
     }
 
+
     public function add_person()
     {
         return view('pages.add_person');
@@ -412,7 +413,7 @@ class HomeController extends Controller
     public function issue_save_print(Request $request)
     {
         $resident = Residence::where("id", $request->uid)->update(["is_read" => 1]);
-        $resident = Transaction::where("id", $request->cid)->update(["date_issued" =>Carbon::now(), "status" => 1]);
+        $resident = Transaction::where("id", $request->cid)->update(["date_issued" =>Carbon::now(), "status" => 1, "control_number" => $request->cn]);
 
         if ($resident) {
             return ["status" => 200];

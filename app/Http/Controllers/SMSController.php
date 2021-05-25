@@ -132,6 +132,20 @@ class SMSController extends Controller
         return ["status" => 500];
     }
 
+    public function sendMessage($mobile, $message)
+    {
+        $sms = new SMS();
+        $sms->subject = "Schedule";
+        $sms->mobile = $mobile;
+        $sms->message = $message;
+
+        if ($sms->save()) {
+            return ["status" => 200];
+        }
+
+        return ["status" => 500];
+    }
+
     public static function prefix($mobile)
     {
         $net = array(

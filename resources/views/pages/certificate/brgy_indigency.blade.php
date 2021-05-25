@@ -71,7 +71,7 @@
                         </td>
 
                         <td>
-                            <h3 style="font-size: 12pt; font-weight: 700;">Barangay ID:</h3>
+                            <p style="font-size: 14pt;">Barangay ID: <b>{{ $data["brgy_id"] }}</b></p>
                         </td>
                     </tr>
                 </table>
