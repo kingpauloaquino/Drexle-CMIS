@@ -33,7 +33,7 @@ class HomeController extends Controller
     {
         $user = \Auth::user();
 
-        if($user->role == 0) {
+        if ($user->role == 0) {
 
             $schedule_date = Schedule::where("residence_uid", $user->id)->where("status", 0)->first();
             $trans_pending = Transaction::where("residence_uid", $user->id)->where("status", 0)->get()->count();
@@ -56,6 +56,21 @@ class HomeController extends Controller
 
     public function add_person_store(Request $request)
     {
+        $path = storage_path('/public/image-library');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $fileOrigName = "";
+        $fileName = "";
+        $filePath = "";
+        if ($request->file()) {
+            $fileOrigName = $request->file->getClientOriginalName();
+            $fileName = time() . '_' . $fileOrigName;
+            $relPathAndName = $request->file->storePubliclyAs('/public/image-library', $fileName);
+            $filePath  = str_replace('public', 'storage', $relPathAndName);
+        }
 
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
         // $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y years, %m months and %d days');
@@ -115,9 +130,10 @@ class HomeController extends Controller
         $data->mobile = $mobile;
         $data->work = $request->work;
         $data->skill = $request->skill;
+        $data->image = $filePath;
         $data->is_read = 1;
 
-        if($data->save()) {
+        if ($data->save()) {
             return redirect("/personal/residence-list")->with("message", "Good Job!");
         }
         return redirect("/personal/add-person")->with("error", "Oops, something went wrong.");
@@ -126,25 +142,42 @@ class HomeController extends Controller
     public function edit_person($uid)
     {
         $resident = Residence::where("id", $uid)->first();
+
         return view('pages.edit_person', compact('resident'));
     }
 
     public function edit_person_update($uid, Request $request)
     {
+
+        $path = storage_path('/public/image-library');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $fileOrigName = "";
+        $fileName = "";
+        $filePath = "";
+        if ($request->file()) {
+            $fileOrigName = $request->file->getClientOriginalName();
+            $fileName = time() . '_' . $fileOrigName;
+            $relPathAndName = $request->file->storePubliclyAs('/public/image-library', $fileName);
+            $filePath  = str_replace('public', 'storage', $relPathAndName);
+        }
+
         $age = Carbon::parse($request->birthdate)->diff(Carbon::now())->format('%y');
 
-         $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'stay' => 'required|min:0'
         ]);
 
-        if((int)$validatedData['stay'] < 0) {
+        if ((int)$validatedData['stay'] < 0) {
             return redirect("/personal/edit-person/{$uid}")->with("error", "Oops, year's stay cannot be negative.");
         }
 
         $middlename = strlen($request->middlename) > 0 ? $request->middlename : " ";
 
         $data = [
-            "id_number" => $request->id_number,
             "firstname" => $request->firstname,
             "middlename" => $middlename,
             "lastname" => $request->lastname,
@@ -164,6 +197,7 @@ class HomeController extends Controller
             "mobile" => $request->mobile,
             "work" => $request->work,
             "skill" => $request->skill,
+            "image" => $filePath
         ];
 
         $resident = Residence::where("id", $uid)->update($data);
@@ -193,7 +227,7 @@ class HomeController extends Controller
     {
         $data = Residence::where("id", (int)$uid)->first();
 
-        if($data == null) {
+        if ($data == null) {
             return ["status" => 404];
         }
         return ["status" => 200, "data" => $data];
@@ -266,7 +300,7 @@ class HomeController extends Controller
 
         $data = DB::select("SELECT * FROM get_request_list WHERE cid = {$intUid};");
 
-        if(COUNT($data) > 0) {
+        if (COUNT($data) > 0) {
             return ["status" => 200, "data" => $data];
         }
 
@@ -345,7 +379,7 @@ class HomeController extends Controller
 
         $cert = new CertController();
 
-        switch($request->method) {
+        switch ($request->method) {
             case "Solo Parent":
             case "Indigency":
                 $method = 1;
@@ -366,8 +400,7 @@ class HomeController extends Controller
                 $res = $cert->bgry_clearance_pdf($resident["data"]);
         }
 
-        return ["status" => 200, "html" => $res, "method" => $method, "uid" => $request->uid, "busines" => $busines] ;
-
+        return ["status" => 200, "html" => $res, "method" => $method, "uid" => $request->uid, "busines" => $busines];
     }
 
     public function resident_issue_download($uid, $method, Request $request)
@@ -390,7 +423,7 @@ class HomeController extends Controller
                 $res = $cert->bgry_clearance_pdf($resident["data"], true);
         }
 
-         if($res["status"] == 200) {
+        if ($res["status"] == 200) {
 
             $resident = Residence::where("id", $uid)->update(["purpose" => "", "is_read" => 1]);
 
@@ -413,7 +446,7 @@ class HomeController extends Controller
     public function issue_save_print(Request $request)
     {
         $resident = Residence::where("id", $request->uid)->update(["is_read" => 1]);
-        $resident = Transaction::where("id", $request->cid)->update(["date_issued" =>Carbon::now(), "status" => 1, "control_number" => $request->cn]);
+        $resident = Transaction::where("id", $request->cid)->update(["date_issued" => Carbon::now(), "status" => 1, "control_number" => $request->cn]);
 
         if ($resident) {
             return ["status" => 200];
@@ -424,7 +457,7 @@ class HomeController extends Controller
 
     public function issue_closure_print(Request $request)
     {
-        $data = Transaction::where("id", $request->buid)->update(["status"=>2, "method" => "businessclosure"]);
+        $data = Transaction::where("id", $request->buid)->update(["status" => 2, "method" => "businessclosure"]);
 
         if ($data) {
             return ["status" => 200];
@@ -436,8 +469,8 @@ class HomeController extends Controller
     public function get_resident_trans($method)
     {
 
-        switch($method) {
-            case "residency" :
+        switch ($method) {
+            case "residency":
                 $record_method = "Residency";
                 break;
             case "soloparent":
@@ -470,7 +503,7 @@ class HomeController extends Controller
     {
         $data = Transaction::where("residence_uid", $uid)->where("method", $method)->get();
 
-        if(COUNT($data) > 0) {
+        if (COUNT($data) > 0) {
             return ["status" => 200, "data" => $data];
         }
 

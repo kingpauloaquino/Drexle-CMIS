@@ -42,13 +42,16 @@
 
                                         @csrf
 
-
                                         <center>
                                             <table border="0">
                                                 <tr>
                                                     <td style="height: 230px;">
                                                         <center>
+                                                            @if($res->image == null)
+                                                            <img src="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/128/Administrator-icon.png" style="border: 2px solid gray; width: 192px; height: 192px;" />
+                                                            @else
                                                             <img src="{{ asset($res->image) }}" style="border: 2px solid gray; width: 192px; height: 192px;" />
+                                                            @endif
                                                         </center>
                                                     </td>
                                                 </tr>

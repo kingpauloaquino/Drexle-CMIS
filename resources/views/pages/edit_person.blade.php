@@ -38,9 +38,33 @@
                             <!-- Component Preview-->
                             <div class="sbp-preview">
                                 <div class="sbp-preview-content">
-                                    <form action="/personal/edit-person/update/{{ $resident->id }}" method="POST">
+                                    <form action="/personal/edit-person/update/{{ $resident->id }}" method="POST" enctype="multipart/form-data">
 
                                         @csrf
+
+                                        <center>
+                                            <table border="0">
+                                                <tr>
+                                                    <td style="height: 230px;">
+                                                        <center>
+                                                            @if($resident->image == null)
+                                                            <img src="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/128/Administrator-icon.png" style="border: 2px solid gray; width: 192px; height: 192px;" />
+                                                            @else
+                                                            <img src="{{ asset($resident->image) }}" style="border: 2px solid gray; width: 192px; height: 192px;" />
+                                                            @endif
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlFile1">Upload 2x2 Photo</label>
+                                                            <input type="file" name="file" class="form-control-file" id="file" accept="image/png, image/jpeg">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </center>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
