@@ -87,6 +87,10 @@ Route::get('/sms-advisory', [App\Http\Controllers\SMSController::class, 'init'])
 Route::post('/sms-advisory/execute', [App\Http\Controllers\SMSController::class, 'execute']);
 Route::get('/sms/message-history', [App\Http\Controllers\SMSController::class, 'sms_list']);
 
+Route::get('/account/add-new', [App\Http\Controllers\HomeController::class, 'account_add_new']);
+Route::any('/account/add-new/post', [App\Http\Controllers\HomeController::class, 'account_add_new_store']);
+Route::get('/account/list', [App\Http\Controllers\HomeController::class, 'account_list']);
+
 
 
 Route::get('/personal/user/profile', [App\Http\Controllers\ResidentController::class, 'profile']);

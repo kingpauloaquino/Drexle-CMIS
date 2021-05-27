@@ -509,4 +509,38 @@ class HomeController extends Controller
 
         return ["status" => 404, "data" => []];
     }
+
+    public function account_add_new()
+    {
+        return view('pages.account_add');
+    }
+
+    public function account_add_new_store(Request $request)
+    {
+        $password = mt_rand(10000000, 99999999);
+
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->password = $password;
+        $user->role = $request->role;
+        $user->status = $request->status;
+
+        $msg = "You have successfully added " . $request->firstname . ". The password is: {$password}";
+
+        if ($user->save()) {
+            return redirect("/account/add-new")->with("message", $msg);
+        }
+
+        return redirect("/account/add-new")->with("error", "Oops, something went wrong.");
+    }
+
+    public function account_list()
+    {
+        $data = User::where("role", ">", 0)->get();
+
+        return view('pages.account', compact('data'));
+    }
 }
