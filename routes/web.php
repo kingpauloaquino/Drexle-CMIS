@@ -44,6 +44,7 @@ Route::post('/personal/edit-person/update/{uid}', [App\Http\Controllers\HomeCont
 Route::get('/personal/delete-person/{uid}', [App\Http\Controllers\HomeController::class, 'delete_person']);
 Route::post('/personal/delete-person/delete/{uid}', [App\Http\Controllers\HomeController::class, 'delete_person_delete']);
 
+Route::get('/personal/archived-list', [App\Http\Controllers\HomeController::class, 'archived_list']);
 Route::get('/personal/residence-list', [App\Http\Controllers\HomeController::class, 'residence_list']);
 Route::get('/personal/request-list', [App\Http\Controllers\HomeController::class, 'request_list']);
 Route::get('/personal/request-list/get-details', [App\Http\Controllers\HomeController::class, 'request_single']);

@@ -67,6 +67,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Residence:</h6>
                             <a class="collapse-item" href="/personal/add-person">Add Record</a>
+                            <a class="collapse-item" href="/personal/archived-list">Archived List</a>
                             <a class="collapse-item" href="/personal/residence-list">Registered List</a>
                             <a class="collapse-item" href="/personal/request-list">Request List</a>
                             <a class="collapse-item" href="/personal/released-list">Released List</a>

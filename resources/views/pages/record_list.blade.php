@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-auto">
                         <h1 class="page-header-title">
-                            Registered List
+                            {{ $status }}
                         </h1>
                         <div class="page-header-subtitle"></div>
                     </div>
@@ -77,6 +77,7 @@
                             @endfor
                     </tbody>
                 </table>
+
             </div>
         </div>
 

@@ -245,8 +245,16 @@ class HomeController extends Controller
 
     public function residence_list()
     {
+        $status = "Registered List";
         $data = Residence::where("status", 0)->orderBy("created_at", "DESC")->get();
-        return view('pages.record_list', compact('data'));
+        return view('pages.record_list', compact('data', 'status'));
+    }
+
+    public function archived_list()
+    {
+        $status = "Archived List";
+        $data = Residence::where("status", 99)->orderBy("created_at", "DESC")->get();
+        return view('pages.record_list', compact('data', 'status'));
     }
 
     public function request_list()
